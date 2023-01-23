@@ -6,7 +6,7 @@ interface IUser {
     name: String;
     email: String;
     type: String;
-    permicoes: String[], // AG, AM, AR
+    permicoes: String[], // GP, GM, GR
 }
 
 type UserType = {
