@@ -60,14 +60,13 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end"
     },
 
-    imageMais: {
-        width: RFValue(20),
-        height: RFValue(20),
+    iconMais: {
+        fontSize: RFValue(20),
         color: '#0051FF'
     },
 
     maisText: {
-        marginLeft: 8,
+        marginLeft: 5,
         fontSize: RFValue(16),
         color: '#0051FF'
     },

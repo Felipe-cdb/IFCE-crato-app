@@ -1,7 +1,7 @@
 import react, { useState } from "react";
 import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
 import Modal from 'react-native-modal';
-import { ItemType } from "../../Types";
+import { ItemType } from "../../base/Types";
 
 import styles from "./styles";
 

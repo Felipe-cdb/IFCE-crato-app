@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Text } from "react-native";
-import { FiltersType } from '../../Types'
+import { FiltersType } from '../../base/Types'
 
 import styles from "./styles";
 

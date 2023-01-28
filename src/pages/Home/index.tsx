@@ -9,7 +9,7 @@ import FILTROS from "../../base/FILTROS";
 import { FlatList } from "react-native-gesture-handler";
 import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MaisInfo";
-import { ItemType } from "../../Types";
+import { ItemType } from "../../base/Types";
 
 const EXEMPLOCOMUNICADO: ItemType[] = [
 	{

@@ -1,23 +1,16 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack'
+import { MessageType, showMessage } from 'react-native-flash-message';
 
-interface IUser {
-    name: String;
-    email: String;
-    type: String;
-    permicoes: String[], // GP, GM, GR
-}
-
-type UserType = {
-    email: string;
-    password: string;
-}
+import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
 
 interface AuthContextDataProps{
     user: IUser;
     isUserLogin: boolean;
-    singIn: (user: UserType) => void;
+    aviso: (m: string, t: MessageType) => void;
+    signIn: (user: IUserLog) => void;
+    signUp: (user: ICheckRegister) => void;
 }
 
 interface AuthProviderProps{
@@ -32,14 +25,29 @@ function AuthProvider({ children }: AuthProviderProps){
     const [isUserLogin, setIsUserLogin] = useState<boolean>(false);
     const navigation = useNavigation<StackNavigationProp<any>>();
 
-    async function singIn(userLog: UserType) {
+    const aviso = (mensagem: string, tipo: MessageType) => {
+        showMessage({
+            message: mensagem,
+            type: tipo,
+            duration: 2000,
+            statusBarHeight: 30,
+            hideOnPress: true,
+            autoHide: true,
+        });
+    }
+
+    async function signUp(userRegister: ICheckRegister) {
+        
+    }
+
+    async function signIn(userLog: IUserLog) {
         if (!userLog.email.trim()) {
-            alert('Insira um email válido');
+            aviso('Insira um email válido', 'warning');
             return;
         }
         
         if (!userLog.password.trim()) {
-            alert('Insira uma senha');
+            aviso('Insira uma senha', 'warning');
             return;
         }
 
@@ -47,7 +55,7 @@ function AuthProvider({ children }: AuthProviderProps){
         navigation.navigate('Home');
     }
 
-    function logar(userLog: UserType) {
+    function logar(userLog: IUserLog) {
         setUser({
             name: "Teste 1",
             email: "teste@mail.com",
@@ -58,7 +66,7 @@ function AuthProvider({ children }: AuthProviderProps){
     }
 
     return(
-        <AuthContext.Provider value={{ singIn, user, isUserLogin }}>
+        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp }}>
             {children}
         </AuthContext.Provider>
     )

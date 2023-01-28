@@ -50,6 +50,10 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
+    iconEye: {
+        fontSize: RFPercentage(3)
+    },
+
     viewPass: {
         position: "absolute",
         right: 15,

@@ -3,8 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator()
 
-import SingIn from '../pages/SingIn';
-import SingUp from '../pages/SingUp';
+import SingIn from '../pages/SignIn';
+import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
 
 export default function StackNavigation() {
@@ -24,7 +24,7 @@ export default function StackNavigation() {
 
         <Stack.Screen
             name='Cadastro'
-            component={SingUp}
+            component={SignUp}
             options={() => ({
                 headerShown: false
             })}

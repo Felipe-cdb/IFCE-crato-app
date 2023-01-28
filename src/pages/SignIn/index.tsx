@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity,
+import { View, Text, TextInput, TouchableOpacity,
     KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'
-import FlashMessage, { showMessage } from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AuthContext } from '../../context/auth';
 import LogoIF from '../../components/LogoIF';
@@ -11,7 +11,7 @@ import styles from './styles'
 
 export default function Login() {
 
-  const { singIn } = useContext(AuthContext);
+  const { signIn, aviso } = useContext(AuthContext);
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const [email, setEmail] = useState('');
@@ -21,26 +21,22 @@ export default function Login() {
 
   const handleResetSenha = () => {
     if (!email.trim()) {
-      alert('Insira um email válido');
+      aviso("Insira um email válido", 'warning')
       return;
     }
 
     try {
       setResetEmail(true);
-      showMessage({
-        message: "Email de recuperação de senha enviado com sucesso",
-        type: 'success',
-        duration: 5000,
-        hideOnPress: true
-      });
+      aviso("Email de recuperação de senha enviado com sucesso", 'success');
+      return;
 
     } catch (error) {
-      alert("Ocorreu um erro inesperado, tente mais tarde!")
+      aviso("Ocorreu um erro inesperado, tente mais tarde!", 'success');
     }
   }
 
   const entrar = () => {
-    singIn({email, password: senha});
+    signIn({email, password: senha});
   }
 
   return (
@@ -70,7 +66,10 @@ export default function Login() {
                 placeholder='Senha'
                 />
                 <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
-                <Image style={{width:25, height: 25}} source={require('../../assets/images/viewPass.png')} />
+                  {
+                    visible ? <Icon name="visibility" style={styles.iconEye} color="#fff" />
+                    : <Icon name="visibility-off" style={styles.iconEye} color="#fff" />
+                  }
                 </TouchableOpacity>
             </View>
 
@@ -90,8 +89,6 @@ export default function Login() {
             </TouchableOpacity>
         </View>
         </View>
-        <FlashMessage position={'top'}/>
-
       </View>
     </>
   );

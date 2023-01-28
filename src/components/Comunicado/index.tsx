@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import FILTROS from "../../base/FILTROS";
-import { ItemType } from "../../Types";
+import { ItemType } from "../../base/Types";
 import styles from "./styles";
 
 interface ComunicadoProps {
@@ -50,7 +50,7 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
             <View style={styles.footerCard}>
                 {showMore &&
                     (<TouchableOpacity style={styles.btnMais} onPress={() => maisInfo()}>
-                        <Image style={styles.imageMais} source={require('./../../assets/images/mais.png')}/>
+                        <Icon name="add-circle-outline" style={styles.iconMais}/>
                         <Text style={styles.maisText}>Saiba mais</Text>
                     </TouchableOpacity>)
                 }
