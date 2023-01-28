@@ -11,10 +11,18 @@ interface AuthContextDataProps{
     aviso: (m: string, t: MessageType) => void;
     signIn: (user: IUserLog) => void;
     signUp: (user: ICheckRegister) => void;
+    signOut: () => void;
 }
 
 interface AuthProviderProps{
     children: ReactNode;
+}
+
+const userVoid: IUser = {
+    name: '',
+    email: '',
+    permicoes: [],
+    type: ''
 }
 
 export const AuthContext = createContext({} as AuthContextDataProps);
@@ -52,7 +60,7 @@ function AuthProvider({ children }: AuthProviderProps){
         }
 
         logar(userLog);
-        navigation.navigate('Home');
+        navigation.navigate('Drawer');
     }
 
     function logar(userLog: IUserLog) {
@@ -62,11 +70,17 @@ function AuthProvider({ children }: AuthProviderProps){
             permicoes: [],
             type: 'Aluno'
         });
-        setIsUserLogin(true)
+        setIsUserLogin(true);
+    }
+
+    function signOut(){
+        setIsUserLogin(false);
+        setUser(userVoid);
+        navigation.navigate('Login');
     }
 
     return(
-        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp }}>
+        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp, signOut }}>
             {children}
         </AuthContext.Provider>
     )
