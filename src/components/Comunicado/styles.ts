@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
 
     apagarIcon: {
-        fontSize: RFPercentage(3)
+        fontSize: RFPercentage(4)
     },
 
     textContent: {

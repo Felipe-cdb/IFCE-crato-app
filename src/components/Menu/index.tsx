@@ -8,13 +8,13 @@ import styles from "./styles";
 
 function Menu(){
 
-    // const navigation = useNavigation<DrawerNavigationProp<any>>();
+    const navigation = useNavigation<DrawerNavigationProp<any>>();
 
     return(
         <View style={styles.containerMenu}>
-            {/* <TouchableOpacity onPress={() => navigation.openDrawer()}> */}
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <Icon name="menu" style={styles.iconsMenu} color="#fff" />
-            {/* </TouchableOpacity> */}
+            </TouchableOpacity>
             <Image style={styles.logoMenu} source={require('../../assets/images/LogoMenu.png')} />
             <Icon name="bell" style={styles.iconsMenu} color="#fff" />
         </View>

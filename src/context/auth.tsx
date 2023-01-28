@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { MessageType, showMessage } from 'react-native-flash-message';
 
 import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
+import { UserPermitions } from '../base/Enums'
 
 interface AuthContextDataProps{
     user: IUser;
@@ -11,10 +12,18 @@ interface AuthContextDataProps{
     aviso: (m: string, t: MessageType) => void;
     signIn: (user: IUserLog) => void;
     signUp: (user: ICheckRegister) => void;
+    signOut: () => void;
 }
 
 interface AuthProviderProps{
     children: ReactNode;
+}
+
+const userVoid: IUser = {
+    name: '',
+    email: '',
+    permicoes: [],
+    type: ''
 }
 
 export const AuthContext = createContext({} as AuthContextDataProps);
@@ -52,21 +61,27 @@ function AuthProvider({ children }: AuthProviderProps){
         }
 
         logar(userLog);
-        navigation.navigate('Home');
+        navigation.navigate('Drawer');
     }
 
     function logar(userLog: IUserLog) {
         setUser({
             name: "Teste 1",
             email: "teste@mail.com",
-            permicoes: [],
+            permicoes: [UserPermitions.GM],
             type: 'Aluno'
         });
-        setIsUserLogin(true)
+        setIsUserLogin(true);
+    }
+
+    function signOut(){
+        setIsUserLogin(false);
+        setUser(userVoid);
+        navigation.navigate('Login');
     }
 
     return(
-        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp }}>
+        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp, signOut }}>
             {children}
         </AuthContext.Provider>
     )

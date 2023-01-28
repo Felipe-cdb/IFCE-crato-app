@@ -67,8 +67,8 @@ export default function Login() {
                 />
                 <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
                   {
-                    visible ? <Icon name="visibility" style={styles.iconEye} color="#fff" />
-                    : <Icon name="visibility-off" style={styles.iconEye} color="#fff" />
+                    visible ? <Icon name="visibility" style={styles.iconEye} color="#000" />
+                    : <Icon name="visibility-off" style={styles.iconEye} color="#000" />
                   }
                 </TouchableOpacity>
             </View>

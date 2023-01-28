@@ -9,9 +9,10 @@ import FILTROS from "../../base/FILTROS";
 import { FlatList } from "react-native-gesture-handler";
 import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MaisInfo";
-import { ItemType } from "../../base/Types";
+import { Item } from "../../base/Types";
+import { UserPermitions } from "../../base/Enums";
 
-const EXEMPLOCOMUNICADO: ItemType[] = [
+const EXEMPLOCOMUNICADO: Item[] = [
 	{
         id: 1,
 		title: "Turma de AP2",
@@ -49,7 +50,7 @@ const EXEMPLOCOMUNICADO: ItemType[] = [
         id: 4,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
-		img: 'https://www.focus.jor.br/wp-content/uploads/2021/11/IFCE-ICT-550x309.jpeg',
+		img: null,
 		referenceLink: ['https://github.com/pedroemanuellima', 'https://www.even3.com.br/eventos?todos=true&q=informatica'],
 		date: "2022-30-17",
 		category: "Notícias",
@@ -78,7 +79,7 @@ const EXEMPLOCOMUNICADO: ItemType[] = [
 
 interface IMoreInformations {
     exibir: boolean;
-    item: ItemType | null;
+    item: Item | null;
 }
 
 function Home(){
@@ -86,13 +87,13 @@ function Home(){
 	const { user } = useContext(AuthContext);
 	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({exibir: false, item: null});
 
-    const RenderItem = ({ item }: {item: ItemType}) => {
+    const RenderItem = ({ item }: {item: Item}) => {
         return(
             <View style={styles.cardComponent}>
                 <Comunicado
 					exibir={setMaisInformacoes}
 					item={item}
-					isGestorDeMural={user.permicoes.includes("GM")}
+					isGestorDeMural={user.permicoes.includes(UserPermitions.GM)}
 				/>
             </View>
         )
@@ -127,7 +128,7 @@ function Home(){
                     showsVerticalScrollIndicator={false}
                     data={EXEMPLOCOMUNICADO}
                     renderItem={RenderItem}
-                    keyExtractor={(item: ItemType) => item.id.toString()}
+                    keyExtractor={(item: Item) => item.id.toString()}
                 />
             </View>
         </View>

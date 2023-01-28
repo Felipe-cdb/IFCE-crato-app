@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Alert, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import FILTROS from "../../base/FILTROS";
-import { ItemType } from "../../base/Types";
+import { Item } from "../../base/Types";
 import styles from "./styles";
 
 interface ComunicadoProps {
-    item: ItemType;
+    item: Item;
     exibir: Function;
     isGestorDeMural: boolean;
 }
@@ -18,6 +18,10 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
     const [showMore, setShowMore] = useState(false);
     const [numLines, setNumLines] = useState<number | undefined>(undefined);
     
+    useEffect(() => {
+        if(item.img || item.referenceLink?.length) setShowMore(true);
+    }, [])
+
     const handleTextLayout = ({ nativeEvent }: any) => {
         if (nativeEvent.lines.length > 5) {
             setNumLines(4)
@@ -33,10 +37,30 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
     }
 
     return(
-        <View style={[styles.comunicadoContainer, {backgroundColor: cor}]}>
+        <Pressable
+            style={[styles.comunicadoContainer, {backgroundColor: cor}]}
+            onLongPress={() => {
+                Alert.alert(
+                    '',
+                    "Deseja excluir o comunicado?",
+                    [
+                        {
+                            text: "Não",
+                            style: "cancel"
+                          },
+                          { 
+                            text: "Sim", 
+                            // onPress: () => Alert.alert("OK Clicado") 
+                          }
+                    ]
+                )
+            }}
+        >
             {isGestorDeMural &&
-                (<TouchableOpacity style={styles.apagarComunicado}>
-                    <Icon name="window-close" style={styles.apagarIcon} color="#000" />
+                (<TouchableOpacity
+                    style={styles.apagarComunicado}
+                >
+                    <Icon name="close" style={styles.apagarIcon} color="#000" />
                 </TouchableOpacity>)
             }
             <View style={styles.textContent}>
@@ -57,7 +81,7 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
                 <Text style={[styles.textComunicado, styles.date]}>{item.date}</Text>
             </View>
             
-        </View>
+        </Pressable>
     );
 }
 

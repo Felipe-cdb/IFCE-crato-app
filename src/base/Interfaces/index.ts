@@ -1,8 +1,10 @@
+import { UserPermitions } from "../Enums"
+
 export interface IUser {
     name: String;
     email: String;
     type: String;
-    permicoes: String[], // GP, GM, GR
+    permicoes: UserPermitions[], // GP, GM, GR
 }
 
 export interface IUserLog {

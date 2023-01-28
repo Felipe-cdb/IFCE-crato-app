@@ -5,7 +5,8 @@ const Stack = createStackNavigator()
 
 import SingIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
-import Home from '../pages/Home';
+import EditProfile from '../pages/EditProfile';
+import Drawer from './DrawerNavigation';
 
 export default function StackNavigation() {
 
@@ -31,13 +32,20 @@ export default function StackNavigation() {
         />
 
         <Stack.Screen
-            name='Home'
-            component={Home}
+            name='Drawer'
+            component={Drawer}
             options={() => ({
                 headerShown: false
             })}
         />  
     
+        <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
+            options={() => ({
+                headerShown: false
+            })}
+        />
     </Stack.Navigator>
   );
 }
