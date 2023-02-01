@@ -10,9 +10,10 @@ interface ComunicadoProps {
     item: Item;
     exibir: Function;
     isGestorDeMural: boolean;
+    setDeletion: (id: number) => void;
 }
 
-function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
+function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
     const cor = FILTROS.filter(obj => obj.nome === item.category)[0].cor;
     
     const [showMore, setShowMore] = useState(false);
@@ -37,51 +38,36 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
     }
 
     return(
-        <Pressable
-            style={[styles.comunicadoContainer, {backgroundColor: cor}]}
-            onLongPress={() => {
-                Alert.alert(
-                    '',
-                    "Deseja excluir o comunicado?",
-                    [
-                        {
-                            text: "Não",
-                            style: "cancel"
-                          },
-                          { 
-                            text: "Sim", 
-                            // onPress: () => Alert.alert("OK Clicado") 
-                          }
-                    ]
-                )
-            }}
-        >
-            {isGestorDeMural &&
-                (<TouchableOpacity
-                    style={styles.apagarComunicado}
-                >
-                    <Icon name="close" style={styles.apagarIcon} color="#000" />
-                </TouchableOpacity>)
-            }
-            <View style={styles.textContent}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text
-                    style={styles.textComunicado}
-                    numberOfLines={numLines}
-                    onTextLayout={handleTextLayout}
-                >{item.contents}</Text>
-            </View>
-            <View style={styles.footerCard}>
-                {showMore &&
-                    (<TouchableOpacity style={styles.btnMais} onPress={() => maisInfo()}>
-                        <Icon name="add-circle-outline" style={styles.iconMais}/>
-                        <Text style={styles.maisText}>Saiba mais</Text>
+        <>
+            <View style={[styles.comunicadoContainer, {backgroundColor: cor}]}>
+                {isGestorDeMural &&
+                    (<TouchableOpacity
+                        style={styles.apagarComunicado}
+                        onPress={() => setDeletion(2)}
+                    >
+                        <Icon name="close" style={styles.apagarIcon} color="#000" />
                     </TouchableOpacity>)
                 }
-                <Text style={[styles.textComunicado, styles.date]}>{item.date}</Text>
+                <View style={styles.textContent}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text
+                        style={styles.textComunicado}
+                        numberOfLines={numLines}
+                        onTextLayout={handleTextLayout}
+                    >{item.contents}</Text>
+                </View>
+                <View style={styles.footerCard}>
+                    {showMore &&
+                        (<TouchableOpacity style={styles.btnMais} onPress={() => maisInfo()}>
+                            <Icon name="add-circle-outline" style={styles.iconMais}/>
+                            <Text style={styles.maisText}>Saiba mais</Text>
+                        </TouchableOpacity>)
+                    }
+                    <Text style={[styles.textComunicado, styles.date]}>{item.date}</Text>
+                </View>
+                
             </View>
-            
-        </Pressable>
+        </>
     );
 }
 

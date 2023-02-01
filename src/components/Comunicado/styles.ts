@@ -8,16 +8,19 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         paddingHorizontal: 10,
+        paddingTop: 10
     },
 
     apagarComunicado: {
         position: "absolute",
         right: 5,
-        top: 0
+        top: 2
     },
 
     apagarIcon: {
-        fontSize: RFPercentage(4)
+        width: RFPercentage(7),
+        fontSize: RFPercentage(4),
+        textAlign: 'right'
     },
 
     textContent: {
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        width: '100%',
+        width: '90%',
         textAlign: "center",
         fontWeight: '700',
         fontSize: RFValue(15),

@@ -1,12 +1,12 @@
 import react, { useState } from "react";
 import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
 import Modal from 'react-native-modal';
-import { ItemType } from "../../base/Types";
+import { Item } from "../../base/Types";
 
 import styles from "./styles";
 
 interface IInfoProps {
-    item: ItemType;
+    item: Item;
     bgc: string;
     visivel: boolean;
     setVisivel: Function;
@@ -18,7 +18,7 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
         try {
             await Linking.openURL(link);
         } catch (error) {
-            alert('Não foi possível abrir a RRL.'+error)
+            alert('Não foi possível abrir a URL.'+error)
         }
 
     }

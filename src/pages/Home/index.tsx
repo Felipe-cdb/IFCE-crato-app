@@ -3,14 +3,15 @@ import { View, ScrollView } from "react-native";
 
 import { AuthContext } from '../../context/auth';
 import Menu from './../../components/Menu';
-import Filtros from "../../components/Filtro";
+import Filtros from "../../components/Filters";
 import styles from "./styles";
 import FILTROS from "../../base/FILTROS";
 import { FlatList } from "react-native-gesture-handler";
 import Comunicado from "../../components/Comunicado";
-import MaisInfo from "../../components/MaisInfo";
+import MaisInfo from "../../components/MoreInfo";
 import { Item } from "../../base/Types";
 import { UserPermitions } from "../../base/Enums";
+import BoxDialog from "../../components/BoxDialog";
 
 const EXEMPLOCOMUNICADO: Item[] = [
 	{
@@ -82,15 +83,22 @@ interface IMoreInformations {
     item: Item | null;
 }
 
+interface IDeleteComucad {
+    exibir: boolean;
+    item: number;
+}
+
 function Home(){
 
 	const { user } = useContext(AuthContext);
 	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({exibir: false, item: null});
+	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: 0 });
 
     const RenderItem = ({ item }: {item: Item}) => {
         return(
             <View style={styles.cardComponent}>
                 <Comunicado
+					setDeletion={(i) => setDeletion({exibir: true, item: i})}
 					exibir={setMaisInformacoes}
 					item={item}
 					isGestorDeMural={user.permicoes.includes(UserPermitions.GM)}
@@ -109,6 +117,9 @@ function Home(){
 					setVisivel={setMaisInformacoes}
 				/>
 			}
+
+			<BoxDialog visivel={deletion.exibir} menosInformacoes={() => setDeletion({exibir: false, item: 0})} />
+
             <Menu/>
 
             <View style={styles.filtros}>
