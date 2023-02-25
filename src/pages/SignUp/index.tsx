@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import FlashMessage, { showMessage, MessageType } from 'react-native-flash-message';
@@ -83,8 +83,10 @@ export default function SingUp() {
 
   return (
 
-    <>
-      <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        enabled style={styles.container}
+      >
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.content}>
             <LogoIF />
@@ -95,6 +97,7 @@ export default function SingUp() {
                 <View style={styles.inputGroupAll}>
                   <InputGroup
                     label="Nome"
+                    value={user.name}
                     required={true}
                     atualiza={setNome}/>
                   <SelectGroup label="Cargo" lista={[
@@ -107,25 +110,30 @@ export default function SingUp() {
                   />
                   <InputGroup
                     label="Matrícula/SIAPE"
+                    value={user.identification || ''}
                     editavel={ativa}
                     required={true}
                     atualiza={setIdentificacao}/>
                   <InputGroup
                     label="Email"
+                    value={user.email}
                     required={true}
                     atualiza={setEmail}/>
                   <InputGroup
                     label="Celular"
+                    value={user.phone || ''}
                     atualiza={setCelular}
                     required={false}
                   />
                   <InputGroup
                     label="Senha"
+                    value={user.password}
                     pass={true}
                     required={true}
                     atualiza={setSenha}/>
                   <InputGroup
                     label="Confirmar Senha"
+                    value={user.confirmPassword}
                     pass={true}
                     required={true}
                     atualiza={setConfirmeSenha}/>
@@ -144,7 +152,6 @@ export default function SingUp() {
             </View>
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </>
+      </KeyboardAvoidingView>
   );
 }

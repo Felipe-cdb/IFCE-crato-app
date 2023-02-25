@@ -8,8 +8,8 @@ export type Item = {
     id: number;
     title: string;
     contents: string;
-    img: string | null;
-    referenceLink: string[] | null;
+    img?: string;
+    referenceLink?: string[];
     date: string;
     category: string;
 }

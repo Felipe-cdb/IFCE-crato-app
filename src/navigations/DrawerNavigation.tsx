@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StatusBar, StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { AuthContext } from '../context/auth';
 
 const Drawer = createDrawerNavigator()
 
@@ -10,8 +12,12 @@ import CustomDrawerContent from "../components/CustomDrawer";
 
 import Home from '../pages/Home';
 import Refectory from '../pages/Refectory';
+import NewCommunicated from '../pages/NewCommunicated';
+import { UserPermitions } from "../base/Enums";
 
 function DrawerNavigation() {
+
+    const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -38,6 +44,23 @@ function DrawerNavigation() {
                     )
                 }}
             />
+
+            {user.permicoes.includes(UserPermitions.GM) &&
+                <Drawer.Screen
+                    name="Novo Comunicado"
+                    component={NewCommunicated}
+                    options={{
+                        headerShown: false,
+                        drawerIcon: ({size}) => (
+                            <Icon
+                                name="note-plus"
+                                color="#000"
+                                style={stylesNavigation.icons}
+                            />
+                        )
+                    }}
+                />
+            }
 
             <Drawer.Screen
                 name="Refeitório"

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { View, ScrollView } from "react-native";
 
 import { AuthContext } from '../../context/auth';
@@ -18,8 +18,6 @@ const EXEMPLOCOMUNICADO: Item[] = [
         id: 1,
 		title: "Turma de AP2",
 		contents: "Bom dia turma de AP2, Informamos que hoje dia 03/10/2022, e dia 04/10/2022, não havera aula. Motivo: o professor está com covid19",
-		img: null,
-		referenceLink: null,
 		date: "2022-09-30",
 		category: "Avisos",
 		//OBS.: o card com imagem ou com um conteudo que utrapasse X caraceres deve ter o botão saiba mais
@@ -41,8 +39,6 @@ const EXEMPLOCOMUNICADO: Item[] = [
         id: 3,
 		title: "TI nas pequenas empresas",
 		contents: "Como a TI vem acelerando cada vez mais os pequenos negócios? participe no dia 01/10/2022 no auditorio principal.",
-		img: null,
-		referenceLink: null,
 		date: "2022-09-28",
 		category: "Palestras",
 	},
@@ -51,7 +47,6 @@ const EXEMPLOCOMUNICADO: Item[] = [
         id: 4,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
-		img: null,
 		referenceLink: ['https://github.com/pedroemanuellima', 'https://www.even3.com.br/eventos?todos=true&q=informatica'],
 		date: "2022-30-17",
 		category: "Notícias",
@@ -61,8 +56,6 @@ const EXEMPLOCOMUNICADO: Item[] = [
         id: 5,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
-		img: null,
-		referenceLink: null,
 		date: "2022-30-17",
 		category: "Notícias",
 	},
@@ -71,8 +64,6 @@ const EXEMPLOCOMUNICADO: Item[] = [
         id: 6,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência. 5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
-		img: null,
-		referenceLink: null,
 		date: "2022-30-17",
 		category: "Notícias",
 	},

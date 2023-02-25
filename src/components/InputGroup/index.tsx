@@ -9,6 +9,9 @@ interface IInputGroupProps {
     pass?: boolean;
     required: boolean;
     editavel?: boolean;
+    numberLines?: number;
+    multiline?: boolean;
+    value: string;
     atualiza: (value: any) => void;
 }
 interface ISelectGroupProps {
@@ -18,14 +21,12 @@ interface ISelectGroupProps {
     lista: Item[];
 }
 
-export const InputGroup = ({ label, pass, required, editavel, atualiza }: IInputGroupProps) => {
+export const InputGroup = ({ label, value, pass, required, editavel, atualiza, multiline, numberLines }: IInputGroupProps) => {
 
     const [borda, setBorda] = useState({});
-    const [vari, setVari] = useState('');
 
     const fimEntrada = () => {
-        atualiza(vari);
-        if (required && !vari.trim()) {
+        if (!value) {
             setBorda({
                 borderWidth: 1,
                 borderColor: '#C91517',
@@ -33,7 +34,15 @@ export const InputGroup = ({ label, pass, required, editavel, atualiza }: IInput
             return;
         }
 
-        if (vari.trim()) {
+        if (required && !value.trim()) {
+            setBorda({
+                borderWidth: 1,
+                borderColor: '#C91517',
+            })
+            return;
+        }
+
+        if (value.trim()) {
             setBorda({})
             return;
         }
@@ -47,21 +56,25 @@ export const InputGroup = ({ label, pass, required, editavel, atualiza }: IInput
            {pass
                 ?<TextInput
                     onEndEditing={() => fimEntrada()}
-                    onChangeText={setVari}
+                    onChangeText={atualiza}
                     style={[styles.inputEntry, 
                         editavel == true || editavel == undefined ? borda : {}
                     ]}
                     secureTextEntry={true}
                     textContentType='password'
                     editable={editavel}
+                    value={value}
                 />
                 :<TextInput
+                    multiline={multiline}
+                    numberOfLines={numberLines}
                     onEndEditing={() => fimEntrada()}
-                    onChangeText={setVari}
+                    onChangeText={atualiza}
                     style={[styles.inputEntry, 
                         editavel == true || editavel == undefined ? borda : {}
                     ]}
                     editable={editavel}
+                    value={value}
                 />
             }
 

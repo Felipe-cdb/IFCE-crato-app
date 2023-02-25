@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity,
-    KeyboardAvoidingView, Platform } from 'react-native';
+    KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -40,13 +40,14 @@ export default function Login() {
   }
 
   return (
-    <>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={styles.container}>
         <LogoIF/>
 
         <View style={styles.content}>
         <Text style={styles.titleForm}>IFCE-Crato-Estudante</Text>
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} enabled>
+            
             <View style={styles.contenteForm}>
             <View style={styles.contntInpuPass}>
                 <TextInput
@@ -90,6 +91,6 @@ export default function Login() {
         </View>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
