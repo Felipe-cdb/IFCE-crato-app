@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import FILTROS from "../../base/FILTROS";
-import { ItemType } from "../../base/Types";
+import { Item as ItemType } from "../../base/Types";
 import styles from "./styles";
 
 interface ComunicadoProps {
@@ -14,10 +14,10 @@ interface ComunicadoProps {
 
 function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
     const cor = FILTROS.filter(obj => obj.nome === item.category)[0].cor;
-    
+
     const [showMore, setShowMore] = useState(false);
     const [numLines, setNumLines] = useState<number | undefined>(undefined);
-    
+
     const handleTextLayout = ({ nativeEvent }: any) => {
         if (nativeEvent.lines.length > 5) {
             setNumLines(4)
@@ -32,8 +32,8 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
         })
     }
 
-    return(
-        <View style={[styles.comunicadoContainer, {backgroundColor: cor}]}>
+    return (
+        <View style={[styles.comunicadoContainer, { backgroundColor: cor }]}>
             {isGestorDeMural &&
                 (<TouchableOpacity style={styles.apagarComunicado}>
                     <Icon name="window-close" style={styles.apagarIcon} color="#000" />
@@ -50,13 +50,13 @@ function Comunicado({ item, exibir, isGestorDeMural }: ComunicadoProps) {
             <View style={styles.footerCard}>
                 {showMore &&
                     (<TouchableOpacity style={styles.btnMais} onPress={() => maisInfo()}>
-                        <Icon name="add-circle-outline" style={styles.iconMais}/>
+                        <Icon name="add-circle-outline" style={styles.iconMais} />
                         <Text style={styles.maisText}>Saiba mais</Text>
                     </TouchableOpacity>)
                 }
                 <Text style={[styles.textComunicado, styles.date]}>{item.date}</Text>
             </View>
-            
+
         </View>
     );
 }

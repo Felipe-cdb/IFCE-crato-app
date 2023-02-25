@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Text } from "react-native";
-import { FiltersType } from '../../base/Types'
+import { Filters as FiltersType } from '../../base/Types'
 
 import styles from "./styles";
 
@@ -15,7 +15,7 @@ function Filtros({ item }: FiltersProps) {
 
     useEffect(() => {
         if (ativo) {
-            setBgc({backgroundColor: item.cor});
+            setBgc({ backgroundColor: item.cor });
             return;
         }
 
@@ -25,7 +25,7 @@ function Filtros({ item }: FiltersProps) {
         }
     }, [ativo])
 
-    return(
+    return (
         <TouchableOpacity onPress={() => setAtivo(!ativo)} style={[styles.btnFiltro, bgc]}>
             <Text style={styles.labelFiltro}>{item.nome}</Text>
         </TouchableOpacity>
