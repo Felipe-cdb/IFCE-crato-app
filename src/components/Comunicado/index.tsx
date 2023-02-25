@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity, Alert, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import FILTROS from "../../base/FILTROS";
-import { Item } from "../../base/Types";
+import { Item as ItemType } from "../../base/Types";
 import styles from "./styles";
 
 interface ComunicadoProps {
-    item: Item;
+    item: ItemType;
     exibir: Function;
     isGestorDeMural: boolean;
     setDeletion: (id: number) => void;
@@ -15,7 +15,7 @@ interface ComunicadoProps {
 
 function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
     const cor = FILTROS.filter(obj => obj.nome === item.category)[0].cor;
-    
+
     const [showMore, setShowMore] = useState(false);
     const [numLines, setNumLines] = useState<number | undefined>(undefined);
     

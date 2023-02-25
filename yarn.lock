@@ -6685,7 +6685,7 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-types/@react-navigation/native:
+"types/@github:react-navigation/native":
   version "3.6.5"
   resolved "https://codeload.github.com/react-navigation/native/tar.gz/6bd839725f1be1313c43c1e393abe167af6fe70b"
   dependencies:

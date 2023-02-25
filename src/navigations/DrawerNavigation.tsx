@@ -66,6 +66,7 @@ function DrawerNavigation() {
                 name="Refeitório"
                 component={Refectory}
                 options={{
+                    headerShown: false,
                     drawerIcon: ({size}) => (
                         <Icon name="silverware-fork-knife"
                             color="#000"

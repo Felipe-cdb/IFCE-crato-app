@@ -1,12 +1,12 @@
 import react, { useState } from "react";
 import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
 import Modal from 'react-native-modal';
-import { Item } from "../../base/Types";
+import { Item as ItemType } from "../../base/Types";
 
 import styles from "./styles";
 
 interface IInfoProps {
-    item: Item;
+    item: ItemType;
     bgc: string;
     visivel: boolean;
     setVisivel: Function;
@@ -24,10 +24,10 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
     }
 
     const menosInformacoes = () => {
-        setVisivel({exibir: false, item: null})
+        setVisivel({ exibir: false, item: null })
     }
 
-    return(
+    return (
         <Modal
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
@@ -38,42 +38,42 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
             statusBarTranslucent={true}
         >
             <View style={styles.viewModal}>
-                    <View style={[styles.contentModalInfo, {backgroundColor: bgc}]}>
-                        <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={[styles.contentModalInfo, { backgroundColor: bgc }]}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
 
-                            <View style={styles.titleAndImage}>
-                                <Text style={styles.titleModal}>{item.title}</Text>
-                                {item.img && (
-                                    <Image style={styles.imageModal} source={{uri: item.img}}/>
-                                )}
-                            </View>
+                        <View style={styles.titleAndImage}>
+                            <Text style={styles.titleModal}>{item.title}</Text>
+                            {item.img && (
+                                <Image style={styles.imageModal} source={{ uri: item.img }} />
+                            )}
+                        </View>
 
-                            <View>
-                                <Text style={styles.contentsInfo}>{item.contents}</Text>
-                                {item.referenceLink &&
-                                        <View style={styles.listaLinks}>
-                                            {item.referenceLink.map((link, index) => (
-                                                <TouchableOpacity key={index} onPress={() => abrir(link)}>
-                                                    <Text style={styles.textLink}>{link}</Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
-                                }
-                            </View>
-
-                            <View style={styles.footerModal}>
-                                <Text style={styles.dataModal}>{item.date}</Text>
-
-                                <View style={styles.containerBtnOk}>
-                                    <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
-                                        <Text>OK</Text>
-                                    </Pressable>
+                        <View>
+                            <Text style={styles.contentsInfo}>{item.contents}</Text>
+                            {item.referenceLink &&
+                                <View style={styles.listaLinks}>
+                                    {item.referenceLink.map((link: string, index: number) => (
+                                        <TouchableOpacity key={index} onPress={() => abrir(link)}>
+                                            <Text style={styles.textLink}>{link}</Text>
+                                        </TouchableOpacity>
+                                    ))}
                                 </View>
+                            }
+                        </View>
+
+                        <View style={styles.footerModal}>
+                            <Text style={styles.dataModal}>{item.date}</Text>
+
+                            <View style={styles.containerBtnOk}>
+                                <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
+                                    <Text>OK</Text>
+                                </Pressable>
                             </View>
-                        </ScrollView>
-                    </View>
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
-            
+
         </Modal>
     )
 }

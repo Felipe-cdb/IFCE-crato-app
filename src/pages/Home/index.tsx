@@ -9,13 +9,13 @@ import FILTROS from "../../base/FILTROS";
 import { FlatList } from "react-native-gesture-handler";
 import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MoreInfo";
-import { Item } from "../../base/Types";
 import { UserPermitions } from "../../base/Enums";
 import BoxDialog from "../../components/BoxDialog";
+import { Item as ItemType } from "../../base/Types";
 
-const EXEMPLOCOMUNICADO: Item[] = [
+const EXEMPLOCOMUNICADO: ItemType[] = [
 	{
-        id: 1,
+		id: 1,
 		title: "Turma de AP2",
 		contents: "Bom dia turma de AP2, Informamos que hoje dia 03/10/2022, e dia 04/10/2022, não havera aula. Motivo: o professor está com covid19",
 		date: "2022-09-30",
@@ -26,7 +26,7 @@ const EXEMPLOCOMUNICADO: Item[] = [
 	},
 
 	{
-        id: 2,
+		id: 2,
 		title: "XVIII Semana da Informatica ",
 		contents: "A partir do dia 25/10 começa XVIII semana da informatica.",
 		img: "https://www.focus.jor.br/wp-content/uploads/2021/11/IFCE-ICT-550x309.jpeg",
@@ -36,7 +36,7 @@ const EXEMPLOCOMUNICADO: Item[] = [
 	},
 
 	{
-        id: 3,
+		id: 3,
 		title: "TI nas pequenas empresas",
 		contents: "Como a TI vem acelerando cada vez mais os pequenos negócios? participe no dia 01/10/2022 no auditorio principal.",
 		date: "2022-09-28",
@@ -44,7 +44,7 @@ const EXEMPLOCOMUNICADO: Item[] = [
 	},
 
 	{
-        id: 4,
+		id: 4,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
 		referenceLink: ['https://github.com/pedroemanuellima', 'https://www.even3.com.br/eventos?todos=true&q=informatica'],
@@ -52,16 +52,16 @@ const EXEMPLOCOMUNICADO: Item[] = [
 		category: "Notícias",
 	},
 
-    {
-        id: 5,
+	{
+		id: 5,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
 		date: "2022-30-17",
 		category: "Notícias",
 	},
 
-    {
-        id: 6,
+	{
+		id: 6,
 		title: "Alunos do IFCE Ganham competição",
 		contents: "5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência. 5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.5 alunos do ifce crato ganham competição do hackatch da americana future. Os participantes da competição apresentaram soluções para problemas globais usando inteligência artificial e aprendizado de máquina. Incluindo soluções de conservação de água, identificar áreas de fome, monitorar surtos de doenças e criar dispositivos médicos para pessoas com deficiência.",
 		date: "2022-30-17",
@@ -71,7 +71,7 @@ const EXEMPLOCOMUNICADO: Item[] = [
 
 interface IMoreInformations {
     exibir: boolean;
-    item: Item | null;
+    item: ItemType | null;
 }
 
 interface IDeleteComucad {
@@ -79,13 +79,13 @@ interface IDeleteComucad {
     item: number;
 }
 
-function Home(){
+function Home() {
 
 	const { user } = useContext(AuthContext);
 	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({exibir: false, item: null});
 	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: 0 });
 
-    const RenderItem = ({ item }: {item: Item}) => {
+    const RenderItem = ({ item }: {item: ItemType}) => {
         return(
             <View style={styles.cardComponent}>
                 <Comunicado
@@ -94,12 +94,12 @@ function Home(){
 					item={item}
 					isGestorDeMural={user.permicoes.includes(UserPermitions.GM)}
 				/>
-            </View>
-        )
-    }
+			</View>
+		)
+	}
 
-    return(
-        <View style={styles.container}>
+	return (
+		<View style={styles.container}>
 			{(maisInformacoes.exibir && maisInformacoes.item) &&
 				<MaisInfo
 					visivel={maisInformacoes.exibir}
@@ -112,7 +112,6 @@ function Home(){
 			<BoxDialog visivel={deletion.exibir} menosInformacoes={() => setDeletion({exibir: false, item: 0})} />
 
             <Menu/>
-
             <View style={styles.filtros}>
                 <ScrollView
                     horizontal
@@ -130,7 +129,7 @@ function Home(){
                     showsVerticalScrollIndicator={false}
                     data={EXEMPLOCOMUNICADO}
                     renderItem={RenderItem}
-                    keyExtractor={(item: Item) => item.id.toString()}
+                    keyExtractor={(item: ItemType) => item.id.toString()}
                 />
             </View>
         </View>
