@@ -1,7 +1,7 @@
 import react, { useState } from "react";
 import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
 import Modal from 'react-native-modal';
-import { ItemType } from "../../base/Types";
+import { Item as ItemType } from "../../base/Types";
 
 import styles from "./styles";
 
@@ -18,16 +18,16 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
         try {
             await Linking.openURL(link);
         } catch (error) {
-            alert('Não foi possível abrir a RRL.'+error)
+            alert('Não foi possível abrir a RRL.' + error)
         }
 
     }
 
     const menosInformacoes = () => {
-        setVisivel({exibir: false, item: null})
+        setVisivel({ exibir: false, item: null })
     }
 
-    return(
+    return (
         <Modal
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
@@ -38,42 +38,42 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
             statusBarTranslucent={true}
         >
             <View style={styles.viewModal}>
-                    <View style={[styles.contentModalInfo, {backgroundColor: bgc}]}>
-                        <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={[styles.contentModalInfo, { backgroundColor: bgc }]}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
 
-                            <View style={styles.titleAndImage}>
-                                <Text style={styles.titleModal}>{item.title}</Text>
-                                {item.img && (
-                                    <Image style={styles.imageModal} source={{uri: item.img}}/>
-                                )}
-                            </View>
+                        <View style={styles.titleAndImage}>
+                            <Text style={styles.titleModal}>{item.title}</Text>
+                            {item.img && (
+                                <Image style={styles.imageModal} source={{ uri: item.img }} />
+                            )}
+                        </View>
 
-                            <View>
-                                <Text style={styles.contentsInfo}>{item.contents}</Text>
-                                {item.referenceLink &&
-                                        <View style={styles.listaLinks}>
-                                            {item.referenceLink.map((link, index) => (
-                                                <TouchableOpacity key={index} onPress={() => abrir(link)}>
-                                                    <Text style={styles.textLink}>{link}</Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
-                                }
-                            </View>
-
-                            <View style={styles.footerModal}>
-                                <Text style={styles.dataModal}>{item.date}</Text>
-
-                                <View style={styles.containerBtnOk}>
-                                    <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
-                                        <Text>OK</Text>
-                                    </Pressable>
+                        <View>
+                            <Text style={styles.contentsInfo}>{item.contents}</Text>
+                            {item.referenceLink &&
+                                <View style={styles.listaLinks}>
+                                    {item.referenceLink.map((link, index) => (
+                                        <TouchableOpacity key={index} onPress={() => abrir(link)}>
+                                            <Text style={styles.textLink}>{link}</Text>
+                                        </TouchableOpacity>
+                                    ))}
                                 </View>
+                            }
+                        </View>
+
+                        <View style={styles.footerModal}>
+                            <Text style={styles.dataModal}>{item.date}</Text>
+
+                            <View style={styles.containerBtnOk}>
+                                <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
+                                    <Text>OK</Text>
+                                </Pressable>
                             </View>
-                        </ScrollView>
-                    </View>
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
-            
+
         </Modal>
     )
 }
