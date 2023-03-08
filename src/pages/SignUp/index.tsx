@@ -87,7 +87,7 @@ export default function SingUp() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         enabled style={styles.container}
       >
-        <ScrollView style={styles.scrollContainer}>
+        <ScrollView style={styles.scrollContainer} keyboardShouldPersistTaps={'handled'}>
           <View style={styles.content}>
             <LogoIF />
             

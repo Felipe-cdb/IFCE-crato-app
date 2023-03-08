@@ -40,45 +40,45 @@ export default function Login() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        enabled style={styles.container}
+      >
         <LogoIF/>
 
-        <View style={styles.content}>
+        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps={'handled'}>
         <Text style={styles.titleForm}>IFCE-Crato-Estudante</Text>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} enabled>
             
-            <View style={styles.contenteForm}>
-            <View style={styles.contntInpuPass}>
-                <TextInput
-                style={styles.inputLog}
-                value={email}
-                onChangeText={setEmail}
-                placeholder='Email'
-                />
-            </View>
-            <View style={styles.contntInpuPass}>
-                <TextInput
-                style={styles.inputLog}
-                value={senha}
-                secureTextEntry={visible}
-                textContentType='password'
-                onChangeText={setSenha}
-                placeholder='Senha'
-                />
-                <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
-                  {
-                    visible ? <Icon name="visibility" style={styles.iconEye} color="#000" />
-                    : <Icon name="visibility-off" style={styles.iconEye} color="#000" />
-                  }
-                </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity onPress={() => handleResetSenha()}>
-                <Text style={styles.textLink}>Esqueceu a senha?</Text>
+        <View style={styles.contenteForm}>
+        <View style={styles.contntInpuPass}>
+            <TextInput
+            style={styles.inputLog}
+            value={email}
+            onChangeText={setEmail}
+            placeholder='Email'
+            />
+        </View>
+        <View style={styles.contntInpuPass}>
+            <TextInput
+            style={styles.inputLog}
+            value={senha}
+            secureTextEntry={visible}
+            textContentType='password'
+            onChangeText={setSenha}
+            placeholder='Senha'
+            />
+            <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
+              {
+                visible ? <Icon name="visibility" style={styles.iconEye} color="#000" />
+                : <Icon name="visibility-off" style={styles.iconEye} color="#000" />
+              }
             </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+        </View>
+
+        <TouchableOpacity onPress={() => handleResetSenha()}>
+            <Text style={styles.textLink}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
+        </View>
 
         <View style={styles.btnGroup}>
             <TouchableOpacity style={styles.btnEntrar} onPress={() => entrar()}>
@@ -89,8 +89,7 @@ export default function Login() {
             <Text style={[styles.textLink, styles.textBtn]}>Ainda não é Cadastrado?</Text>
             </TouchableOpacity>
         </View>
-        </View>
-      </View>
-    </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
   );
 }
