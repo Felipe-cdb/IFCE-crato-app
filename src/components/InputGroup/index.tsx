@@ -26,7 +26,7 @@ export const InputGroup = ({ label, value, pass, required, editavel, atualiza, m
     const [borda, setBorda] = useState({});
 
     const fimEntrada = () => {
-        if (!value) {
+        if (!value && required) {
             setBorda({
                 borderWidth: 1,
                 borderColor: '#C91517',
@@ -35,6 +35,7 @@ export const InputGroup = ({ label, value, pass, required, editavel, atualiza, m
         }
 
         if (required && !value.trim()) {
+            atualiza('');
             setBorda({
                 borderWidth: 1,
                 borderColor: '#C91517',

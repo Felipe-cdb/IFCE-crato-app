@@ -45,7 +45,7 @@ function DrawerNavigation() {
                 }}
             />
 
-            {user.permicoes.includes(UserPermitions.GM) &&
+            {user.permitions.includes(UserPermitions.GM) &&
                 <Drawer.Screen
                     name="Novo Comunicado"
                     component={NewCommunicated}

@@ -4,20 +4,22 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
 
     container: {
-        width: '100%',
-        marginVertical: 16,
-        display: "flex",
-        alignItems: "center"
+        flex: 1
+    },
+
+    scrollContainer: {
+        alignItems: "center",
+        marginTop: 24,
+        paddingBottom: 32
     },
 
     title: {
-        textAlign: "center",
         fontSize: RFValue(24),
         fontWeight: 'bold',
         marginBottom: 16
     },
 
-    content: {
+    form: {
         width: '90%'
     },
 
@@ -25,20 +27,61 @@ const styles = StyleSheet.create({
         fontSize: RFValue(16)
     },
 
-    clipBtn: {
+    optionsImage: {
+        width: '100%',
         marginTop: 8,
-        paddingHorizontal: 50,
-        paddingVertical: 30,
-        borderWidth: 2,
-        borderColor: "#D9D9D9",
-        borderRadius: 16,
 
         display: "flex",
         alignItems: "center",
-        alignSelf: "center"
+        alignSelf: "center",
+
+        justifyContent: 'center',
+        marginVertical: 10,
+        overflow: 'hidden',
+    },
+    
+    image: {
+        width: '100%',
+
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: 'space-around'
     },
 
-    clip: {
+    imageTrash: {
+        width: '20%',
+        alignItems: "center",
+        fontSize: RFValue(32)
+    },
+    
+    iconTrash: {
+        fontSize: RFValue(24)
+    },
+
+    imagePreview: {
+        flex: 1,
+        width: '70%',
+        minHeight: 200,
+        maxHeight: 300,
+        resizeMode: 'cover',
+        borderWidth: 2,
+        borderColor: "#D9D9D9",
+        borderRadius: 16,
+    },
+
+    clipContainer: {
+        width: '50%',
+        paddingVertical: 30,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "#D9D9D9",
+        borderRadius: 16,
+    },
+
+    clipIcon: {
         fontSize: RFValue(32)
     },
 
@@ -72,9 +115,10 @@ const styles = StyleSheet.create({
     },
 
     butnGroup: {
-        width: '90%',
-        marginTop: 16,
-        
+        width: '100%',
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        // paddingBottom: 8,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"

@@ -4,8 +4,9 @@ export interface IUser {
     name: String;
     email: String;
     type: String;
-    permicoes: UserPermitions[], // GP, GM, GR
+    permitions: UserPermitions[], // GP, GM, GR
 }
+
 
 export interface IUserLog {
     email: string;

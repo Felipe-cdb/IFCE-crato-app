@@ -22,7 +22,7 @@ interface AuthProviderProps{
 const userVoid: IUser = {
     name: '',
     email: '',
-    permicoes: [],
+    permitions: [],
     type: ''
 }
 
@@ -68,7 +68,7 @@ function AuthProvider({ children }: AuthProviderProps){
         setUser({
             name: "Teste 1",
             email: "teste@mail.com",
-            permicoes: [UserPermitions.GM],
+            permitions: [],
             type: 'Aluno'
         });
         setIsUserLogin(true);
