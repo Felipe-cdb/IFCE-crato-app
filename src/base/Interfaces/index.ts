@@ -4,7 +4,9 @@ export interface IUser {
     name: String;
     email: String;
     type: String;
-    permitions: UserPermitions[], // GP, GM, GR
+    roles: UserPermitions[]; // MP, MM, RM
+    phoneNumber?: string;
+
 }
 
 

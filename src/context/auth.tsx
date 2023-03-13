@@ -1,14 +1,16 @@
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack'
 import { MessageType, showMessage } from 'react-native-flash-message';
 
+import { api } from "../config";
 import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
-import { UserPermitions } from '../base/Enums'
+// import { UserPermitions } from '../base/Enums'
+import { EmailRegex, PasswordRegex } from "../base/Regexs";
 
 interface AuthContextDataProps{
     user: IUser;
-    isUserLogin: boolean;
+    isUserLoaded: boolean;
     aviso: (m: string, t: MessageType) => void;
     signIn: (user: IUserLog) => void;
     signUp: (user: ICheckRegister) => void;
@@ -22,7 +24,7 @@ interface AuthProviderProps{
 const userVoid: IUser = {
     name: '',
     email: '',
-    permitions: [],
+    roles: [],
     type: ''
 }
 
@@ -31,8 +33,12 @@ export const AuthContext = createContext({} as AuthContextDataProps);
 function AuthProvider({ children }: AuthProviderProps){
     
     const [user, setUser] = useState({} as IUser);
-    const [isUserLogin, setIsUserLogin] = useState<boolean>(false);
+    const [isUserLoaded, setIsUserLoaded] = useState<boolean>(false);
     const navigation = useNavigation<StackNavigationProp<any>>();
+
+    useEffect(() => {
+        if (isUserLoaded) navigation.navigate('Drawer');
+    }, [isUserLoaded])
 
     const aviso = (mensagem: string, tipo: MessageType) => {
         showMessage({
@@ -50,38 +56,53 @@ function AuthProvider({ children }: AuthProviderProps){
     }
 
     async function signIn(userLog: IUserLog) {
-        if (!userLog.email.trim()) {
-            aviso('Insira um email válido', 'warning');
+        if (!EmailRegex.test(userLog.email)) {
+            aviso('E-mail invalido', 'warning');
             return;
         }
-        
-        if (!userLog.password.trim()) {
-            aviso('Insira uma senha', 'warning');
+    
+        if (!PasswordRegex.test(userLog.password)) {
+            aviso('Senha invalida', 'warning');
             return;
         }
 
-        logar(userLog);
-        navigation.navigate('Drawer');
+        await logar(userLog);
     }
 
-    function logar(userLog: IUserLog) {
-        setUser({
-            name: "Teste 1",
-            email: "teste@mail.com",
-            permitions: [],
-            type: 'Aluno'
-        });
-        setIsUserLogin(true);
+    async function logar(userLog: IUserLog) {
+        try {
+            const response = await api.post("auth/login", userLog);
+            const userResponse = response.data.user;
+            setUser({
+                name: userResponse.name,
+                email: userResponse.email,
+                roles: userResponse.roles,
+                type: userResponse.type,
+                phoneNumber: userResponse.phoneNumber || undefined
+            });
+            setIsUserLoaded(true)
+        } catch (error: any) {
+            if (error.response){
+                if (error.response.data.message === "User not found") {
+                    aviso("Usuário não encontrado", "warning");
+                }
+                if (error.response.data.message === "Invalid password") {
+                    aviso("Senha incorreta", "warning");
+                }
+            }else {
+                aviso("Falha no login", "warning");
+            }
+        }
     }
 
     function signOut(){
-        setIsUserLogin(false);
+        setIsUserLoaded(false);
         setUser(userVoid);
         navigation.navigate('Login');
     }
 
     return(
-        <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp, signOut }}>
+        <AuthContext.Provider value={{ signIn, user, isUserLoaded, aviso, signUp, signOut }}>
             {children}
         </AuthContext.Provider>
     )

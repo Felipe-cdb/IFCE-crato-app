@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { AuthContext } from '../../context/auth';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles'
+import ScreenLoad from '../../components/ScreenLoad';
 
 export default function Login() {
 
@@ -17,7 +18,9 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [visible, setVisible] = useState(true);
-  const [resetEmail, setResetEmail] = useState(false);
+  const [resetEmail, setResetEmail] = useState(false);   
+  const [loading, setLoading] = useState<boolean>(false);
+
 
   const handleResetSenha = () => {
     if (!email.trim()) {
@@ -35,29 +38,32 @@ export default function Login() {
     }
   }
 
-  const entrar = () => {
-    signIn({email, password: senha});
+  const entrar = async () => {
+    setLoading(true)
+    await signIn({email, password: senha});
+    setLoading(false)
   }
 
   return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        enabled style={styles.container}
-      >
-        <LogoIF/>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      enabled style={styles.container}
+    >
+      <ScreenLoad visivel={loading}/>
+      <LogoIF/>
 
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps={'handled'}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps={'handled'}>
         <Text style={styles.titleForm}>IFCE-Crato-Estudante</Text>
-            
+          
         <View style={styles.contenteForm}>
-        <View style={styles.contntInpuPass}>
+          <View style={styles.contntInpuPass}>
             <TextInput
-            style={styles.inputLog}
-            value={email}
-            onChangeText={setEmail}
-            placeholder='Email'
+              style={styles.inputLog}
+              value={email}
+              onChangeText={setEmail}
+              placeholder='Email'
             />
-        </View>
+          </View>
         <View style={styles.contntInpuPass}>
             <TextInput
             style={styles.inputLog}
@@ -81,15 +87,15 @@ export default function Login() {
         </View>
 
         <View style={styles.btnGroup}>
-            <TouchableOpacity style={styles.btnEntrar} onPress={() => entrar()}>
+          <TouchableOpacity style={styles.btnEntrar} onPress={() => entrar()}>
             <Text style={[styles.textBtn, {color: '#fff'}]}>Entrar</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
             <Text style={[styles.textLink, styles.textBtn]}>Ainda não é Cadastrado?</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

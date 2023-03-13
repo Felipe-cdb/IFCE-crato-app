@@ -45,7 +45,7 @@ function DrawerNavigation() {
                 }}
             />
 
-            {user.permitions.includes(UserPermitions.GM) &&
+            {user.roles.includes(UserPermitions.MM) &&
                 <Drawer.Screen
                     name="Novo Comunicado"
                     component={NewCommunicated}
@@ -62,19 +62,21 @@ function DrawerNavigation() {
                 />
             }
 
-            <Drawer.Screen
-                name="Refeitório"
-                component={Refectory}
-                options={{
-                    headerShown: false,
-                    drawerIcon: ({size}) => (
-                        <Icon name="silverware-fork-knife"
-                            color="#000"
-                            style={stylesNavigation.icons}
-                        />
-                    )
-                }}
-            />
+            {user.roles.includes(UserPermitions.RM) &&
+                <Drawer.Screen
+                    name="Refeitório"
+                    component={Refectory}
+                    options={{
+                        headerShown: false,
+                        drawerIcon: ({size}) => (
+                            <Icon name="silverware-fork-knife"
+                                color="#000"
+                                style={stylesNavigation.icons}
+                            />
+                        )
+                    }}
+                />
+            }
         </Drawer.Navigator>
     </>
   );

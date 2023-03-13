@@ -92,7 +92,7 @@ function Home() {
 					setDeletion={(i) => setDeletion({exibir: true, item: i})}
 					exibir={setMaisInformacoes}
 					item={item}
-					isGestorDeMural={user.permicoes.includes(UserPermitions.GM)}
+					isGestorDeMural={user.roles.includes(UserPermitions.MM)}
 				/>
 			</View>
 		)
