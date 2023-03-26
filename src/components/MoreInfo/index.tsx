@@ -1,6 +1,7 @@
 import react, { useState } from "react";
 import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
 import Modal from 'react-native-modal';
+import { format } from "date-fns";
 import { Item as ItemType } from "../../base/Types";
 
 import styles from "./styles";
@@ -43,16 +44,16 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
 
                         <View style={styles.titleAndImage}>
                             <Text style={styles.titleModal}>{item.title}</Text>
-                            {item.img && (
-                                <Image style={styles.imageModal} source={{ uri: item.img }} />
+                            {item.resource && (
+                                <Image style={styles.imageModal} source={{ uri: item.resource.secure_url }} />
                             )}
                         </View>
 
                         <View>
                             <Text style={styles.contentsInfo}>{item.contents}</Text>
-                            {item.referenceLink &&
+                            {item.referenceLinks &&
                                 <View style={styles.listaLinks}>
-                                    {item.referenceLink.map((link: string, index: number) => (
+                                    {item.referenceLinks.map((link: string, index: number) => (
                                         <TouchableOpacity key={index} onPress={() => abrir(link)}>
                                             <Text style={styles.textLink}>{link}</Text>
                                         </TouchableOpacity>
@@ -62,7 +63,7 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
                         </View>
 
                         <View style={styles.footerModal}>
-                            <Text style={styles.dataModal}>{item.date}</Text>
+                            <Text style={styles.dataModal}>{format(new Date(item.createdAt), 'dd/MM/yyyy')}</Text>
 
                             <View style={styles.containerBtnOk}>
                                 <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
