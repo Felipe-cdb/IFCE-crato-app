@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Alert, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import FILTROS from "../../base/FILTROS";
+import { format } from 'date-fns';
+import { constantColors } from "../../base/constants";
 import { Item as ItemType } from "../../base/Types";
 import styles from "./styles";
 
@@ -14,13 +14,11 @@ interface ComunicadoProps {
 }
 
 function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
-    const cor = FILTROS.filter(obj => obj.nome === item.category)[0].cor;
-
     const [showMore, setShowMore] = useState(false);
     const [numLines, setNumLines] = useState<number | undefined>(undefined);
     
     useEffect(() => {
-        if(item.img || item.referenceLink?.length) setShowMore(true);
+        if(item.resource || item.referenceLinks?.length) setShowMore(true);
     }, [])
 
     const handleTextLayout = ({ nativeEvent }: any) => {
@@ -39,7 +37,7 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
 
     return(
         <>
-            <View style={[styles.comunicadoContainer, {backgroundColor: cor}]}>
+            <View style={[styles.comunicadoContainer, {backgroundColor: constantColors[item.category]}]}>
                 {isGestorDeMural &&
                     (<TouchableOpacity
                         style={styles.apagarComunicado}
@@ -63,7 +61,7 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
                             <Text style={styles.maisText}>Saiba mais</Text>
                         </TouchableOpacity>)
                     }
-                    <Text style={[styles.textComunicado, styles.date]}>{item.date}</Text>
+                    <Text style={[styles.textComunicado, styles.date]}>{format(new Date(item.createdAt), 'dd/MM/yyyy')}</Text>
                 </View>
                 
             </View>
