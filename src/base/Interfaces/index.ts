@@ -1,4 +1,4 @@
-import { UserPermitions } from "../Enums"
+import { UserPermitions, UserTypes } from "../Enums"
 
 export interface IUser {
     name: String;
@@ -17,10 +17,10 @@ export interface IUserLog {
 
 export interface IUserRegister {
     name: string;
-    type: string;
+    type: UserTypes;
     identification?: string;
     email: string;
-    phone?: string;
+    phoneNumber: string;
     password: string;
 }
 

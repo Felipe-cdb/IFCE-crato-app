@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator()
 
+import { AuthContext } from "../context/auth";
 import SingIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import EditProfile from '../pages/EditProfile';
@@ -10,9 +11,10 @@ import Drawer from './DrawerNavigation';
 
 export default function StackNavigation() {
 
+    const { user, isUserLoaded } = useContext(AuthContext);
   return (
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName={isUserLoaded ? "Drawer" : "Login"}
       >
 
         <Stack.Screen

@@ -3,3 +3,9 @@ export enum UserPermitions{
     MM = 'mural_manager',
     PM = 'permission_manager',
 }
+
+export enum UserTypes{
+    STD = 'student',
+    EMP = 'employee',
+    EXT = 'external ',
+}
