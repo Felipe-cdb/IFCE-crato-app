@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         marginTop: 25,
         alignSelf: 'flex-start',
         marginLeft: 30,
-        marginBottom: 35,
+        marginBottom: 40,
     },
 
     //-------------------------Botões-------------------------
@@ -76,6 +76,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginHorizontal: 20,
         marginBottom: 15,
+    },
+
+    ButtonGR: {
+        flexDirection: 'row',
+        justifyContent: "center",
+        marginBottom: 40,
     },
 
 });
