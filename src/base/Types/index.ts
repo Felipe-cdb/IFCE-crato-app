@@ -5,13 +5,21 @@ export type Filters = {
 }
 
 export type Item = {
-    id: number;
+    id: string;
     title: string;
     contents: string;
-    img?: string;
-    referenceLink?: string[];
-    date: string;
+    resource?: Resource
+    referenceLinks?: string[];
+    createdAt: string;
     category: string;
+    author: string | User;
+
+}
+
+export type Resource = {
+    secure_url: string;
+    resource_type: string;
+    etag: string;
 }
 
 export type User = {
@@ -23,3 +31,4 @@ export type User = {
     senha: string;
     confirmeSenha: string;
 }
+

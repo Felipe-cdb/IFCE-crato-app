@@ -78,9 +78,8 @@ function DrawerNavigation() {
                         )
                     }}
                 />
-                {/* Abaixo estou colocando a permisão GM para não ficar alterando os de muitos arquivos, 
-                por favor alterar para GR após os testes */}
-                {user.permicoes.includes(UserPermitions.GM) &&
+                
+                {user.permicoes.includes(UserPermitions.RM) &&
                     <Drawer.Screen
                         name="Formulários do Refeitório"
                         component={ListRefectoryForms}
@@ -95,9 +94,8 @@ function DrawerNavigation() {
                         }}
                     />
                 }
-                {/* Abaixo estou colocando a permisão GM para não ficar alterando os de muitos arquivos, 
-                por favor alterar para GR após os testes */}
-                {user.permicoes.includes(UserPermitions.GM) &&
+                
+                {user.permicoes.includes(UserPermitions.RM) &&
                     <Drawer.Screen
                         name="Relatório do Refeitório"
                         component={RefectoryReport}

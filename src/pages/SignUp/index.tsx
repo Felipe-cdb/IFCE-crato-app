@@ -1,36 +1,29 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity,
+  KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import FlashMessage, { showMessage, MessageType } from 'react-native-flash-message';
 
 import { AuthContext } from '../../context/auth';
 import { InputGroup, SelectGroup} from '../../components/InputGroup';
 import { ICheckRegister } from '../../base/Interfaces';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles';
+import { UserTypes } from '../../base/Enums';
+import ScreenLoad from '../../components/ScreenLoad';
 
 export default function SingUp() {
 
   const [ativa, setAtiva] = useState(true);
-  const [user, setUser] = useState<ICheckRegister>({} as ICheckRegister);
-  const { aviso,signUp } = useContext(AuthContext);
+  const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
+  const [load, setLoad] = useState<boolean>(false);
+
+  const { signUp } = useContext(AuthContext);
   const navigation = useNavigation<DrawerNavigationProp<any>>()
 
   const cadastrar = () => {
-    if ((!user.name?.trim() || !user.type?.trim() || !user.email?.trim() || !user.password?.trim() || !user.confirmPassword.trim())
-      || (user.type == 'Aluno' || user.type == 'Servidor') && !user.identification?.trim())
-      {
-        aviso('Preencha todos os campos com *', 'danger');
-        return;
-      }
-    
-    if (user.password != user.confirmPassword) {
-      aviso('A senha e senha de confirmação não são as mesmas!', 'warning');
-      return;
-    }
-
-    signUp(user);
+    setLoad(true);
+    signUp(user, setLoad);
   }
 
   const setNome = (nome: string) => {
@@ -39,7 +32,7 @@ export default function SingUp() {
     })
   }
   
-  const setCargo = (cargo: string) => {
+  const setCargo = (cargo: UserTypes) => {
     setUser(prevState => {
       return {...prevState, type: cargo}
     })
@@ -59,7 +52,7 @@ export default function SingUp() {
   
   const setCelular = (celular: string) => {
     setUser(prevState => {
-      return {...prevState, phone: celular}
+      return {...prevState, phoneNumber: celular}
     })
   }
   
@@ -75,11 +68,9 @@ export default function SingUp() {
     })
   }
     
-  
-
   useEffect(() => {
-    setAtiva(!(user.type === 'Externo'))
-  }, [user.type])
+    setAtiva(!(user.type === UserTypes.EXT))
+  }, [user.type]);
 
   return (
 
@@ -87,10 +78,11 @@ export default function SingUp() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         enabled style={styles.container}
       >
-        <ScrollView style={styles.scrollContainer}>
+        <ScrollView style={styles.scrollContainer} keyboardShouldPersistTaps={'handled'}>
           <View style={styles.content}>
             <LogoIF />
-            
+
+            <ScreenLoad visivel={load}/>
             <View style={styles.form}>
               <Text style={styles.titleForm}>Cadastro</Text>
               <View style={styles.formGroup}>
@@ -100,10 +92,10 @@ export default function SingUp() {
                     value={user.name}
                     required={true}
                     atualiza={setNome}/>
-                  <SelectGroup label="Cargo" lista={[
-                      { label: "Aluno", value: "Aluno" },
-                      { label: "Servidor", value: "Servidor" },
-                      { label: "Externo", value: "Externo" },
+                  <SelectGroup label="Nível de Acesso" lista={[
+                      { label: "Aluno", value: UserTypes.STD },
+                      { label: "Servidor", value: UserTypes.EMP },
+                      { label: "Externo", value: UserTypes.EXT },
                     ]}
                     required={true}
                     atualiza={setCargo}
@@ -121,9 +113,9 @@ export default function SingUp() {
                     atualiza={setEmail}/>
                   <InputGroup
                     label="Celular"
-                    value={user.phone || ''}
+                    value={user.phoneNumber}
                     atualiza={setCelular}
-                    required={false}
+                    required={true}
                   />
                   <InputGroup
                     label="Senha"

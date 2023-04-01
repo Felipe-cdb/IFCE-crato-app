@@ -1,5 +1,11 @@
-export enum UserPermitions {
-    GM = 'Gestor de Mural',
-    GP = 'Gestor de Permições',
-    GR = 'Gestor de Refeitório',
+export enum UserPermitions{
+    RM = 'refectory_manager',
+    MM = 'mural_manager',
+    PM = 'permission_manager',
+}
+
+export enum UserTypes{
+    STD = 'student',
+    EMP = 'employee',
+    EXT = 'external ',
 }
