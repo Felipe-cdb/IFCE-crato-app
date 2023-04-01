@@ -15,8 +15,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
     },
+    extraButton: {
+        backgroundColor: '#275D8E',
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+    },
     buttonText: {
         color: '#FFFFFF',
+    },
+    iconStyles: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

@@ -10,7 +10,7 @@ import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
 import { EmailRegex, PasswordRegex } from "../base/Regexs";
 import { UserTypes } from "../base/Enums";
 
-interface AuthContextDataProps{
+interface AuthContextDataProps {
     user: IUser;
     isUserLoaded: boolean;
     aviso: (m: string, t: MessageType) => void;
@@ -19,7 +19,7 @@ interface AuthContextDataProps{
     signOut: () => void;
 }
 
-interface AuthProviderProps{
+interface AuthProviderProps {
     children: ReactNode;
 }
 
@@ -32,8 +32,8 @@ const userVoid: IUser = {
 
 export const AuthContext = createContext({} as AuthContextDataProps);
 
-function AuthProvider({ children }: AuthProviderProps){
-    
+function AuthProvider({ children }: AuthProviderProps) {
+
     const [user, setUser] = useState({} as IUser);
     const [isUserLoaded, setIsUserLoaded] = useState<boolean>(false);
     const navigation = useNavigation<any>();
@@ -175,6 +175,7 @@ function AuthProvider({ children }: AuthProviderProps){
             }
         }
     }
+
 
     function signOut(){
         setIsUserLoaded(false);

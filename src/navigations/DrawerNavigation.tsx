@@ -14,61 +14,63 @@ import Home from '../pages/Home';
 import Refectory from '../pages/Refectory';
 import NewCommunicated from '../pages/NewCommunicated';
 import { UserPermitions } from "../base/Enums";
+import ListRefectoryForms from "../pages/ListRefectoryForms";
+import RefectoryReport from "../pages/RefectoryReport";
+import RefectoryForms from "../pages/RefectoryForms";
 
 function DrawerNavigation() {
 
     const { user } = useContext(AuthContext);
 
-  return (
-    <>
-        <StatusBar backgroundColor={'#19882C'} barStyle={"light-content"} translucent/>
+    return (
+        <>
+            <StatusBar backgroundColor={'#19882C'} barStyle={"light-content"} translucent />
 
-        <Drawer.Navigator
-            initialRouteName="Mural"
-            screenOptions={{
-                drawerLabelStyle: stylesNavigation.fontDrawer
-            }}
-            useLegacyImplementation
-            drawerContent={(props) => <CustomDrawerContent {...props} />}
-        >
-            <Drawer.Screen
-                name="Mural"
-                component={Home}
-                options={{
-                    headerShown: false,
-                    drawerIcon: ({size}) => (
-                        <Icon name="text-box-multiple-outline"
-                            color="#000"
-                            style={stylesNavigation.icons}
-                        />
-                    )
+            <Drawer.Navigator
+                initialRouteName="Mural"
+                screenOptions={{
+                    drawerLabelStyle: stylesNavigation.fontDrawer
                 }}
-            />
-
-            {user.roles.includes(UserPermitions.MM) &&
+                useLegacyImplementation
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
+            >
                 <Drawer.Screen
-                    name="Novo Comunicado"
-                    component={NewCommunicated}
+                    name="Mural"
+                    component={Home}
                     options={{
                         headerShown: false,
-                        drawerIcon: ({size}) => (
-                            <Icon
-                                name="note-plus"
+                        drawerIcon: ({ size }) => (
+                            <Icon name="text-box-multiple-outline"
                                 color="#000"
                                 style={stylesNavigation.icons}
                             />
                         )
                     }}
                 />
-            }
 
-            {user.roles.includes(UserPermitions.RM) &&
+                {user.permicoes.includes(UserPermitions.GM) &&
+                    <Drawer.Screen
+                        name="Novo Comunicado"
+                        component={NewCommunicated}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) => (
+                                <Icon
+                                    name="note-plus"
+                                    color="#000"
+                                    style={stylesNavigation.icons}
+                                />
+                            )
+                        }}
+                    />
+                }
+
                 <Drawer.Screen
                     name="Refeitório"
                     component={Refectory}
                     options={{
                         headerShown: false,
-                        drawerIcon: ({size}) => (
+                        drawerIcon: ({ size }) => (
                             <Icon name="silverware-fork-knife"
                                 color="#000"
                                 style={stylesNavigation.icons}
@@ -76,17 +78,57 @@ function DrawerNavigation() {
                         )
                     }}
                 />
-            }
-        </Drawer.Navigator>
-    </>
-  );
+                
+                {user.permicoes.includes(UserPermitions.RM) &&
+                    <Drawer.Screen
+                        name="Formulários do Refeitório"
+                        component={ListRefectoryForms}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) => (
+                                <Icon name="clipboard-edit-outline"
+                                    color="#000"
+                                    style={stylesNavigation.icons}
+                                />
+                            )
+                        }}
+                    />
+                }
+                
+                {user.permicoes.includes(UserPermitions.RM) &&
+                    <Drawer.Screen
+                        name="Relatório do Refeitório"
+                        component={RefectoryReport}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) => (
+                                <Icon name="chart-bar"
+                                    color="#000"
+                                    style={stylesNavigation.icons}
+                                />
+                            )
+                        }}
+                    />
+                }
+
+                <Drawer.Screen
+                    name="Dados do Formulário"
+                    component={RefectoryForms}
+                    options={{
+                        headerShown: false,
+                        drawerItemStyle: { display: 'none' },
+                    }}
+                />
+            </Drawer.Navigator>
+        </>
+    );
 }
 
 const stylesNavigation = StyleSheet.create({
     icons: {
         fontSize: RFValue(30),
     },
-    fontDrawer:{
+    fontDrawer: {
         fontSize: RFValue(16),
     }
 });
