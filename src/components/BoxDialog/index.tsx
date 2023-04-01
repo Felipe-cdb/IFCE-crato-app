@@ -1,15 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Modal from 'react-native-modal';
 import { View, Text, Pressable } from 'react-native';
+import { api } from "../../config";
+import { AuthContext } from "../../context/auth";
 
 import styles from "./styles";
 
 type BoxProps = {
     visivel: boolean;
     menosInformacoes: () => void;
+    communiqueId: string;
 }
 
-function BoxDialog({ visivel, menosInformacoes }: BoxProps) {
+function BoxDialog({ visivel, menosInformacoes, communiqueId }: BoxProps) {
+    
+    const { aviso } = useContext(AuthContext);
+
+    const handleDelete = async () =>{
+        try {
+            await api.delete(`communique/${communiqueId}`);
+            aviso('Comunicado removido com sucesso', 'success');
+        } catch (error) {
+            console.log(error);
+            aviso('Falha na exclusão do comunicado', 'danger');
+        }
+
+        menosInformacoes();
+
+    }
     
     return(
         <Modal
@@ -26,7 +44,7 @@ function BoxDialog({ visivel, menosInformacoes }: BoxProps) {
 
                         <View>
                             <Text style={styles.contentsInfo}>
-                                Desja excluir o comunicado?
+                                Confirmar exclusão de comunicado?
                             </Text>
                         </View>
 
@@ -43,7 +61,7 @@ function BoxDialog({ visivel, menosInformacoes }: BoxProps) {
 
                             <Pressable
                                 style={styles.btnOk}
-                                onPress={() => menosInformacoes()}
+                                onPress={handleDelete}
                             >
                                 <Text style={styles.textBtn}>
                                     Sim

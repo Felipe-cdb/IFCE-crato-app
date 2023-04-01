@@ -5,7 +5,7 @@ export type Filters = {
 }
 
 export type Item = {
-    id: number;
+    id: string;
     title: string;
     contents: string;
     resource?: Resource

@@ -1,108 +1,146 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, KeyboardAvoidingView,
   Platform, ScrollView, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import {  useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { api } from '../../config';
+import FormData from 'form-data';
 
 import styles from './styles';
 import Menu from '../../components/Menu';
 import { InputGroup, SelectGroup } from '../../components/InputGroup';
 import LinkList from '../../components/LinkList';
-import { Item } from '../../base/Types';
+import { constantCategories } from '../../base/constants';
+import { AuthContext } from '../../context/auth';
+
+interface ISelectedImage {
+  uri: string,
+  name?: string,
+  type: string,
+}
 
 export default function NewCommunicated() {
 
-  const [comunicado, setComunicado] = useState({} as Omit<Item, "id">);
   const [link, setLink] = useState('');
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
+  const [referenceLinks, setReferenceLinks] = useState<string[]>([]);
+  const { aviso } = useContext(AuthContext);
+  const navigation = useNavigation<DrawerNavigationProp<any>>();
 
+  const [inputValues, setInputValues] = useState({
+    category: 'Notice',
+    title: '',
+    contents: ''
+  })
+
+  const handleInputChange = (input: { name: string; value: string; }) => {
+    const { name, value } = input
+    setInputValues({ ...inputValues, [name]: value })
+  }
   
   useFocusEffect(
     React.useCallback(() => {
-      setComunicado({} as Omit<Item, "id">);
       setLink('');
       setSelectedImage(null);
-      // return () => {};
+      setReferenceLinks([]);
     }, [])
-  );
+  )
 
-  const setAtualizarCategoria = (categoria: string) => {
-    setComunicado(prevState => {
-      return {...prevState, category: categoria}
-    });
-  }
-
-  const setAtualizarTitulo = (titulo: string) => {
-    setComunicado(prevState => {
-      return {...prevState, title: titulo}
-    });
-  }
-
-  const setAtualizarConteudo = (conteudo: string) => {
-    setComunicado(prevState => {
-      return {...prevState, contents: conteudo}
-    });
-  }
-
-  const setAdicionarLink = () => {
-
-    if (!link.trim()) return;
-    
-    let links: string[] = [];
-    if (comunicado.referenceLink?.length) {
-      links.push(...comunicado.referenceLink);
-      links.push(link.replace(/\s/g, ""));
-    } else {
-      links.push(link.replace(/\s/g, ""))
+  const handleAddLink = () => {
+    if(!link) {
+      aviso('Preencha o campo para adicionar referências.', 'warning');
     }
-    
-    setComunicado(prevState => {
-      return {...prevState, referenceLink: links}
-    });
-    
-    setLink('');
+
+    const record = referenceLinks.find((item) => item == link.trim())
+
+    if (record) {
+      aviso('Mesmo link já inserido.', 'warning')
+      return
+    }
+  
+    setReferenceLinks([...referenceLinks, link.trim()])
+    setLink('')
   }
 
-  const setRemoverLink = (indexRemover: number) => {
-    if (!comunicado.referenceLink?.length) return;
-  
-    if (indexRemover === -1) return;
-  
-    const newLinks = [...comunicado.referenceLink];
-    newLinks.splice(indexRemover, 1);
-  
-    setComunicado({ ...comunicado, referenceLink: newLinks });
+  const handleRemoveLink = (link: string) => {
+    const records = referenceLinks.filter((item) => item !== link)
+    setReferenceLinks(records)
+    setLink('')
   }
 
-  const pickImage = async () => {
+  const handleUpload = async () => {
     try {
+      const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (!granted) return;
+
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
         quality: 1,
       });
-      if (!result.canceled && result.assets.length > 0) {
-        setSelectedImage(result.assets[0].uri);
+
+      if (result.canceled) {
+          return;
       }
+
+      const localUri = result.assets[0].uri;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename as string);
+      const type = match ? `image/${match[1]}` : `image`;
+      setSelectedImage({
+        uri: localUri,
+        name: filename,
+        type
+      })
     } catch (error) {
-      console.log('Error picking image', error);
+      aviso('Error ao anexar imagem', 'danger');
     }
   };
+
+  const handleSubmit = async () => {
+    const { title, category, contents } = inputValues;
+    
+    const data = new FormData();
+
+    data.append('category', category)
+    data.append('title', title)
+    data.append('contents', contents)
+    
+    if (selectedImage) {
+      data.append('file', selectedImage)
+    }
+
+    if (referenceLinks.length) {
+      referenceLinks.forEach((link, index) => {
+        data.append(`referenceLinks[${index}]`, link);
+      });
+    }
+
+    
+    try {
+      await api.post('communique', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      aviso('Comunicado criado com sucesso.', 'success');
+      navigation.navigate('Mural');
+    } catch (error: any) {
+      aviso('Falha ao criar comunicado.', 'danger');
+      return
+    }
+  }
 
   const setRemoveImage = () => {
     setSelectedImage(null)
   }
 
-  const criar = () => {
-    console.log(comunicado)
-  }
-
   return (
-
     <View style={styles.container}>
       <Menu />
-
+      
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         enabled style={{flex: 1}}
@@ -117,20 +155,20 @@ export default function NewCommunicated() {
               <SelectGroup
                 label='Categoria'
                 lista={[
-                  { label: "Aviso", value: "Aviso" },
-                  { label: "Evento", value: "Evento" },
-                  { label: "Noicia", value: "Noicia" },
-                  { label: "Palestra", value: "Palestra" }
+                  { label: "Aviso", value: constantCategories['Avisos'] },
+                  { label: "Evento", value: constantCategories['Eventos'] },
+                  { label: "Notícia", value: constantCategories['Notícias'] },
+                  { label: "Palestra", value: constantCategories['Palestras'] }
                 ]}
                 required={true}
-                atualiza={setAtualizarCategoria}
+                atualiza={(value) => handleInputChange({name: 'category', value: value})}
               />
 
               <InputGroup
                 label='Titulo'
-                value={comunicado.title}
+                value={inputValues.title}
                 required={true}
-                atualiza={setAtualizarTitulo}
+                atualiza={(value) => handleInputChange({name: 'title', value: value})}
               />
 
               <View>
@@ -142,11 +180,11 @@ export default function NewCommunicated() {
                         <Icon name='trash-can-outline' color={'#000'} style={styles.iconTrash}/>
                       </TouchableOpacity>
                       <Image
-                        source={{ uri: selectedImage }}
+                        source={{ uri: selectedImage.uri }}
                         style={styles.imagePreview} />
                     </View>
                   ) : 
-                    <TouchableOpacity onPress={pickImage} style={styles.clipContainer}>
+                    <TouchableOpacity onPress={handleUpload} style={styles.clipContainer}>
                       <Icon style={styles.clipIcon} name="paperclip" color="#000"/>
                     </TouchableOpacity>
                   }
@@ -155,8 +193,8 @@ export default function NewCommunicated() {
 
               <InputGroup
                 label="Conteúdo"
-                value={comunicado.contents}
-                atualiza={setAtualizarConteudo}
+                value={inputValues.contents}
+                atualiza={(value) => handleInputChange({name: 'contents', value: value})}
                 required={true}
                 multiline={true}
                 numberLines={5}
@@ -174,15 +212,15 @@ export default function NewCommunicated() {
 
                 <TouchableOpacity
                   style={styles.btnPlus}
-                  onPress={setAdicionarLink}
+                  onPress={handleAddLink}
                 >
                   <Icon style={styles.plus} name='plus-thick' color="#fff"/>
                 </TouchableOpacity>
               </View>
 
               <View>
-                {comunicado.referenceLink?.map((l, i) => (
-                  <LinkList link={l} indexLink={i} key={i} removeLink={setRemoverLink}/>
+                {referenceLinks.map((l, i) => (
+                  <LinkList link={l} indexLink={i} key={i} removeLink={() => handleRemoveLink(l)}/>
                 ))}
               </View>
               
@@ -193,7 +231,7 @@ export default function NewCommunicated() {
             <Text style={styles.textBtn}>Cancelar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => criar()} style={styles.butnCriar}>
+          <TouchableOpacity onPress={handleSubmit} style={styles.butnCriar}>
             <Text style={styles.textBtn}>Criar</Text>
           </TouchableOpacity>
         </View>

@@ -39,30 +39,6 @@ function AuthProvider({ children }: AuthProviderProps){
     const navigation = useNavigation<any>();
 
     useEffect(() => {
-        async function checkTokenAndSetUser() {
-            const userId = await AsyncStorage.getItem('userId');
-            if(userId){
-                try {
-                    const res = await api.get(`/users/${userId}`);
-                    if (res) {
-                        const userResponse = res.data;
-                        setUser({
-                            name: userResponse.name,
-                            email: userResponse.email,
-                            roles: userResponse.roles,
-                            type: userResponse.type,
-                            phoneNumber: userResponse.phoneNumber || undefined
-                        });
-                        setIsUserLoaded(true);
-                        navigation.navigate('Drawer');
-                    };
-                    return;
-                } catch (error: any) {
-                    console.log(error);
-                }
-            }
-        }
-
         async function userInCache() {
             const userId = await AsyncStorage.getItem('userId');
             const tokenLocal = await AsyncStorage.getItem('token');
@@ -70,12 +46,29 @@ function AuthProvider({ children }: AuthProviderProps){
             if(!userId || !tokenLocal){
                 return ;
             }
-            
+
             api.defaults.headers.common['Authorization'] = `Bearer ${tokenLocal}`;
+            try {
+                const res = await api.get(`/users/${userId}`);
+                if (res) {
+                    const userResponse = res.data;
+                    setUser({
+                        name: userResponse.name,
+                        email: userResponse.email,
+                        roles: userResponse.roles,
+                        type: userResponse.type,
+                        phoneNumber: userResponse.phoneNumber || undefined
+                    });
+                    setIsUserLoaded(true);
+                    navigation.navigate('Drawer');
+                };
+                return;
+            } catch (error: any) {
+                console.log(error);
+            }
         }
 
         userInCache();
-        checkTokenAndSetUser();
     }, []);
 
     useEffect(() => {
@@ -169,6 +162,7 @@ function AuthProvider({ children }: AuthProviderProps){
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             setIsUserLoaded(true)
         } catch (error: any) {
+            console.log(error.response.data)
             if (error.response){
                 if (error.response.data.message === "User not found") {
                     aviso("Usuário não encontrado", "warning");

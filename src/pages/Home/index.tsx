@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, RefreshControl } from "react-native";
 import { api } from "../../config";
 
 import { AuthContext } from '../../context/auth';
@@ -21,35 +21,46 @@ interface IMoreInformations {
 
 interface IDeleteComucad {
     exibir: boolean;
-    item: number;
+    item: string;
 }
 
 function Home() {
 
 	const { user } = useContext(AuthContext);
 	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({exibir: false, item: null});
-	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: 0 });
+	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: '' });
 	const [communiques, setCommuniques] = useState<ItemType[]>([])
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+	const [refresh, setRefresh] = useState<boolean>(false)
+
+	const loadCommuniques = async () => {
+		const result = await api.get('/communique')
+		setCommuniques(result.data.list);
+		setRefresh(false);
+	}
+	
+	const findCommuniques = async () => {
+		const result = await api.get(`/communique?categories=${selectedCategories.toString()}`)
+		setCommuniques(result.data.list)
+		setRefresh(false);
+	}
 
 	useEffect(() => {
-		const loadCommuniques = async () => {
-			const result = await api.get('/communique')
-			setCommuniques(result.data.list)
-			console.log(result.data.list)
+		loadCommuniques();
+	} ,[]);
+	
+	const handleScroll = () => {
+		console.log('refresh')
+		setRefresh(true);
+		if (selectedCategories.length){
+			findCommuniques();
+		} else {
+			loadCommuniques();
 		}
-
-		loadCommuniques()
-
-	},[])
-
+	}
+	
 	useEffect(() => {
-		console.log('CATEGORIA: ', selectedCategories)
-		const findCommuniques = async () => {
-			const result = await api.get(`/communique?categories=${selectedCategories.toString()}`)
-			setCommuniques(result.data.list)
-		}
-		findCommuniques()
+		findCommuniques();
 		// Refatorar para evitar muitas requests na api
 	}, [selectedCategories])
 
@@ -77,7 +88,11 @@ function Home() {
 				/>
 			}
 
-			<BoxDialog visivel={deletion.exibir} menosInformacoes={() => setDeletion({exibir: false, item: 0})} />
+			<BoxDialog
+				visivel={deletion.exibir}
+				menosInformacoes={() => setDeletion({exibir: false, item: ''})}
+				communiqueId={deletion.item}
+			/>
 
             <Menu/>
             <View style={styles.filtros}>
@@ -102,6 +117,16 @@ function Home() {
                     data={communiques}
                     renderItem={RenderItem}
                     keyExtractor={(item: ItemType) => item.id.toString()}
+					refreshControl={
+						<RefreshControl
+							refreshing={refresh}
+							onRefresh={() => {
+								setCommuniques([]);
+								handleScroll();
+							}}
+							tintColor='#19882C'
+						/>
+					}
                 />
             </View>
         </View>

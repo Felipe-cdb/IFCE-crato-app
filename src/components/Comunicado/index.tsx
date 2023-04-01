@@ -10,7 +10,7 @@ interface ComunicadoProps {
     item: ItemType;
     exibir: Function;
     isGestorDeMural: boolean;
-    setDeletion: (id: number) => void;
+    setDeletion: (id: string) => void;
 }
 
 function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
@@ -41,7 +41,7 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
                 {isGestorDeMural &&
                     (<TouchableOpacity
                         style={styles.apagarComunicado}
-                        onPress={() => setDeletion(2)}
+                        onPress={() => setDeletion(item.id)}
                     >
                         <Icon name="close" style={styles.apagarIcon} color="#000" />
                     </TouchableOpacity>)
