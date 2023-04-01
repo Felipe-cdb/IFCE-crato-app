@@ -1,5 +1,5 @@
-export enum UserPermitions{
+export enum UserPermitions {
     GM = 'Gestor de Mural',
     GP = 'Gestor de Permições',
-    GR = 'Gestor de Rfeitório',
+    GR = 'Gestor de Refeitório',
 }

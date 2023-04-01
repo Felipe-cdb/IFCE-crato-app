@@ -6,7 +6,7 @@ import { MessageType, showMessage } from 'react-native-flash-message';
 import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
 import { UserPermitions } from '../base/Enums'
 
-interface AuthContextDataProps{
+interface AuthContextDataProps {
     user: IUser;
     isUserLogin: boolean;
     aviso: (m: string, t: MessageType) => void;
@@ -15,7 +15,7 @@ interface AuthContextDataProps{
     signOut: () => void;
 }
 
-interface AuthProviderProps{
+interface AuthProviderProps {
     children: ReactNode;
 }
 
@@ -28,8 +28,8 @@ const userVoid: IUser = {
 
 export const AuthContext = createContext({} as AuthContextDataProps);
 
-function AuthProvider({ children }: AuthProviderProps){
-    
+function AuthProvider({ children }: AuthProviderProps) {
+
     const [user, setUser] = useState({} as IUser);
     const [isUserLogin, setIsUserLogin] = useState<boolean>(false);
     const navigation = useNavigation<StackNavigationProp<any>>();
@@ -46,7 +46,7 @@ function AuthProvider({ children }: AuthProviderProps){
     }
 
     async function signUp(userRegister: ICheckRegister) {
-        
+
     }
 
     async function signIn(userLog: IUserLog) {
@@ -54,7 +54,7 @@ function AuthProvider({ children }: AuthProviderProps){
             aviso('Insira um email válido', 'warning');
             return;
         }
-        
+
         if (!userLog.password.trim()) {
             aviso('Insira uma senha', 'warning');
             return;
@@ -74,13 +74,13 @@ function AuthProvider({ children }: AuthProviderProps){
         setIsUserLogin(true);
     }
 
-    function signOut(){
+    function signOut() {
         setIsUserLogin(false);
         setUser(userVoid);
         navigation.navigate('Login');
     }
 
-    return(
+    return (
         <AuthContext.Provider value={{ signIn, user, isUserLogin, aviso, signUp, signOut }}>
             {children}
         </AuthContext.Provider>

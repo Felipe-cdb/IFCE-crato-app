@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, ScrollView } from "react-native";
+import { AuthContext } from '../../context/auth';
+import { UserPermitions } from "../../base/Enums";
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import Menu from "../../components/Menu";
-import { OpcoesDesejadaCardapio } from '../../components/OpcoesDesejadaCardapio';
+import { RefectoryChoices } from '../../components/RefectoryChoices';
 import { Button } from '../../components/Button';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from "./styles";
 
@@ -19,31 +24,46 @@ const dataFormatada = dia.toString().padStart(2, '0') + '-' + mes.toString().pad
 const dataFormatada2 = dia2.toString().padStart(2, '0') + '-' + mes.toString().padStart(2, '0') + '-' + ano + '  ás 18h';
 const statusForms = true
 
-interface CardapioData {
-    cardapioJanta: string;
-    cardapioLancheNoite: string;
+interface MenuData {
+    menuBreakfast: string;
+    menuLunch: string;
+    menuAfternoonSnack: string;
+    menuDinner: string;
+    menuEveningSnack: string;
 }
 function Refectory() {
+    const { user } = useContext(AuthContext);
+    const navigation = useNavigation<DrawerNavigationProp<any>>();
 
-    // const [cardapioJanta, setCardapioJanta] = useState("");
-    // const [cardapioLancheNoite, setCardapioLancheNoite] = useState("");
-    const [cardapioJanta, setCardapioJanta] = useState("Macarrão ao alho e óleo, bife à parmegiana, suco de uva");
-    const [cardapioLancheNoite, setCardapioLancheNoite] = useState("Sanduíche de presunto e queijo, suco de abacaxi");
+    // const [menuBreakfast, setMenuBreakfast] = useState("");
+    // const [menuLunch, setMenuLunch] = useState("");
+    // const [menuAfternoonSnack, setMenuAfternoonSnack] = useState("");
+    // const [menuDinner, setMenuDinner] = useState("");
+    // const [menuEveningSnack, setMenuEveningSnack] = useState("");
 
-    const [opcaoCafe, setOpcaoCafe] = useState(false);
-    const [opcaoAlmoco, setOpcaoAlmoco] = useState(false);
-    const [opcaoLancheTarde, setOpcaoLancheTarde] = useState(false);
-    const [opcaoJanta, setOpcaoJanta] = useState(false);
-    const [opcaoLancheNoite, setOpcaoLancheNoite] = useState(false);
-    console.log(opcaoCafe, opcaoAlmoco, opcaoLancheTarde, opcaoJanta, opcaoLancheNoite)
+    const [menuBreakfast, setMenuBreakfast] = useState("Café com leite, Bolacha");
+    const [menuLunch, setMenuLunch] = useState("Arroz, Feijão, bife grelhado, suco de Laranja");
+    const [menuAfternoonSnack, setMenuAfternoonSnack] = useState("Sanduíche de presunto e queijo, suco de abacaxi");
+    const [menuDinner, setMenuDinner] = useState("Macarrão ao alho e óleo, bife à parmegiana, suco de uva");
+    const [menuEveningSnack, setMenuEveningSnack] = useState("achocolatado, biscoitos");
+
+    const [choiceBreakfast, setChoiceBreakfast] = useState(false);
+    const [choiceLunch, setChoiceLunch] = useState(false);
+    const [choiceAfternoonSnack, setChoiceAfternoonSnack] = useState(false);
+    const [choiceDinner, setChoiceDinner] = useState(false);
+    const [choiceEveningSnack, setChoiceEveningSnack] = useState(false);
+    console.log(choiceBreakfast, choiceLunch, choiceAfternoonSnack, choiceDinner, choiceEveningSnack)
     // Faz a chamada à API e atualiza o estado com os dados recuperados
     // useEffect(() => {
     //     // Fazer chamada da API e setar os valores dos cardápios nos estados
     //     fetch("http://exemplo.com/cardapio")
     //         .then((response) => response.json())
-    //         .then((data: CardapioData) => {
-    //             setCardapioJanta(data.cardapioJanta);
-    //             setCardapioLancheNoite(data.cardapioLancheNoite);
+    //         .then((data: MenuData) => {
+    //             setMenuBreakfast(data.menuBreakfast);
+    //             setMenuLunch(data.menuLunch);
+    //             setMenuAfternoonSnack(data.menuAfternoonSnack);
+    //             setMenuDinner(data.menuDinner);
+    //             setMenuEveningSnack(data.menuEveningSnack);
     //         })
     //         .catch((error) => console.log(error));
     // }, []);
@@ -76,31 +96,63 @@ function Refectory() {
 
                     <View style={styles.row}>
                         <Text style={styles.subtitle}>
+                            <Text style={{ fontWeight: 'bold' }}>Café da Manhã </Text>
+                            - {menuBreakfast}
+                        </Text>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.subtitle}>
+                            <Text style={{ fontWeight: 'bold' }}>Almoço </Text>
+                            - {menuLunch}
+                        </Text>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.subtitle}>
+                            <Text style={{ fontWeight: 'bold' }}>Lanche da Tarde </Text>
+                            - {menuAfternoonSnack}
+                        </Text>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.subtitle}>
                             <Text style={{ fontWeight: 'bold' }}>Janta </Text>
-                            - {cardapioJanta}
+                            - {menuDinner}
                         </Text>
                     </View>
 
                     <View style={styles.row}>
                         <Text style={styles.subtitle}>
                             <Text style={{ fontWeight: 'bold' }}>Lanche da Noite </Text>
-                            - {cardapioLancheNoite}
+                            - {menuEveningSnack}
                         </Text>
                     </View>
                 </View>
 
                 <View style={styles.SelectOp}>
-                    <OpcoesDesejadaCardapio
-                        onSelectCafe={(selected: boolean) => setOpcaoCafe(selected)}
-                        onSelectAlmoco={(selected: boolean) => setOpcaoAlmoco(selected)}
-                        onSelectLancheTarde={(selected: boolean) => setOpcaoLancheTarde(selected)}
-                        onSelectJanta={(selected: boolean) => setOpcaoJanta(selected)}
-                        onSelectLancheNoite={(selected: boolean) => setOpcaoLancheNoite(selected)}
+                    <RefectoryChoices
+                        onSelectBreakfast={(selected: boolean) => setChoiceBreakfast(selected)}
+                        onSelectLunch={(selected: boolean) => setChoiceLunch(selected)}
+                        onSelectAfternoonSnack={(selected: boolean) => setChoiceAfternoonSnack(selected)}
+                        onSelectDinner={(selected: boolean) => setChoiceDinner(selected)}
+                        onSelectEveningSnack={(selected: boolean) => setChoiceEveningSnack(selected)}
                     />
                 </View>
+                {/* Abaixo estou colocando a permisão GM para não ficar alterando os de muitos arquivos, 
+                por favor alterar para GR após os testes */}
+                {user.permicoes.includes(UserPermitions.GM) &&
+                    <View style={styles.ButtonGR}>
+                        <Button
+                            title="Formulários"
+                            onPress={() => navigation.navigate('Formulários do Refeitório')}
+                            iconName={<Icon name="clipboard-edit-outline" size={25} color="white" />}
+                        />
+                    </View>
+                }
                 <View style={styles.Buttons}>
                     <Button title="Voltar" onPress={() => { }} isBackButton />
-                    <Button title="Salvar" onPress={() => handleButtonPress()} />
+                    <Button title="Enviar" onPress={() => handleButtonPress()} />
                 </View>
             </ScrollView>
         </View>
