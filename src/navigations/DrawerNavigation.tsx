@@ -48,7 +48,7 @@ function DrawerNavigation() {
                     }}
                 />
 
-                {user.permicoes.includes(UserPermitions.GM) &&
+                {user.roles.includes(UserPermitions.MM) &&
                     <Drawer.Screen
                         name="Novo Comunicado"
                         component={NewCommunicated}
@@ -79,7 +79,7 @@ function DrawerNavigation() {
                     }}
                 />
                 
-                {user.permicoes.includes(UserPermitions.RM) &&
+                {user.roles.includes(UserPermitions.RM) &&
                     <Drawer.Screen
                         name="Formulários do Refeitório"
                         component={ListRefectoryForms}
@@ -95,7 +95,7 @@ function DrawerNavigation() {
                     />
                 }
                 
-                {user.permicoes.includes(UserPermitions.RM) &&
+                {user.roles.includes(UserPermitions.RM) &&
                     <Drawer.Screen
                         name="Relatório do Refeitório"
                         component={RefectoryReport}
