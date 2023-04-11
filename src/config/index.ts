@@ -1,7 +1,8 @@
 import axios from 'axios';
+import env from '../EnvironmentVariables';
 
 export const api: any = axios.create({
-  baseURL: 'http://alunoifcecratoapi-env.eba-cgx6xwzd.us-east-1.elasticbeanstalk.com/',
+  baseURL: env.URL_API,
   headers: {
     'Content-Type': 'application/json', 
     'Accept': 'application/json',
