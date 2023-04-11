@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-import { View, ScrollView, RefreshControl } from "react-native";
-import { api } from "../../config";
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import { View, ScrollView } from "react-native";
+import { RefreshControl } from 'react-native-gesture-handler';
 
+import { api } from "../../config";
 import { AuthContext } from '../../context/auth';
 import Menu from './../../components/Menu';
 import Filtros from "../../components/Filters";
@@ -31,38 +32,41 @@ function Home() {
 	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: '' });
 	const [communiques, setCommuniques] = useState<ItemType[]>([])
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-	const [refresh, setRefresh] = useState<boolean>(false)
-
-	const loadCommuniques = async () => {
-		const result = await api.get('/communique')
-		setCommuniques(result.data.list);
-		setRefresh(false);
+	const [refreshing, setRefreshing] = useState<boolean>(false)
+	
+	const loadCommuniques = () => {
+		api.get('/communique')
+		.then((res: any) => {
+			setCommuniques(res.data.list);
+			setRefreshing(false);
+		})
+		.catch((error: any) => {
+			setRefreshing(false);
+		})
 	}
 	
-	const findCommuniques = async () => {
-		const result = await api.get(`/communique?categories=${selectedCategories.toString()}`)
-		setCommuniques(result.data.list)
-		setRefresh(false);
+	const findCommuniques = () => {
+		api.get(`/communique?categories=${selectedCategories.toString()}`)
+		.then((res: any) => {
+			setCommuniques(res.data.list);
+			setRefreshing(false);
+		})
+		.catch((error: any) => {
+			setRefreshing(false);
+		})
 	}
-
+	
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		if(selectedCategories.length) findCommuniques();
+		else loadCommuniques();
+  	}, [selectedCategories, refreshing]);
+	
+	
 	useEffect(() => {
-		loadCommuniques();
-	} ,[]);
-	
-	const handleScroll = () => {
-		console.log('refresh')
-		setRefresh(true);
-		if (selectedCategories.length){
-			findCommuniques();
-		} else {
-			loadCommuniques();
-		}
-	}
-	
-	useEffect(() => {
-		findCommuniques();
-		// Refatorar para evitar muitas requests na api
-	}, [selectedCategories])
+		if(selectedCategories.length) findCommuniques();
+		else loadCommuniques();
+	}, [refreshing, selectedCategories])
 
     const RenderItem = ({ item }: {item: ItemType}) => {
         return(
@@ -74,6 +78,12 @@ function Home() {
 					isGestorDeMural={user.roles.includes(UserPermitions.MM)}
 				/>
 			</View>
+		)
+	}
+
+	const ItemSeparatorComponent = () => {
+        return(
+            <View style={styles.lineSeparator}/>
 		)
 	}
 
@@ -101,34 +111,28 @@ function Home() {
                     centerContent
                     contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}}
                 >
+					
                     {FILTROS.map(item => (
                         <Filtros
-						key={item.id}
-						selectedCategories={selectedCategories}
-						setSelectedCategories={setSelectedCategories}
-						item={item}/>
+							key={item.key}
+							selectedCategories={selectedCategories}
+							setSelectedCategories={setSelectedCategories}
+							item={item.label}
+						/>
                     ))}
                 </ScrollView>
             </View>
 
-            <View style={styles.contentComunicados}>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    data={communiques}
-                    renderItem={RenderItem}
-                    keyExtractor={(item: ItemType) => item.id.toString()}
-					refreshControl={
-						<RefreshControl
-							refreshing={refresh}
-							onRefresh={() => {
-								setCommuniques([]);
-								handleScroll();
-							}}
-							tintColor='#19882C'
-						/>
-					}
-                />
-            </View>
+			<View style={[styles.contentComunicados, {flex: 1}]}>
+				<FlatList
+					showsVerticalScrollIndicator={false}
+					ItemSeparatorComponent={ItemSeparatorComponent}
+					data={communiques}
+					renderItem={RenderItem}					
+					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={'#19882C'}/>}
+					keyExtractor={(item: ItemType) => item.id.toString()}
+				/>
+			</View>
         </View>
     )
 }

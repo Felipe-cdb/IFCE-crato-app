@@ -1,23 +1,19 @@
 const FILTROS = [
     {
-        id: 1,
-        nome: 'Palestras',
-        cor: '#D3FFD3',
+        key: 1,
+        label: 'Palestras',
     },
     {
-        id: 2,
-        nome: 'Notícias',
-        cor: '#FDE4E4',
+        key: 2,
+        label: 'Notícias',
     },
     {
-        id: 3,
-        nome: 'Eventos',
-        cor: '#CDEDF4',
+        key: 3,
+        label: 'Eventos',
     },
     {
-        id: 4,
-        nome: 'Avisos',
-        cor: '#FFF1BF',
+        key: 4,
+        label: 'Avisos',
     },
 
 ];

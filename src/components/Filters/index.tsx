@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Text } from "react-native";
-import { constantCategories } from "../../base/constants";
-import { Filters as FiltersType } from '../../base/Types'
+import { constantCategories, constantColors } from "../../base/constants"
 
 import styles from "./styles";
 
 type FiltersProps = {
-    item: FiltersType
+    item: string,
     selectedCategories: string[]
     setSelectedCategories: (value: string[]) => any
 }
@@ -18,7 +17,7 @@ function Filtros({ item, setSelectedCategories, selectedCategories }: FiltersPro
 
     useEffect(() => {
         if (ativo) {
-            setBgc({ backgroundColor: item.cor });
+            setBgc({ backgroundColor: constantColors[constantCategories[item]] });
             return;
         }
 
@@ -31,23 +30,18 @@ function Filtros({ item, setSelectedCategories, selectedCategories }: FiltersPro
     const handlePress = (value: string) => {
         setAtivo(!ativo)
 
-        const formatedCategory = formatCategories(value)
-        const alreadyExists = selectedCategories.find((item) => item == formatedCategory)
+        const alreadyExists = selectedCategories.find((category) => category == constantCategories[value])
         
         if(!alreadyExists) {
-            setSelectedCategories([...selectedCategories, formatedCategory])
+            setSelectedCategories([...selectedCategories, constantCategories[value]])
         } else {
-            setSelectedCategories(selectedCategories.filter((item) => item != formatedCategory))
+            setSelectedCategories(selectedCategories.filter((item) => item != constantCategories[value]))
         }
     }
 
-    const formatCategories = (category: string): string => {
-        return constantCategories[category]
-    }
-
     return (
-        <TouchableOpacity onPress={() => handlePress(item.nome)} style={[styles.btnFiltro, bgc]}>
-            <Text style={styles.labelFiltro}>{item.nome}</Text>
+        <TouchableOpacity onPress={() => handlePress(item)} style={[styles.btnFiltro, bgc]}>
+            <Text style={styles.labelFiltro}>{item}</Text>
         </TouchableOpacity>
     )
 };

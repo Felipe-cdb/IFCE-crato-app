@@ -10,6 +10,7 @@ type BoxProps = {
     visivel: boolean;
     menosInformacoes: () => void;
     communiqueId: string;
+    // refreshing: Function
 }
 
 function BoxDialog({ visivel, menosInformacoes, communiqueId }: BoxProps) {

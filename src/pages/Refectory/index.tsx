@@ -141,7 +141,7 @@ function Refectory() {
                 </View>
                 {/* Abaixo estou colocando a permisão GM para não ficar alterando os de muitos arquivos, 
                 por favor alterar para GR após os testes */}
-                {user.permicoes.includes(UserPermitions.GM) &&
+                {user.roles.includes(UserPermitions.RM) &&
                     <View style={styles.ButtonGR}>
                         <Button
                             title="Formulários"

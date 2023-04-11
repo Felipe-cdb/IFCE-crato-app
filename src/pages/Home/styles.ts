@@ -4,32 +4,31 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
         alignItems: "center",
     },
 
     filtros: {
         width: '90%',
-
-        marginTop: 15,
-
+        marginTop: RFValue(16),
         borderBottomWidth: 1,
         borderBottomColor: '#19882C',
-
-        paddingBottom: 18
+        paddingBottom: RFValue(8),
     },
 
     contentComunicados: {
-        width: '90%',
-        flex: 1,
-        flexDirection: "column",
+        height: '100%',
+        width: '90%'
+    },
+
+    lineSeparator: {
+        width: '100%',
+        borderTopWidth: 1.5,
+        borderTopColor: '#19882C'
     },
 
     cardComponent: {
-        marginBottom: RFValue(16),
-        paddingTop: RFValue(16),
-        borderTopWidth: 1,
-        borderTopColor: '#19882C'
+        marginBottom: RFValue(8),
+        paddingTop: RFValue(8)
     }
 });
 
