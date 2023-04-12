@@ -1,18 +1,17 @@
 import React, { createContext, ReactNode, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from '@react-navigation/stack'
 import { MessageType, showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { api } from "../config";
 import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
-// import { UserPermitions } from '../base/Enums'
 import { EmailRegex, PasswordRegex } from "../base/Regexs";
 import { UserTypes } from "../base/Enums";
 
 interface AuthContextDataProps {
     user: IUser;
     isUserLoaded: boolean;
+    loading: boolean;
     aviso: (m: string, t: MessageType) => void;
     signIn: (user: IUserLog) => void;
     signUp: (user: ICheckRegister, finish: Function) => void;
@@ -36,6 +35,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     const [user, setUser] = useState({} as IUser);
     const [isUserLoaded, setIsUserLoaded] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation<any>();
 
     useEffect(() => {
@@ -44,6 +44,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             const tokenLocal = await AsyncStorage.getItem('token');
             
             if(!userId || !tokenLocal){
+                setLoading(false);
                 return ;
             }
 
@@ -60,23 +61,17 @@ function AuthProvider({ children }: AuthProviderProps) {
                         phoneNumber: userResponse.phoneNumber || undefined
                     });
                     setIsUserLoaded(true);
-                    navigation.navigate('Drawer');
                 };
+                setLoading(false);
+
                 return;
             } catch (error: any) {
-                console.log(error);
+                setLoading(false);
             }
         }
 
         userInCache();
     }, []);
-
-    useEffect(() => {
-
-        if(isUserLoaded) navigation.navigate('Drawer');
-        
-    }, [isUserLoaded]);
-
 
     const aviso = (mensagem: string, tipo: MessageType) => {
         showMessage({
@@ -160,9 +155,10 @@ function AuthProvider({ children }: AuthProviderProps) {
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-            setIsUserLoaded(true)
+            setIsUserLoaded(true);
+            setLoading(false);
         } catch (error: any) {
-            console.log(error.response.data)
+            setLoading(false);
             if (error.response){
                 if (error.response.data.message === "User not found") {
                     aviso("Usuário não encontrado", "warning");
@@ -179,13 +175,13 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     function signOut(){
         setIsUserLoaded(false);
+        setLoading(false);
         setUser(userVoid);
         AsyncStorage.clear();
-        navigation.navigate('Login');
     }
 
     return(
-        <AuthContext.Provider value={{ signIn, user, isUserLoaded, aviso, signUp, signOut }}>
+        <AuthContext.Provider value={{ signIn, loading, user, isUserLoaded, aviso, signUp, signOut }}>
             {children}
         </AuthContext.Provider>
     )

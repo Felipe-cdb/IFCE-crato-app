@@ -32,7 +32,7 @@ function Home() {
 	const [deletion, setDeletion] = useState<IDeleteComucad>({ exibir: false, item: '' });
 	const [communiques, setCommuniques] = useState<ItemType[]>([])
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-	const [refreshing, setRefreshing] = useState<boolean>(false)
+	const [refreshing, setRefreshing] = useState<boolean>(true)
 	
 	const loadCommuniques = () => {
 		api.get('/communique')
@@ -129,7 +129,13 @@ function Home() {
 					ItemSeparatorComponent={ItemSeparatorComponent}
 					data={communiques}
 					renderItem={RenderItem}					
-					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={'#19882C'}/>}
+					refreshControl={
+						<RefreshControl
+							refreshing={refreshing}
+							onRefresh={onRefresh}
+							colors={['#19882C']}
+							tintColor={'#19882C'}
+						/>}
 					keyExtractor={(item: ItemType) => item.id.toString()}
 				/>
 			</View>
