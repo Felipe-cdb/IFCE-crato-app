@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import { View, ScrollView } from "react-native";
-import { RefreshControl } from 'react-native-gesture-handler';
+import { RefreshControl, FlatList } from 'react-native-gesture-handler';
 
 import { api } from "../../config";
 import { AuthContext } from '../../context/auth';
@@ -8,7 +8,6 @@ import Menu from './../../components/Menu';
 import Filtros from "../../components/Filters";
 import styles from "./styles";
 import FILTROS from "../../base/FILTROS";
-import { FlatList } from "react-native-gesture-handler";
 import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MoreInfo";
 import { UserPermitions } from "../../base/Enums";

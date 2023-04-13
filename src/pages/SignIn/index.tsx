@@ -61,17 +61,22 @@ export default function Login() {
               style={styles.inputLog}
               value={email}
               onChangeText={setEmail}
+              keyboardType='email-address'
+              textContentType='emailAddress'
+              autoCapitalize='none'
+              autoComplete='email'
               placeholder='Email'
             />
           </View>
         <View style={styles.contntInpuPass}>
             <TextInput
-            style={styles.inputLog}
-            value={senha}
-            secureTextEntry={visible}
-            textContentType='password'
-            onChangeText={setSenha}
-            placeholder='Senha'
+              style={styles.inputLog}
+              value={senha}
+              secureTextEntry={visible}
+              textContentType='password'
+              autoCapitalize='none'
+              onChangeText={setSenha}
+              placeholder='Senha'
             />
             <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
               {
