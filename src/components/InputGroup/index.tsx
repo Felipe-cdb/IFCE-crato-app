@@ -8,7 +8,6 @@ interface IInputGroupProps {
     label: string;
     pass?: boolean;
     required: boolean;
-    editavel?: boolean;
     numberLines?: number;
     multiline?: boolean;
     value: string;
@@ -21,7 +20,7 @@ interface ISelectGroupProps {
     lista: Item[];
 }
 
-export const InputGroup = ({ label, value, pass, required, editavel, atualiza, multiline, numberLines }: IInputGroupProps) => {
+export const InputGroup = ({ label, value, pass, required, atualiza, multiline, numberLines }: IInputGroupProps) => {
 
     const [borda, setBorda] = useState({});
 
@@ -58,12 +57,9 @@ export const InputGroup = ({ label, value, pass, required, editavel, atualiza, m
                 ?<TextInput
                     onEndEditing={() => fimEntrada()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, 
-                        editavel == true || editavel == undefined ? borda : {}
-                    ]}
+                    style={styles.inputEntry}
                     secureTextEntry={true}
                     textContentType='password'
-                    editable={editavel}
                     value={value}
                 />
                 :<TextInput
@@ -71,10 +67,7 @@ export const InputGroup = ({ label, value, pass, required, editavel, atualiza, m
                     numberOfLines={numberLines}
                     onEndEditing={() => fimEntrada()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, 
-                        editavel == true || editavel == undefined ? borda : {}
-                    ]}
-                    editable={editavel}
+                    style={styles.inputEntry}
                     value={value}
                 />
             }

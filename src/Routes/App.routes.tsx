@@ -36,7 +36,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             component={Home}
             options={{
                 headerShown: false,
-                drawerIcon: ({ size }) => (
+                drawerIcon: () => (
                     <Icon name="text-box-multiple-outline"
                         color="#000"
                         style={stylesNavigation.icons}
@@ -50,7 +50,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             component={NewCommunicated}
             options={{
                 headerShown: false,
-                drawerIcon: ({ size }) => (
+                drawerIcon: () => (
                     <Icon
                         name="note-plus"
                         color="#000"
@@ -65,7 +65,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             component={Refectory}
             options={{
                 headerShown: false,
-                drawerIcon: ({ size }) => (
+                drawerIcon: () => (
                     <Icon name="silverware-fork-knife"
                         color="#000"
                         style={stylesNavigation.icons}
@@ -79,7 +79,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             component={ListRefectoryForms}
             options={{
                 headerShown: false,
-                drawerIcon: ({ size }) => (
+                drawerIcon: () => (
                     <Icon name="clipboard-edit-outline"
                         color="#000"
                         style={stylesNavigation.icons}
@@ -93,7 +93,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             component={RefectoryReport}
             options={{
                 headerShown: false,
-                drawerIcon: ({ size }) => (
+                drawerIcon: () => (
                     <Icon name="chart-bar"
                         color="#000"
                         style={stylesNavigation.icons}

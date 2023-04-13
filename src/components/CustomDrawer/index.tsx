@@ -11,7 +11,7 @@ import styles from "./styles";
 
 const CustomDrawerContent = (props: any) => {
 
-    const { signOut } = useContext(AuthContext);
+    const { signOut, isUserLoaded } = useContext(AuthContext);
 
     function sair(){
         signOut();
@@ -33,7 +33,7 @@ const CustomDrawerContent = (props: any) => {
                 <DrawerItemList {...props} />
             </DrawerContentScrollView>
 
-            <View style={styles.footerDrawer}>
+            {isUserLoaded && <View style={styles.footerDrawer}>
                 <TouchableOpacity onPress={() => props.navigation.navigate('EditProfile')} style={styles.contentExit}>
                     <Icon name="account-cog-outline" color="#000" style={styles.icons}/>
                     <Text style={styles.textExit}>
@@ -49,7 +49,7 @@ const CustomDrawerContent = (props: any) => {
                         Sair
                     </Text>
                 </TouchableOpacity>
-            </View>
+            </View>}
 
         </View>
     );

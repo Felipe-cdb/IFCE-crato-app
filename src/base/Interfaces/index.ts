@@ -17,11 +17,12 @@ export interface IUserLog {
 
 export interface IUserRegister {
     name: string;
-    type: UserTypes;
-    identification?: string;
     email: string;
-    phoneNumber: string;
     password: string;
+    phoneNumber?: string;
+    identification: string;
+    roles: UserPermitions[];
+    type: UserTypes;
 }
 
 export interface ICheckRegister extends IUserRegister {

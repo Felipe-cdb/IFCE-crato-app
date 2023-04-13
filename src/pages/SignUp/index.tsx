@@ -14,7 +14,6 @@ import ScreenLoad from '../../components/ScreenLoad';
 
 export default function SingUp() {
 
-  const [ativa, setAtiva] = useState(true);
   const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
   const [load, setLoad] = useState<boolean>(false);
 
@@ -67,10 +66,6 @@ export default function SingUp() {
       return {...prevState, confirmPassword: confirmeSenha}
     })
   }
-    
-  useEffect(() => {
-    setAtiva(!(user.type === UserTypes.EXT))
-  }, [user.type]);
 
   return (
 
@@ -95,7 +90,6 @@ export default function SingUp() {
                   <SelectGroup label="Nível de Acesso" lista={[
                       { label: "Aluno", value: UserTypes.STD },
                       { label: "Servidor", value: UserTypes.EMP },
-                      { label: "Externo", value: UserTypes.EXT },
                     ]}
                     required={true}
                     atualiza={setCargo}
@@ -103,7 +97,6 @@ export default function SingUp() {
                   <InputGroup
                     label="Matrícula/SIAPE"
                     value={user.identification || ''}
-                    editavel={ativa}
                     required={true}
                     atualiza={setIdentificacao}/>
                   <InputGroup
@@ -113,7 +106,7 @@ export default function SingUp() {
                     atualiza={setEmail}/>
                   <InputGroup
                     label="Celular"
-                    value={user.phoneNumber}
+                    value={user.phoneNumber || ''}
                     atualiza={setCelular}
                     required={true}
                   />

@@ -9,8 +9,8 @@ import styles from "./styles";
 interface ComunicadoProps {
     item: ItemType;
     exibir: Function;
-    isGestorDeMural: boolean;
-    setDeletion: (id: string) => void;
+    isGestorDeMural?: boolean;
+    setDeletion?: (id: string) => void;
 }
 
 function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
@@ -38,7 +38,7 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
     return(
         <>
             <View style={[styles.comunicadoContainer, {backgroundColor: constantColors[item.category]}]}>
-                {isGestorDeMural &&
+                {(isGestorDeMural && setDeletion) &&
                     (<TouchableOpacity
                         style={styles.apagarComunicado}
                         onPress={() => setDeletion(item.id)}

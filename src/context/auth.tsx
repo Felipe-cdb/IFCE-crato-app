@@ -86,8 +86,8 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     async function signUp(userRegister: ICheckRegister, finish: Function) {
         if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
-        || !userRegister.confirmPassword.trim() || !userRegister.phoneNumber.trim())
-        || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification?.trim())
+        || !userRegister.confirmPassword.trim())
+        || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
         {
             aviso('Preencha todos os campos com *', 'danger');
             finish(false);
@@ -104,9 +104,10 @@ function AuthProvider({ children }: AuthProviderProps) {
             name: userRegister.name,
             email: userRegister.email,
             password: userRegister.password,
-            phoneNumber: userRegister.phoneNumber,
-            siap: userRegister.identification || undefined,
-            roles: [],
+            phoneNumber: userRegister.phoneNumber || undefined,
+            siap: userRegister.type == UserTypes.EMP ? userRegister.identification : undefined,
+            registration: userRegister.type == UserTypes.STD ? userRegister.identification : undefined,
+            roles: userRegister.roles.length || [],
             type: userRegister.type,
         }
         console.log('api')

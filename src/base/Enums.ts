@@ -7,5 +7,4 @@ export enum UserPermitions{
 export enum UserTypes{
     STD = 'student',
     EMP = 'employee',
-    EXT = 'external ',
 }
