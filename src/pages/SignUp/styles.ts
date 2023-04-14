@@ -66,7 +66,60 @@ const styles = StyleSheet.create({
     textBtn: {
         fontSize: RFValue(16),
         color: "#fff"
+    },
+
+    // Validation Code
+    containerBack: {
+        width: '100%',
+        paddingVertical: RFValue(8)
+    },
+
+    iconBack: {
+        fontSize: RFValue(32),
+        color: '#000'
+    },
+
+    contentValidation: {
+        marginTop: RFValue(56)
+    },
+
+    titleValidation: {
+        fontSize: RFValue(24),
+        fontWeight: 'bold'
+    },
+
+    infosValidation: {
+        marginTop: RFValue(32)
+    },
+
+    infoText: {
+        fontSize: RFValue(16)
+    },
+
+    infoMail: {
+        fontSize: RFValue(16),
+        fontWeight: 'bold'
+    },
+
+    contentCode: {
+        marginTop: RFValue(16)
+    },
+
+    optionsCode: {
+        marginTop: RFValue(24),
+        alignItems: 'center'
+    },
+
+    btnNewCode: {
+        marginTop: RFValue(16),
+    },
+
+    textBtnCode: {
+        fontSize: RFValue(16),
+        color: "#407CFF",
+        textDecorationLine: "underline",
     }
+
 });
 
 export default styles;
