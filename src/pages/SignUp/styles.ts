@@ -118,8 +118,50 @@ const styles = StyleSheet.create({
         fontSize: RFValue(16),
         color: "#407CFF",
         textDecorationLine: "underline",
-    }
+    },
 
+    // Sucess Validation
+    containerSucess: {
+        flex: 1,
+        marginTop: '15%',
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+
+    contetSucess: {
+        width: '100%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        marginBottom: '30%'
+    },
+    
+    titleSucess: {
+        fontSize: RFValue(24),
+        fontWeight: 'bold'
+    },
+    
+    textSucess: {
+        width: '87%',
+        marginTop: RFValue(8),
+        fontSize: RFValue(16)
+    },
+
+    btnContinue: {
+        borderWidth: 2,
+        marginTop: RFValue(40),
+        paddingVertical: RFValue(16),
+        borderColor: '#696969',
+        width: '100%',
+        alignSelf: "center",
+        alignItems: "center",
+        borderRadius: RFValue(8)
+    },
+
+    textContinue: {
+        fontSize: RFValue(16),
+        fontWeight: 'bold'
+    }
 });
 
 export default styles;

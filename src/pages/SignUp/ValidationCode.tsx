@@ -15,26 +15,32 @@ const ValidationCode = () => {
     const navigation = useNavigation<StackNavigationProp<any>>();
 
     useEffect(() => {
-        if (code.includes('0')) {
-            showMessage({
-                message: 'O código de verificação inserido é inválido. Por favor, verifique o código enviado para o seu e-mail e tente novamente.',
-                type: 'warning',
-                autoHide: true,
-                duration: 4000,
-                floating: true,
-                statusBarHeight: StatusBar.currentHeight,
-                style: {
-                    width: '90%',
-                    marginVertical: '5%',
-                    borderRadius: 8,
-                    alignSelf: "center"
-                }
-            });
+        function completeCode(){
+            if (code.includes('0')) {
+                showMessage({
+                    message: 'O código de verificação inserido é inválido. Por favor, verifique o código enviado para o seu e-mail e tente novamente.',
+                    type: 'warning',
+                    autoHide: true,
+                    duration: 4000,
+                    floating: true,
+                    statusBarHeight: StatusBar.currentHeight,
+                    style: {
+                        width: '90%',
+                        marginVertical: '5%',
+                        borderRadius: 8,
+                        alignSelf: "center"
+                    }
+                });
 
-            setCode('');
-        } else {
-            console.log(code)
+                setCode('');
+                return;
+            }
+
+            navigation.navigate('sucess');
+            return;
         }
+
+        completeCode();
     }, [code])
 
     const handleCreateNewPass = () => {

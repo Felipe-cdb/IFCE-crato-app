@@ -53,7 +53,7 @@ export default function Login() {
       <LogoIF/>
 
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps={'handled'}>
-        <Text style={styles.titleForm}>IFCE-Crato-Estudante</Text>
+        <Text style={styles.titleForm}>IFCE Crato Aluno</Text>
           
         <View style={styles.contenteForm}>
           <View style={styles.contntInpuPass}>

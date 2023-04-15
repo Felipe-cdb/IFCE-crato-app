@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ValidationCode from './ValidationCode';
 import CreateAccount from './CreateAccount';
+import SucessValidation from './SucessValidation';
 
 const signUpStak = createStackNavigator();
 
@@ -23,6 +24,14 @@ export default function SignUp() {
       <signUpStak.Screen
         name='validation'
         component={ValidationCode}
+        options={{
+          headerShown: false
+        }}
+      />
+      
+      <signUpStak.Screen
+        name='sucess'
+        component={SucessValidation}
         options={{
           headerShown: false
         }}
