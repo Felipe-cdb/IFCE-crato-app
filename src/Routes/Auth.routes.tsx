@@ -42,6 +42,7 @@ const AuthRoutes = () => (<>
             component={SingIn}
             options={{
                 headerShown: false,
+                swipeEnabled: false,
                 drawerIcon: () => (
                     <Icon name="login"
                         color="#000"
@@ -56,6 +57,7 @@ const AuthRoutes = () => (<>
             component={SignUp}
             options={{
                 headerShown: false,
+                swipeEnabled: false,
                 drawerIcon: () => (
                     <Icon name="account-plus-outline"
                         color="#000"

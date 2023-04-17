@@ -1,31 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TextInput, View, StyleSheet,
     NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
 interface ICodeInputProps {
-    valueCode: string;
-    onChange: (code: string) => any;
+    code: string;
+    setCode: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CodeInput = ({ onChange, valueCode }: ICodeInputProps) => {
-  const [code, setCode] = useState(valueCode);
+const CodeInput = ({ setCode, code }: ICodeInputProps) => {
+
+    const [inputIndex, setInputIndex] = useState<number>();
+    useEffect(() => {
+        if (!code.trim()) codeInputRefs[0].current?.focus();
+    }, [code])
   const codeInputRefs = [
     useRef<TextInput>(null),
     useRef<TextInput>(null),
     useRef<TextInput>(null),
     useRef<TextInput>(null),
   ];
-
-  useEffect(() => {
-    if (valueCode === '') {
-        setCode('')
-        codeInputRefs[0].current?.focus();
-    }
-  }, [valueCode])
-
-  useEffect(() => {
-    if(code.length==4) onChange(code);
-  }, [code]);
 
   const handleFocus = (index: number) => {
     if (index > code.split('').length){
@@ -34,7 +27,6 @@ const CodeInput = ({ onChange, valueCode }: ICodeInputProps) => {
   }
 
   const handleCodeChange = (value: string, index: number) => {
-    
     setCode((prevCode) => {
         const newCode = prevCode.split('');
         newCode[index] = value;
@@ -45,10 +37,6 @@ const CodeInput = ({ onChange, valueCode }: ICodeInputProps) => {
         codeInputRefs[index + 1].current?.focus();
     }
 
-    if (value && index === 3) {
-        codeInputRefs[index].current?.focus();
-    }
-
     if (index > 0 && !value && !code[index - 1]) {
         codeInputRefs[index - 2].current?.focus();
     }
@@ -56,11 +44,9 @@ const CodeInput = ({ onChange, valueCode }: ICodeInputProps) => {
 
   const handleCodeKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
     const key = event.nativeEvent.key;
-    if (index < 3 && key !== 'Backspace' && (
-        key == '0' || key == '1' || key == '2' || key == '3' || key == '4' ||
-        key == '5' || key == '6' || key == '7' || key == '8' || key == '9'
-    )) {
-        handleCodeChange(key, index+1)
+    const keyboards = ['0','1','2','3','4','5','6','7','8','9']
+    if (index < 3 && keyboards.includes(key)){
+        if(code[index]) handleCodeChange(key, index)
     }
 
     if (key === 'Backspace' && index > 0) {
@@ -81,7 +67,6 @@ const CodeInput = ({ onChange, valueCode }: ICodeInputProps) => {
                     onChangeText={(value) => handleCodeChange(value, index)}
                     onKeyPress={(event) => handleCodeKeyPress(event, index)}
                     keyboardType="number-pad"
-                    autoFocus={index === 0}
                     onFocus={() => handleFocus(index)}
                 />
             ))}

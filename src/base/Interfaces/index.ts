@@ -21,7 +21,6 @@ export interface IUserRegister {
     password: string;
     phoneNumber?: string;
     identification: string;
-    roles: UserPermitions[];
     type: UserTypes;
 }
 

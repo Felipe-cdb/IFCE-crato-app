@@ -5,9 +5,10 @@ import { AuthContext } from '../context/auth';
 import AuthRoutes from './Auth.routes';
 import AppRoutes from './App.routes';
 import { UserPermitions } from '../base/Enums';
+import ScreenLoad from '../components/ScreenLoad';
 
 const Routes = () => {
-  const {isUserLoaded, loading, user} = useContext(AuthContext);
+  const {isUserLoaded, loading, user, screenLoading} = useContext(AuthContext);
 
   if (loading) {
     return (
@@ -17,13 +18,17 @@ const Routes = () => {
     );
   }
 
-  return isUserLoaded ?
-    <AppRoutes
-      mural={user.roles.includes(UserPermitions.MM)}
-      refactory={user.roles.includes(UserPermitions.RM)}
-      permitions={user.roles.includes(UserPermitions.PM)}
-    /> :
-    <AuthRoutes />;
+  return (<>
+    <ScreenLoad visivel={screenLoading}/>
+    {isUserLoaded ?
+      <AppRoutes
+        mural={user.roles.includes(UserPermitions.MM)}
+        refactory={user.roles.includes(UserPermitions.RM)}
+        permitions={user.roles.includes(UserPermitions.PM)}
+      /> :
+      <AuthRoutes />
+    }
+  </>)
 };
 
 export default Routes;
