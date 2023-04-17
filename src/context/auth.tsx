@@ -2,6 +2,7 @@ import React, { createContext, ReactNode, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MessageType, showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from "react-native";
 
 import { api } from "../config";
 import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
@@ -10,12 +11,16 @@ import { UserTypes } from "../base/Enums";
 
 interface AuthContextDataProps {
     user: IUser;
-    isUserLoaded: boolean;
     loading: boolean;
-    aviso: (m: string, t: MessageType) => void;
+    isUserLoaded: boolean;
+    screenLoading: boolean;
+    signOut: () => any;
     signIn: (user: IUserLog) => void;
-    signUp: (user: ICheckRegister, finish: Function) => void;
-    signOut: () => void;
+    signUp: (user: ICheckRegister) => void;
+    aviso: (m: string, t: MessageType) => void;
+    setLoggedUser: () => any;
+    confirmCode: (email: string, code: string, errorInCode: () => void) => any;
+    resendCode: (email: string) => any;
 }
 
 interface AuthProviderProps {
@@ -33,10 +38,11 @@ export const AuthContext = createContext({} as AuthContextDataProps);
 
 function AuthProvider({ children }: AuthProviderProps) {
 
-    const [user, setUser] = useState({} as IUser);
-    const [isUserLoaded, setIsUserLoaded] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation<any>();
+    const [user, setUser] = useState({} as IUser);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [isUserLoaded, setIsUserLoaded] = useState<boolean>(false);
+    const [screenLoading, setScreenLoading] = useState<boolean>(false);
 
     useEffect(() => {
         async function userInCache() {
@@ -71,32 +77,43 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
 
         userInCache();
+        setScreenLoading(false);
     }, []);
 
     const aviso = (mensagem: string, tipo: MessageType) => {
         showMessage({
             message: mensagem,
             type: tipo,
-            duration: 2000,
-            statusBarHeight: 30,
+            duration: 3000,
+            statusBarHeight: StatusBar.currentHeight,
             hideOnPress: true,
             autoHide: true,
+            floating: true,
+            style: {
+                width: '90%',
+                marginVertical: '5%',
+                borderRadius: 8,
+                alignSelf: "center"
+            }
         });
     }
 
-    async function signUp(userRegister: ICheckRegister, finish: Function) {
+    async function setLoggedUser() {
+        setIsUserLoaded(true);
+        setLoading(false);
+    }
+
+    async function signUp(userRegister: ICheckRegister) {
         if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
         || !userRegister.confirmPassword.trim())
         || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
         {
             aviso('Preencha todos os campos com *', 'danger');
-            finish(false);
             return; 
         }
         
         if (userRegister.password != userRegister.confirmPassword) {
             aviso('A senha e senha de confirmação não são as mesmas!', 'warning');
-            finish(false);
             return;
         }
 
@@ -107,14 +124,16 @@ function AuthProvider({ children }: AuthProviderProps) {
             phoneNumber: userRegister.phoneNumber || undefined,
             siap: userRegister.type == UserTypes.EMP ? userRegister.identification : undefined,
             registration: userRegister.type == UserTypes.STD ? userRegister.identification : undefined,
-            roles: userRegister.roles.length || [],
             type: userRegister.type,
         }
-        console.log('api')
-        api.post('/auth/signup', JSON.stringify(userCreate)).then((resp: any) => {
-            aviso("Usuário cadastrado com sucesso!", "success");
-            navigation.navigate('Login');
-        }).catch((error: any) => {
+        try {
+            setScreenLoading(true);
+            await api.post('/auth/signup', JSON.stringify(userCreate));
+            setScreenLoading(false);
+            navigation.navigate('validation', {email: userRegister.email});
+            aviso("Só falta confirmar seu email!", "success");
+        } catch (error: any) {
+            setScreenLoading(false);
             if (error.response){
                 if (error.response.data.message === "Duplicate Email entered") {
                     aviso("Usuário já cadastrado", "warning");
@@ -124,8 +143,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             }else {
                 aviso("Ocorre um erro inesperado!", "warning");
             }
-        });
-        finish(false);
+        }
     }
 
     async function signIn(userLog: IUserLog) {
@@ -173,16 +191,72 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-
     function signOut(){
         setIsUserLoaded(false);
         setLoading(false);
         setUser(userVoid);
         AsyncStorage.clear();
     }
+    
+    async function confirmCode(email: string, code: string, errorInCode: () => void){
+        try {
+            setScreenLoading(true);
+            const response = await api.post('/auth/confirm/email-code', JSON.stringify({
+                email: email, code: code
+            }));
+
+            const userResponse = response.data.user;
+            setUser({
+                name: userResponse.name,
+                email: userResponse.email,
+                roles: userResponse.roles,
+                type: userResponse.type,
+                phoneNumber: userResponse.phoneNumber || undefined
+            });
+            AsyncStorage.setItem('token', response.data.token);
+            AsyncStorage.setItem('userId', userResponse.id);
+            api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+
+            setScreenLoading(false);
+            navigation.navigate('sucess');
+            
+        } catch (error: any) {
+            setScreenLoading(false);
+            errorInCode();
+            if (error.response){
+                if (error.response.data.message === "User not found or already is active") {
+                    aviso("Usuário não encontrado", "warning");
+                } else if (error.response.data.message === "Invalid code") {
+                    aviso("O código de verificação inserido é inválido. Por favor, verifique o código enviado para o seu e-mail e tente novamente.", "warning");
+                } else if (error.response.data.message === "Expired code") {
+                    aviso("Código expirado. Por favor, solicite um novo código.", "warning");
+                }
+            }else {
+                aviso("Ocorre um erro inesperado!", "warning");
+            }
+        }
+    }
+
+    async function resendCode(email: string) {
+        try {
+            const response = await api.post('/auth/resend/email-code', JSON.stringify({email}))
+            aviso('Um novo código foi enviado para seu e-mail, por favor verifique sua caixa de e-mail novamente.', 'success');
+            console.log(response.data)
+        } catch (error: any) {
+            if (error.response && error.response.data.message === "User not found or already is active"){
+                aviso("Usuário não encontrado", "warning");
+            }else {
+                aviso("Ocorre um erro inesperado!", "warning");
+            }
+        }
+    }
 
     return(
-        <AuthContext.Provider value={{ signIn, loading, user, isUserLoaded, aviso, signUp, signOut }}>
+        <AuthContext.Provider value={{
+            signIn, aviso, signUp, signOut, setLoggedUser,
+            confirmCode, resendCode,
+            loading, user, isUserLoaded, screenLoading
+        }}>
             {children}
         </AuthContext.Provider>
     )

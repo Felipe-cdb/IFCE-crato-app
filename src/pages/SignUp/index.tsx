@@ -11,7 +11,7 @@ export default function SignUp() {
 
   return (
     <signUpStak.Navigator
-      initialRouteName='validation'
+      initialRouteName='create'
     >
       <signUpStak.Screen
         name='create'

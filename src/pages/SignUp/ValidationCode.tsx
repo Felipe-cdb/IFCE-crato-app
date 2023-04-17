@@ -1,65 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, TouchableOpacity, Text, StatusBar } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from "react-native-responsive-fontsize";
 import { showMessage } from "react-native-flash-message";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import CodeInput from "../../components/CodeInput";
 import styles from "./styles";
+import { AuthContext } from "../../context/auth";
 
-const ValidationCode = () => {
+const ValidationCode = ({ route }: any) => {
 
+    const email = route.params!.email;
     const [code, setCode] = useState<string>('');
     const navigation = useNavigation<StackNavigationProp<any>>();
+    const { confirmCode, resendCode } = useContext(AuthContext);
 
+    const errorInCode = () => {
+        setCode('');
+    }
     useEffect(() => {
         function completeCode(){
-            if (code.includes('0')) {
-                showMessage({
-                    message: 'O código de verificação inserido é inválido. Por favor, verifique o código enviado para o seu e-mail e tente novamente.',
-                    type: 'warning',
-                    autoHide: true,
-                    duration: 4000,
-                    floating: true,
-                    statusBarHeight: StatusBar.currentHeight,
-                    style: {
-                        width: '90%',
-                        marginVertical: '5%',
-                        borderRadius: 8,
-                        alignSelf: "center"
-                    }
-                });
+            if(code.trim().length < 4) return;
 
-                setCode('');
-                return;
-            }
-
-            navigation.navigate('sucess');
+            confirmCode(email, code, errorInCode);
             return;
         }
 
         completeCode();
-    }, [code])
+    }, [code]);
+
+    
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setCode('');
+        }, [])
+    )
 
     const handleCreateNewPass = () => {
-        showMessage({
-            message: 'Um novo código foi enviado para seu e-mail, por favor verifique sua caixa de e-mail novamente.',
-            type: 'none',
-            autoHide: true,
-            duration: 4000,
-            floating: true,
-            statusBarHeight: StatusBar.currentHeight,
-            backgroundColor: '#FFF',
-            color: '#000',
-            style: {
-                width: '90%',
-                marginVertical: '5%',
-                borderRadius: 8,
-                alignSelf: "center"
-            }
-        });
+        resendCode(email)
     };
 
     function maskEmail(email: string) {
@@ -83,14 +64,14 @@ const ValidationCode = () => {
 
                 <View style={styles.infosValidation}>
                     <Text style={styles.infoText}>Um código de 4 dígitos foi enviado para:</Text>
-                    <Text style={styles.infoMail}>{maskEmail("pa69731@gmail.com")}</Text>
+                    <Text style={styles.infoMail}>{maskEmail(email)}</Text>
                 </View>
 
                 <View style={styles.contentCode}>
                     <Text style={styles.infoText}>Por favor, insira esse código a seguir</Text>
                    
                     <View style={styles.optionsCode}>
-                        <CodeInput onChange={setCode} valueCode={code}/>
+                        <CodeInput setCode={setCode} code={code}/>
 
                         <TouchableOpacity style={styles.btnNewCode} onPress={handleCreateNewPass}>
                             <Text style={styles.textBtnCode}>Reenvie um novo código</Text>

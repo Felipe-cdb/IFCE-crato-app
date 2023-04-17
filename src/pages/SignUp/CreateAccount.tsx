@@ -10,19 +10,16 @@ import { ICheckRegister } from '../../base/Interfaces';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles';
 import { UserTypes } from '../../base/Enums';
-import ScreenLoad from '../../components/ScreenLoad';
 
 export default function CreateAccount() {
 
   const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
-  const [load, setLoad] = useState<boolean>(false);
 
   const { signUp } = useContext(AuthContext);
   const navigation = useNavigation<DrawerNavigationProp<any>>()
 
   const cadastrar = () => {
-    setLoad(true);
-    signUp(user, setLoad);
+    signUp(user);
   }
 
   const setNome = (nome: string) => {
@@ -77,7 +74,6 @@ export default function CreateAccount() {
           <View style={styles.content}>
             <LogoIF />
 
-            <ScreenLoad visivel={load}/>
             <View style={styles.form}>
               <Text style={styles.titleForm}>Cadastro</Text>
               <View style={styles.formGroup}>
@@ -108,7 +104,7 @@ export default function CreateAccount() {
                     label="Celular"
                     value={user.phoneNumber || ''}
                     atualiza={setCelular}
-                    required={true}
+                    required={false}
                   />
                   <InputGroup
                     label="Senha"
