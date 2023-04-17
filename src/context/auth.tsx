@@ -104,6 +104,11 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
 
     async function signUp(userRegister: ICheckRegister) {
+<<<<<<< HEAD
+=======
+        navigation.navigate('validation', {email: 'tormentageneses@gmail.com'});
+        return;
+>>>>>>> 92f1e44beec899c2ef044e04c039084f36495817
         if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
         || !userRegister.confirmPassword.trim())
         || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
