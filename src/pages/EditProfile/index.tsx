@@ -1,13 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
-
-import styles from "./styles";
+import InDevelopment from "../../components/InDevelopment";
 
 function EditProfile(){
     return(
-        <View style={styles.container}>
-            <Text>Editar Perfil</Text>
-        </View>
+        <InDevelopment />
     )
 }
 
