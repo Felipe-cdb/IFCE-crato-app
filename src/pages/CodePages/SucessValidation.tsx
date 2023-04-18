@@ -1,10 +1,11 @@
 import React, { useCallback, useContext } from 'react';
 import { ImageBackground, View, Text, TouchableOpacity } from 'react-native';
+
 import styles from './styles';
 import LogoIF from '../../components/LogoIF';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { AuthContext } from '../../context/auth';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const SucessValidation = () => {
 
@@ -34,7 +35,7 @@ const SucessValidation = () => {
             <LogoIF />
 
             <View style={styles.contetSucess}>
-                <Text style={styles.titleSucess}>Seu Cadastro foi realizado Com sucesso</Text>
+                <Text style={styles.titleSucess}>Sua Conta foi ativada com sucesso</Text>
 
                 <Text style={styles.textSucess}>
                     Sua conta foi ativada, agora você poderá acessar todos os recursos que a plataforma tem a oferecer.

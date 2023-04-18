@@ -2,12 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, TouchableOpacity, Text, StatusBar } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from "react-native-responsive-fontsize";
-import { showMessage } from "react-native-flash-message";
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import CodeInput from "../../components/CodeInput";
 import styles from "./styles";
+import CodeInput from "../../components/CodeInput";
 import { AuthContext } from "../../context/auth";
 
 const ValidationCode = ({ route }: any) => {
@@ -40,7 +39,7 @@ const ValidationCode = ({ route }: any) => {
     )
 
     const handleCreateNewPass = () => {
-        resendCode(email)
+        resendCode(email, 'Um novo código foi enviado para seu email, verifique sua caixa de emails')
     };
 
     function maskEmail(email: string) {

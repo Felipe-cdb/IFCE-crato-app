@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import ValidationCode from './ValidationCode';
 import CreateAccount from './CreateAccount';
-import SucessValidation from './SucessValidation';
+import ValidationCode from '../CodePages/ValidationCode';
+import SucessValidation from '../CodePages/SucessValidation';
 
 const signUpStak = createStackNavigator();
 

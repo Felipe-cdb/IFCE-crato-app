@@ -20,7 +20,7 @@ interface AuthContextDataProps {
     aviso: (m: string, t: MessageType) => void;
     setLoggedUser: () => any;
     confirmCode: (email: string, code: string, errorInCode: () => void) => any;
-    resendCode: (email: string) => any;
+    resendCode: (email: string, message: string) => any;
 }
 
 interface AuthProviderProps {
@@ -100,15 +100,9 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     async function setLoggedUser() {
         setIsUserLoaded(true);
-        setLoading(false);
     }
 
     async function signUp(userRegister: ICheckRegister) {
-<<<<<<< HEAD
-=======
-        navigation.navigate('validation', {email: 'tormentageneses@gmail.com'});
-        return;
->>>>>>> 92f1e44beec899c2ef044e04c039084f36495817
         if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
         || !userRegister.confirmPassword.trim())
         || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
@@ -161,13 +155,14 @@ function AuthProvider({ children }: AuthProviderProps) {
             aviso('Senha invalida', 'warning');
             return;
         }
-
         await logar(userLog);
     }
 
     async function logar(userLog: IUserLog) {
+        setScreenLoading(true);
         try {
-            const response = await api.post("auth/login", userLog);
+            const response = await api.post("/auth/login", JSON.stringify(userLog));
+
             const userResponse = response.data.user;
             setUser({
                 name: userResponse.name,
@@ -180,15 +175,18 @@ function AuthProvider({ children }: AuthProviderProps) {
             AsyncStorage.setItem('userId', userResponse.id);
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             setIsUserLoaded(true);
-            setLoading(false);
+            setScreenLoading(false);
         } catch (error: any) {
-            setLoading(false);
             if (error.response){
-                if (error.response.data.message === "User not found") {
-                    aviso("Usuário não encontrado", "warning");
-                }
-                if (error.response.data.message === "Invalid password") {
-                    aviso("Senha incorreta", "warning");
+                if (error.response.data.message === "Pending email confirmation") {
+                    try {
+                        resendCode(userLog.email, 'Confirme seu email para continuar.')
+                        navigation.navigate('validation', {email: error.response.data.user.email});
+                    } catch (error) {
+                        
+                    }
+                    setScreenLoading(false);
+                    aviso("Confirme seu email para continuar", "warning");
                 }
             }else {
                 aviso("Falha no login", "warning");
@@ -242,10 +240,10 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    async function resendCode(email: string) {
+    async function resendCode(email: string, message: string) {
         try {
             const response = await api.post('/auth/resend/email-code', JSON.stringify({email}))
-            aviso('Um novo código foi enviado para seu e-mail, por favor verifique sua caixa de e-mail novamente.', 'success');
+            aviso(message, 'success');
             console.log(response.data)
         } catch (error: any) {
             if (error.response && error.response.data.message === "User not found or already is active"){

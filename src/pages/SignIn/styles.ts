@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        justifyContent: "space-between"
+        justifyContent: "space-around"
     },
 
     inputLog: {
