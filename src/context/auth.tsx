@@ -21,6 +21,7 @@ interface AuthContextDataProps {
     setLoggedUser: () => any;
     confirmCode: (email: string, code: string, errorInCode: () => void) => any;
     resendCode: (email: string, message: string) => any;
+    setScreenLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AuthProviderProps {
@@ -103,6 +104,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
 
     async function signUp(userRegister: ICheckRegister) {
+
         if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
         || !userRegister.confirmPassword.trim())
         || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
@@ -115,7 +117,11 @@ function AuthProvider({ children }: AuthProviderProps) {
             aviso('A senha e senha de confirmação não são as mesmas!', 'warning');
             return;
         }
-
+        
+        if (userRegister.password.length < 8){
+            aviso('A senha deve ter no minimo 8 caracteres!', 'warning');
+            return;
+        }
         const userCreate = {
             name: userRegister.name,
             email: userRegister.email,
@@ -185,12 +191,18 @@ function AuthProvider({ children }: AuthProviderProps) {
                     } catch (error) {
                         
                     }
-                    setScreenLoading(false);
                     aviso("Confirme seu email para continuar", "warning");
+                } else if(error.response.data.message === 'User not found'){
+                    aviso("Usuário não encontrado", "danger");
+                } else if(error.response.data.message === 'Invalid password'){
+                    aviso("Senha incorreta", "danger");
+                }else {
+                    aviso("Falha no login", "danger");
                 }
             }else {
-                aviso("Falha no login", "warning");
+                aviso("Falha no login", "danger");
             }
+            setScreenLoading(false);
         }
     }
 
@@ -257,7 +269,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     return(
         <AuthContext.Provider value={{
             signIn, aviso, signUp, signOut, setLoggedUser,
-            confirmCode, resendCode,
+            confirmCode, resendCode, setScreenLoading,
             loading, user, isUserLoaded, screenLoading
         }}>
             {children}

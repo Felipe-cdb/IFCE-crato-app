@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
 
     scrollContainer: {
         alignItems: "center",
-        marginTop: 24,
-        paddingBottom: 32
+        paddingTop: RFValue(16),
+        paddingBottom: RFValue(32)
     },
 
     title: {
         fontSize: RFValue(24),
         fontWeight: 'bold',
-        marginBottom: 16
+        marginBottom: RFValue(16)
     },
 
     form: {
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
 
     optionsImage: {
         width: '100%',
-        marginTop: 8,
+        marginTop: RFValue(8),
 
         display: "flex",
         alignItems: "center",
         alignSelf: "center",
 
         justifyContent: 'center',
-        marginVertical: 10,
+        marginVertical: RFValue(8),
         overflow: 'hidden',
     },
     
@@ -62,17 +62,17 @@ const styles = StyleSheet.create({
     imagePreview: {
         flex: 1,
         width: '70%',
-        minHeight: 200,
-        maxHeight: 300,
+        minHeight: RFValue(200),
+        maxHeight: RFValue(300),
         resizeMode: 'cover',
-        borderWidth: 2,
+        borderWidth: RFValue(2),
         borderColor: "#D9D9D9",
-        borderRadius: 16,
+        borderRadius: RFValue(16),
     },
 
     clipContainer: {
         width: '50%',
-        paddingVertical: 30,
+        paddingVertical: RFValue(30),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
 
     btnPlus: {
         width: '12%',
-        height: 40,
+        height: RFValue(40),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: '#275D8E',
         paddingHorizontal: RFPercentage(1.5),
         paddingVertical: RFPercentage(1),
-        borderRadius: 16,
+        borderRadius: RFValue(16),
         marginTop: RFValue(24) 
     },
 
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 24,
         paddingTop: 24,
-        // paddingBottom: 8,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"

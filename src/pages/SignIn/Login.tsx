@@ -9,6 +9,7 @@ import { AuthContext } from '../../context/auth';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles'
 import ScreenLoad from '../../components/ScreenLoad';
+import { Button } from '../../components/Button';
 
 export default function Login() {
 
@@ -49,10 +50,16 @@ export default function Login() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       enabled style={styles.container}
     >
-      <ScreenLoad visivel={loading}/>
-      <LogoIF/>
 
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps={'handled'}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps={'handled'}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={true}
+      >
+        <ScreenLoad visivel={loading}/>
+        <LogoIF/>
+        
         <Text style={styles.titleForm}>IFCE Crato Aluno</Text>
           
         <View style={styles.contenteForm}>
@@ -92,11 +99,14 @@ export default function Login() {
         </View>
 
         <View style={styles.btnGroup}>
-          <TouchableOpacity style={styles.btnEntrar} onPress={() => entrar()}>
+          <Button
+            typeButton='mainButton'
+            onPress={() => entrar()}
+          >
             <Text style={[styles.textBtn, {color: '#fff'}]}>Entrar</Text>
-          </TouchableOpacity>
+          </Button>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <TouchableOpacity style={{marginTop: 16}} onPress={() => navigation.navigate('Cadastro')}>
             <Text style={[styles.textLink, styles.textBtn]}>Ainda não é Cadastrado?</Text>
           </TouchableOpacity>
         </View>

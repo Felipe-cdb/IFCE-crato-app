@@ -16,9 +16,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#19882C'
     },
 
+    logoMenuContent: {
+        width: RFValue(48),
+        height: RFValue(48),
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: '#FFF',
+        borderRadius: RFPercentage(50),
+    },
+
     logoMenu: {
-        width: RFValue(56),
-        height: RFValue(56),
+        width: RFValue(24),
+        height: RFValue(32),
     },
 
     iconsMenu: {

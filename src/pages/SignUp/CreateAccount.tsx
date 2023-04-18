@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity,
   KeyboardAvoidingView, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import { AuthContext } from '../../context/auth';
@@ -10,6 +10,7 @@ import { ICheckRegister } from '../../base/Interfaces';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles';
 import { UserTypes } from '../../base/Enums';
+import { Button } from '../../components/Button';
 
 export default function CreateAccount() {
 
@@ -17,6 +18,12 @@ export default function CreateAccount() {
 
   const { signUp } = useContext(AuthContext);
   const navigation = useNavigation<DrawerNavigationProp<any>>()
+
+  useFocusEffect(
+    useCallback(() => {
+      setUser({type: UserTypes.STD} as ICheckRegister);
+    }, [])
+  )
 
   const cadastrar = () => {
     signUp(user);
@@ -94,7 +101,9 @@ export default function CreateAccount() {
                     label="Matrícula/SIAPE"
                     value={user.identification || ''}
                     required={true}
-                    atualiza={setIdentificacao}/>
+                    atualiza={setIdentificacao}
+                    keyboardType='number-pad'
+                  />
                   <InputGroup
                     label="Email"
                     value={user.email}
@@ -105,6 +114,7 @@ export default function CreateAccount() {
                     value={user.phoneNumber || ''}
                     atualiza={setCelular}
                     required={false}
+                    keyboardType='number-pad'
                   />
                   <InputGroup
                     label="Senha"
@@ -121,13 +131,19 @@ export default function CreateAccount() {
                 </View>
 
                 <View style={styles.butnGroup}>
-                  <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.butnCancelar}>
+                  <Button
+                    typeButton='backButton'
+                    onPress={() => navigation.navigate('Login')}
+                  >
                     <Text style={styles.textBtn}>Cancelar</Text>
-                  </TouchableOpacity>
+                  </Button>
 
-                  <TouchableOpacity onPress={() => cadastrar()} style={styles.butnCadastrar}>
+                  <Button
+                    typeButton='mainButton'
+                    onPress={() => cadastrar()}
+                  >
                     <Text style={styles.textBtn}>Cadastrar</Text>
-                  </TouchableOpacity>       
+                  </Button>       
                 </View>
               </View>
             </View>

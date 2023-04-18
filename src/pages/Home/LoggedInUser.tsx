@@ -104,6 +104,7 @@ function LoggedInUser({ user }: LoggedInUserProps) {
 				visivel={deletion.exibir}
 				menosInformacoes={() => setDeletion({exibir: false, item: ''})}
 				communiqueId={deletion.item}
+				refreshing={onRefresh}
 			/>
 
             <Menu/>

@@ -51,18 +51,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
 
-    butnCancelar: {
-        backgroundColor: "#696969",
-        padding: 10,
-        borderRadius: 25
-    },
-
-    butnCadastrar: {
-        backgroundColor: "#379936",
-        padding: 10,
-        borderRadius: 25
-    },
-
     textBtn: {
         fontSize: RFValue(16),
         color: "#fff"

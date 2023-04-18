@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
 
     icons: {
-        fontSize: RFValue(30),
+        fontSize: RFValue(24),
         marginRight: 15
     },
     
@@ -45,15 +45,8 @@ const styles = StyleSheet.create({
         marginLeft: RFValue(25),
     },
 
-    imageExit: {
-        width: 30,
-        height: 30,
-        marginRight: 16,
-
-    },
-
     textExit: {
-        fontSize: RFPercentage(3)
+        fontSize: RFValue(16)
     }
 });
 

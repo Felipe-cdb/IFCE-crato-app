@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, TextInput, TextInputProps } from "react-native";
 import RNPickerSelect, { Item } from 'react-native-picker-select';
+import { RFValue } from "react-native-responsive-fontsize";
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./styles";
 
-interface IInputGroupProps {
+interface IInputGroupProps extends TextInputProps {
     label: string;
     pass?: boolean;
     required: boolean;
-    numberLines?: number;
     multiline?: boolean;
     value: string;
     atualiza: (value: any) => void;
+    heigth?: number;
 }
 interface ISelectGroupProps {
     label: string;
@@ -20,32 +22,36 @@ interface ISelectGroupProps {
     lista: Item[];
 }
 
-export const InputGroup = ({ label, value, pass, required, atualiza, multiline, numberLines }: IInputGroupProps) => {
+export const InputGroup = ({ keyboardType, label, value, pass, required, atualiza, multiline, heigth, onContentSizeChange }: IInputGroupProps) => {
 
     const [borda, setBorda] = useState({});
 
-    const fimEntrada = () => {
+    useFocusEffect(
+        useCallback(() => {
+          setBorda({});
+        }, [])
+      )
+
+    const endInput = () => {
+        if (value?.trim()) {
+            setBorda({});
+            return;
+        }
+
         if (!value && required) {
             setBorda({
                 borderWidth: 1,
-                borderColor: '#C91517',
-            })
+                borderColor:'#C91517'
+            });
             return;
         }
 
-        if (required && !value.trim()) {
+        if (required && !(value?.trim())) {
             atualiza('');
-            setBorda({
-                borderWidth: 1,
-                borderColor: '#C91517',
-            })
+            setBorda('#C91517');
             return;
         }
 
-        if (value.trim()) {
-            setBorda({})
-            return;
-        }
     }
 
     return(
@@ -55,20 +61,21 @@ export const InputGroup = ({ label, value, pass, required, atualiza, multiline, 
             </Text>
            {pass
                 ?<TextInput
-                    onEndEditing={() => fimEntrada()}
+                    onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={styles.inputEntry}
+                    style={[styles.inputEntry, borda, {height: heigth || RFValue(40)}]}
                     secureTextEntry={true}
                     textContentType='password'
                     value={value}
                 />
                 :<TextInput
                     multiline={multiline}
-                    numberOfLines={numberLines}
-                    onEndEditing={() => fimEntrada()}
+                    onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={styles.inputEntry}
+                    style={[styles.inputEntry, borda, {height: heigth || undefined}]}
                     value={value}
+                    onContentSizeChange={onContentSizeChange}
+                    keyboardType={keyboardType}
                 />
             }
 

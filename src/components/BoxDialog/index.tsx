@@ -10,10 +10,10 @@ type BoxProps = {
     visivel: boolean;
     menosInformacoes: () => void;
     communiqueId: string;
-    // refreshing: Function
+    refreshing: () => void;
 }
 
-function BoxDialog({ visivel, menosInformacoes, communiqueId }: BoxProps) {
+function BoxDialog({ visivel, menosInformacoes, communiqueId, refreshing }: BoxProps) {
     
     const { aviso } = useContext(AuthContext);
 
@@ -21,6 +21,7 @@ function BoxDialog({ visivel, menosInformacoes, communiqueId }: BoxProps) {
         try {
             await api.delete(`communique/${communiqueId}`);
             aviso('Comunicado removido com sucesso', 'success');
+            refreshing();
         } catch (error) {
             console.log(error);
             aviso('Falha na exclusão do comunicado', 'danger');
