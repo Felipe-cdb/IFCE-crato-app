@@ -18,7 +18,9 @@ function Menu(){
             <View style={styles.logoMenuContent}>
                 <Image style={styles.logoMenu} source={require('../../assets/images/LogoMenu.png')} />
             </View>
-            <Icon name="bell" style={styles.iconsMenu} color="#fff" />
+            <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+                <Icon name="bell" style={styles.iconsMenu} color="#fff" />
+            </TouchableOpacity>
         </View>
     )
 }

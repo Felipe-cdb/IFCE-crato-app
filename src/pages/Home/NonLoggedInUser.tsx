@@ -10,6 +10,7 @@ import FILTROS from "../../base/FILTROS";
 import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MoreInfo";
 import { Item as ItemType } from "../../base/Types";
+import CommuniqueListEmpty from "../../components/CommuniqueListEmpty";
 
 interface IMoreInformations {
     exibir: boolean;
@@ -110,7 +111,8 @@ function NonLoggedInUser() {
 					showsVerticalScrollIndicator={false}
 					ItemSeparatorComponent={ItemSeparatorComponent}
 					data={communiques}
-					renderItem={RenderItem}					
+					renderItem={RenderItem}
+					ListEmptyComponent={CommuniqueListEmpty}				
 					refreshControl={
 						<RefreshControl
 							refreshing={refreshing}
