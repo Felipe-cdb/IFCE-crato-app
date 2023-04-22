@@ -15,6 +15,7 @@ import CustomDrawerContent from "../components/CustomDrawer";
 import ListRefectoryForms from "../pages/ListRefectoryForms";
 import EditProfile from "../pages/EditProfile";
 import UserCard from "../pages/UserCard";
+import Notifications from "../pages/Notifications";
 
 interface ManagerProps {
     mural?: boolean,
@@ -130,6 +131,21 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
         <AppRoutesDrawer.Screen
             name="EditProfile"
             component={EditProfile}
+            options={{
+                headerShown: false,
+                drawerItemStyle: { display: 'none' },
+                drawerIcon: () => (
+                    <Icon name="silverware-fork-knife"
+                        color="#000"
+                        style={stylesNavigation.icons}
+                    />
+                )
+            }}
+        />
+        
+        <AppRoutesDrawer.Screen
+            name="Notifications"
+            component={Notifications}
             options={{
                 headerShown: false,
                 drawerItemStyle: { display: 'none' },

@@ -13,6 +13,7 @@ import { UserPermitions } from "../../base/Enums";
 import BoxDialog from "../../components/BoxDialog";
 import { Item as ItemType } from "../../base/Types";
 import { IUser } from "../../base/Interfaces";
+import CommuniqueListEmpty from "../../components/CommuniqueListEmpty";
 
 interface IMoreInformations {
     exibir: boolean;
@@ -131,7 +132,8 @@ function LoggedInUser({ user }: LoggedInUserProps) {
 					showsVerticalScrollIndicator={false}
 					ItemSeparatorComponent={ItemSeparatorComponent}
 					data={communiques}
-					renderItem={RenderItem}					
+					renderItem={RenderItem}	
+					ListEmptyComponent={CommuniqueListEmpty}				
 					refreshControl={
 						<RefreshControl
 							refreshing={refreshing}
