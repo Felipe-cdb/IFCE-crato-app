@@ -11,3 +11,8 @@ export const constantCategories: any = {
     ['Eventos']: 'Event',
     ['Avisos']: 'Notice',
 }
+
+export const constantUserType: any = {
+    ['student']: 'Estudante',
+    ['employee']: 'Servidor'
+}

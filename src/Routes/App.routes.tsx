@@ -14,6 +14,7 @@ import NewCommunicated from '../pages/NewCommunicated';
 import CustomDrawerContent from "../components/CustomDrawer";
 import ListRefectoryForms from "../pages/ListRefectoryForms";
 import EditProfile from "../pages/EditProfile";
+import UserCard from "../pages/UserCard";
 import Notifications from "../pages/Notifications";
 
 interface ManagerProps {
@@ -69,6 +70,20 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="silverware-fork-knife"
+                        color="#000"
+                        style={stylesNavigation.icons}
+                    />
+                )
+            }}
+        />
+
+        <AppRoutesDrawer.Screen
+            name="Identificação"
+            component={UserCard}
+            options={{
+                headerShown: false,
+                drawerIcon: () => (
+                    <Icon name="card-account-details-outline"
                         color="#000"
                         style={stylesNavigation.icons}
                     />
