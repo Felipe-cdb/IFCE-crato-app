@@ -98,7 +98,8 @@ export default StyleSheet.create({
   informations: {
     flex: 1,
     marginTop: RFValue(8),
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    paddingHorizontal: RFValue(2)
   },
 
   infoLine: {
@@ -106,7 +107,8 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    flexWrap: 'wrap'
   },
 
   header: {

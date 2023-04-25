@@ -10,7 +10,8 @@ export interface IUser {
     course?: string,
     registration?: string,
     siape?: string,
-    isActive: boolean
+    isActive: boolean,
+    createdAt: string
 }
 
 
