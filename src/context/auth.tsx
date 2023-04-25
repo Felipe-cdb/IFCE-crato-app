@@ -5,9 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from "react-native";
 
 import { api } from "../config";
-import { IUser, IUserLog, ICheckRegister } from '../base/Interfaces'
+import { IUser, IUserLog } from '../base/Interfaces'
 import { EmailRegex, PasswordRegex } from "../base/Regexs";
-import { UserTypes } from "../base/Enums";
 
 interface AuthContextDataProps {
     user: IUser;
@@ -16,7 +15,6 @@ interface AuthContextDataProps {
     screenLoading: boolean;
     signOut: () => any;
     signIn: (user: IUserLog) => void;
-    signUp: (user: ICheckRegister) => void;
     aviso: (m: string, t: MessageType) => void;
     setLoggedUser: () => any;
     confirmCode: (email: string, code: string, errorInCode: () => void) => any;
@@ -32,7 +30,8 @@ const userVoid: IUser = {
     name: '',
     email: '',
     roles: [],
-    type: ''
+    type: '',
+    isActive: true
 }
 
 export const AuthContext = createContext({} as AuthContextDataProps);
@@ -65,7 +64,8 @@ function AuthProvider({ children }: AuthProviderProps) {
                         email: userResponse.email,
                         roles: userResponse.roles,
                         type: userResponse.type,
-                        phoneNumber: userResponse.phoneNumber || undefined
+                        phoneNumber: userResponse.phoneNumber || undefined,
+                        isActive: userResponse.isActive || false
                     });
                     setIsUserLoaded(true);
                 };
@@ -103,54 +103,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         setIsUserLoaded(true);
     }
 
-    async function signUp(userRegister: ICheckRegister) {
-
-        if ((!userRegister.name?.trim() || !userRegister.type?.trim() || !userRegister.email?.trim() || !userRegister.password?.trim()
-        || !userRegister.confirmPassword.trim())
-        || (userRegister.type == UserTypes.STD || userRegister.type == UserTypes.EMP) && !userRegister.identification.trim())
-        {
-            aviso('Preencha todos os campos com *', 'danger');
-            return; 
-        }
-        
-        if (userRegister.password != userRegister.confirmPassword) {
-            aviso('A senha e senha de confirmação não são as mesmas!', 'warning');
-            return;
-        }
-        
-        if (userRegister.password.length < 8){
-            aviso('A senha deve ter no minimo 8 caracteres!', 'warning');
-            return;
-        }
-        const userCreate = {
-            name: userRegister.name,
-            email: userRegister.email,
-            password: userRegister.password,
-            phoneNumber: userRegister.phoneNumber || undefined,
-            siap: userRegister.type == UserTypes.EMP ? userRegister.identification : undefined,
-            registration: userRegister.type == UserTypes.STD ? userRegister.identification : undefined,
-            type: userRegister.type,
-        }
-        try {
-            setScreenLoading(true);
-            await api.post('/auth/signup', JSON.stringify(userCreate));
-            setScreenLoading(false);
-            navigation.navigate('validation', {email: userRegister.email});
-            aviso("Só falta confirmar seu email!", "success");
-        } catch (error: any) {
-            setScreenLoading(false);
-            if (error.response){
-                if (error.response.data.message === "Duplicate Email entered") {
-                    aviso("Usuário já cadastrado", "warning");
-                } else if (error.response.data.message === "phoneNumber must be a valid phone number") {
-                    aviso("Número de telefone inválido", "warning");
-                }
-            }else {
-                aviso("Ocorre um erro inesperado!", "warning");
-            }
-        }
-    }
-
     async function signIn(userLog: IUserLog) {
         if (!EmailRegex.test(userLog.email)) {
             aviso('E-mail invalido', 'warning');
@@ -175,7 +127,8 @@ function AuthProvider({ children }: AuthProviderProps) {
                 email: userResponse.email,
                 roles: userResponse.roles,
                 type: userResponse.type,
-                phoneNumber: userResponse.phoneNumber || undefined
+                phoneNumber: userResponse.phoneNumber || undefined,
+                isActive: userResponse.isActive || false
             });
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
@@ -226,7 +179,8 @@ function AuthProvider({ children }: AuthProviderProps) {
                 email: userResponse.email,
                 roles: userResponse.roles,
                 type: userResponse.type,
-                phoneNumber: userResponse.phoneNumber || undefined
+                phoneNumber: userResponse.phoneNumber || undefined,
+                isActive: userResponse.isActive || false
             });
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
@@ -268,7 +222,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     return(
         <AuthContext.Provider value={{
-            signIn, aviso, signUp, signOut, setLoggedUser,
+            signIn, aviso, signOut, setLoggedUser,
             confirmCode, resendCode, setScreenLoading,
             loading, user, isUserLoaded, screenLoading
         }}>
