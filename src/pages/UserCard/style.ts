@@ -1,156 +1,156 @@
 import { StyleSheet, Dimensions } from "react-native";
 import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
 
-export const SLIDER_WIDTH = Dimensions.get('window').width + 80
-export const SLIDER_HEIGHT = Dimensions.get('window').height
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7)
-export const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.7)
-
 export default StyleSheet.create({
-    container: {
-      backgroundColor: '#75B874',
-      borderRadius: 8,
-      width: ITEM_WIDTH,
-      height: ITEM_HEIGHT - ( 0.10 * ITEM_HEIGHT ),
-      paddingBottom: 10,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 3,
-      },
-      shadowOpacity: 0.29,
-      shadowRadius: 4.65,
-      elevation: 4,
-      alignItems: "center",
-      justifyContent: "center"
+  container: {
+    flex: 1,
+    backgroundColor: '#75B874',
+    borderRadius: 8,
+    paddingBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
     },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 4,
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
-    square: {
-      width: ITEM_WIDTH - (0.08 * ITEM_WIDTH),
-      height: 0,
-      backgroundColor: 'transparent',
-      borderStyle: 'solid',
-      borderTopWidth: 0,
-      borderRightWidth: 100,
-      borderBottomWidth: 100,
-      borderLeftWidth: 100,
-      borderTopColor: 'transparent',
-      borderRightColor: 'transparent',
-      borderBottomColor: '#275D8E',
-      borderLeftColor: 'transparent',
-      transform: [{ rotate: '180deg' }],
-      position: "absolute",
-      top: 0,
-      zIndex: -1
-    },
+  containerLogo: {
+    width: '100%',
+    paddingBottom: RFValue(8),
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
-    userPersonalInfo: {
-      alignContent: "center",
-      alignItems: 'center',
-      width: ITEM_WIDTH,
-    },
+  square: {
+    width: '90%',
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: 100,
+    borderBottomWidth: 100,
+    borderLeftWidth: 100,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#275D8E',
+    borderLeftColor: 'transparent',
+    transform: [{ rotate: '180deg' }],
+    position: "absolute",
+    top: 0,
+    zIndex: -1
+  },
 
-    logoContainer: {
-      alignContent: "center",
-      alignItems: 'center',
-    },
-    
-    image: {
-      width: ITEM_WIDTH - (0.5 * ITEM_WIDTH),
-      height: ITEM_WIDTH - (0.5 * ITEM_WIDTH),
-      borderTopEndRadius: 20,
-      borderBottomLeftRadius: 20,
-      marginTop: 16
-    },
+  image2: {
+    width: 34,
+    height: 49,
+  },
 
-    image2: {
-      width: 34,
-      height: 49,
-    },
+  textDestaque: {
+    fontSize: RFValue(10),
+    fontWeight: '700',
+    textAlign: "center",
+    color: 'white'
+  },
 
-    textDestaque: {
-      fontSize: RFValue(10),
-      fontWeight: '700',
-      textAlign: "center",
-      color: 'white'
-    },
+  textCe: {
+    fontSize: RFPercentage(2),
+    marginTop: RFValue(4),
+    borderTopWidth: 1,
+    borderTopColor: '#379936',
+    textAlign: 'center',
+    color: 'white'
+  },
 
-    textCe: {
-      fontSize: RFPercentage(2),
-      marginTop: RFValue(4),
-      borderTopWidth: 1,
-      borderTopColor: '#379936',
-      textAlign: 'center',
-      color: 'white'
-    },
+  image: {
+    width: '60%',
+    height: '30%',
+    borderTopRightRadius: RFValue(24),
+    borderBottomLeftRadius: RFValue(24),
+  },
 
-    textContainer: {
-      borderTopEndRadius: 20,
-      borderBottomLeftRadius: 20,
-      backgroundColor: '#275D8E',
-      width: ITEM_WIDTH - (0.1 * ITEM_WIDTH),
-      marginTop: 7,
-      padding: 18,
-      alignContent: "center",
-      alignItems: 'center',
-    },
+  textContainer: {
+    borderTopRightRadius: RFValue(24),
+    borderBottomLeftRadius: RFValue(24),
+    backgroundColor: '#275D8E',
+    width: '90%',
+    marginTop: RFValue(8),
+    padding: RFValue(8),
+    alignContent: "center",
+    alignItems: 'center',
+  },
 
-    title: {
-      color: 'white',
-      fontWeight: "bold",
-      fontSize: 20
-    },
+  title: {
+    color: 'white',
+    fontWeight: "bold",
+    fontSize: RFValue(24)
+  },
 
-    subtitle: {
-      color: '#69A568',
-      fontSize: 18
-    },
+  subtitle: {
+    color: '#69A568',
+    fontSize: RFValue(16)
+  },
 
-    header: {
-      color: "#222",
-      fontSize: 18,
-      fontWeight: "bold",
-      paddingLeft: 20,
-      paddingTop: 18
-    },
-    body: {
-      color: "#222",
-      fontSize: 16,
-      paddingLeft: 20,
-      paddingRight: 20
-    },
+  informations: {
+    flex: 1,
+    marginTop: RFValue(8),
+    justifyContent: "space-around"
+  },
 
-    validationContainer: {
-      borderTopEndRadius: 20,
-      borderBottomLeftRadius: 20,
-      backgroundColor: '#275D8E',
-      width: ITEM_WIDTH - ( 0.20 * ITEM_WIDTH ),
-      height: ITEM_HEIGHT - ( 0.20 * ITEM_HEIGHT ),
-      justifyContent: "space-around",
-      alignItems: "center",
-    },
+  infoLine: {
+    width: '100%',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  },
 
-    codeField: {
-      alignItems: "center"
-    },
+  header: {
+    color: "#222",
+    fontSize: RFValue(20),
+    fontWeight: "bold",
+  },
 
-    validationFooter: {
-      marginTop: 20,
-      alignItems: "flex-start"
-    },
+  body: {
+    color: "#222",
+    fontSize: RFValue(16),
+  },
 
-    codeTitle: {
-      color: 'black',
-      fontWeight: "bold",
-      fontSize: 26
-    },
+  validationContainer: {
+    borderTopEndRadius: 20,
+    borderBottomLeftRadius: 20,
+    backgroundColor: '#275D8E',
+    width: '90%',
+    height: '90%',
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
 
-    smallTitle: {
-      color: 'white',
-      fontWeight: "normal",
-      fontSize: 14,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 5
-    }
-  })
+  codeField: {
+    alignItems: "center"
+  },
+
+  validationFooter: {
+    marginTop: 20,
+    alignItems: "flex-start"
+  },
+
+  codeTitle: {
+    color: 'black',
+    fontWeight: "bold",
+    fontSize: RFValue(32)
+  },
+
+  smallTitle: {
+    color: 'white',
+    fontWeight: "normal",
+    fontSize: RFValue(16),
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5
+  }
+})

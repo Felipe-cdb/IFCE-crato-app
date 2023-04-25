@@ -20,69 +20,47 @@ type CardProp = {
 } 
 
 const CarouselCardItem = ({ index, item }: CardProp) => {
-
-    console.log(item)
-    const flatListData = [
-        {
-            key: 'Matrícula/Siap',
-            value: item?.userData?.registration || item?.userData?.registration
-        },
-        {
-            key: 'Curso',
-            value: item?.userData?.course
-        },
-        {
-            key: 'Email',
-            value: item?.userData?.email
-        },
-        {
-            key: 'Emissão',
-            value: format(new Date(item?.userData?.createdAt || Date.now()), 'dd/MM/yyyy')
-        }
-    ]
-
     return (
         <View style={styles.container} key={index}>
-            { item?.userData ? (
-                <>
-                <View style={styles.userPersonalInfo}>
-                    <View style={styles.logoContainer}>
-                        <Image style={styles.image2} source={require('./../../assets/images/Logo.png')} />
-                        <Text style={styles.textDestaque}>INSTITUTO FEDERAL</Text>
-                        <Text style={styles.textCe}>Campus Crato</Text>
-                    </View>
-
-                    <View style={styles.square}>
-                    </View>
-                    <Image
-                    source={{ uri: item.userData.avatarUrl }}
+            { item?.userData ? (<>
+                <View style={styles.containerLogo}>
+                    <Image style={styles.image2} source={require('./../../assets/images/Logo.png')} />
+                    <Text style={styles.textDestaque}>INSTITUTO FEDERAL</Text>
+                    <Text style={styles.textCe}>Campus Crato</Text>
+                    <View style={styles.square}/>
+                </View>
+                <Image
+                    source={{
+                        uri: item.userData.avatarUrl
+                    }}
                     style={styles.image}
                 />
-                    <View style={styles.textContainer}>
-                        <Text style={styles.title} > { item.userData.name } </Text>
-                        <Text style={styles.subtitle} > { constantUserType[item.userData.type as any] } </Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.title} > { item.userData.name } </Text>
+                    <Text style={styles.subtitle} > { constantUserType[item.userData.type as any] } </Text>
+                </View>
+                <View style={styles.informations}>
+                    <View style={styles.infoLine}>
+                        <Text style={styles.header}>Matrícula/Siao: </Text>
+                        <Text style={styles.body}>item?.userData?.registration || item?.userData?.registration</Text>
+                    </View>
+                    
+                    <View style={styles.infoLine}>
+                        <Text style={styles.header}>Curso: </Text>
+                        <Text style={styles.body}>item?.userData?.course</Text>
+                    </View>
+                    
+                    <View style={styles.infoLine}>
+                        <Text style={styles.header}>Email: </Text>
+                        <Text style={styles.body}>{item?.userData?.email}</Text>
+                    </View>
+                    
+                    <View style={styles.infoLine}>
+                        <Text style={styles.header}>Emissão: </Text>
+                        <Text style={styles.body}>format(new Date(item?.userData?.createdAt || Date.now()), 'dd/MM/yyyy')</Text>
                     </View>
                 </View>
-               
-               <FlatList
-               data={flatListData}
-               renderItem={({ item }) => (
-                <View>
-                    <Text style={styles.header}>{item.key} :</Text>
-                    <Text
-                    style={styles.body}
-                    numberOfLines={1}
-                    ellipsizeMode='tail'
-                    > 
-                    { item.value }
-                    </Text>
-                </View>
-               )}
-               />
-                
-                </>
-            ) : (
-                <>
+            </>) : (<>
                 <View style={styles.validationContainer}>
                     <View style={styles.validationFooter}>
                         <Text style={styles.smallTitle}> <Icon size={16} name='school-outline' /> IFCE - Campus Crato</Text>
@@ -90,8 +68,7 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                         <Text style={styles.smallTitle}> <Icon size={16} name='phone' /> (88) 3586-8100 </Text>
                     </View>
                 </View>
-                </>
-            )}
+            </>)}
         </View>
     )
 }
