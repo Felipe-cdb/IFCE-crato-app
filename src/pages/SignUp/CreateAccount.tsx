@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity,
-  KeyboardAvoidingView, Platform } from 'react-native';
+  KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
@@ -11,23 +11,31 @@ import LogoIF from '../../components/LogoIF';
 import styles from './styles';
 import { UserTypes } from '../../base/Enums';
 import { Button } from '../../components/Button';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import * as ImagePicker from 'expo-image-picker';
+import { api } from '../../config';
+import FormData from 'form-data';
+
+interface ISelectedImage {
+  uri: string,
+  name?: string,
+  type: string,
+}
 
 export default function CreateAccount() {
 
+  const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
   const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
 
-  const { signUp } = useContext(AuthContext);
+  const { aviso, setScreenLoading } = useContext(AuthContext);
   const navigation = useNavigation<DrawerNavigationProp<any>>()
 
   useFocusEffect(
     useCallback(() => {
       setUser({type: UserTypes.STD} as ICheckRegister);
+      setSelectedImage(null)
     }, [])
   )
-
-  const cadastrar = () => {
-    signUp(user);
-  }
 
   const setNome = (nome: string) => {
     setUser(prevState => {
@@ -37,13 +45,17 @@ export default function CreateAccount() {
   
   const setCargo = (cargo: UserTypes) => {
     setUser(prevState => {
-      return {...prevState, type: cargo}
+      return {...prevState, type: cargo, registration: '', siap: ''}
     })
   }
   
   const setIdentificacao = (identificacao: string) => {
+    const constantKey = {
+      [UserTypes.EMP]: 'siap',
+      [UserTypes.STD]: 'registration'
+    }
     setUser(prevState => {
-      return {...prevState, identification: identificacao}
+      return {...prevState, [constantKey[user.type]]: identificacao}
     })
   }
 
@@ -71,6 +83,106 @@ export default function CreateAccount() {
     })
   }
 
+
+  const handleUpload = async () => {
+    try {
+      const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (!granted) return;
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (result.canceled) {
+          return;
+      }
+
+      const localUri = result.assets[0].uri;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename as string);
+      const type = match ? `image/${match[1]}` : `image`;
+      setSelectedImage({
+        uri:  Platform.OS === 'ios' ? localUri.replace('file://', '') : localUri,
+        name: filename,
+        type
+      })
+    } catch (error) {
+      aviso('Error ao anexar imagem', 'danger');
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null)
+  }
+
+  const handleCreateAccount = async () => {
+    const data = new FormData();
+    if ((!user.name?.trim() || !user.type?.trim() || !user.email?.trim() || !user.password?.trim()
+        || !user.confirmPassword.trim())
+        || (user.type == UserTypes.STD ) && !(user.registration ?? '').trim()
+        || (user.type == UserTypes.EMP) && !(user.siap ?? '').trim())
+        {
+            aviso('Preencha todos os campos com *', 'danger');
+            return; 
+        }
+        
+        if (user.password != user.confirmPassword) {
+            aviso('A senha e senha de confirmação não são as mesmas!', 'warning');
+            return;
+        }
+        
+        if (user.password.length < 8){
+            aviso('A senha deve ter no minimo 8 caracteres!', 'warning');
+            return;
+        }
+
+        data.append('name', user.name)
+        data.append('email', user.email)
+        data.append('password', user.password)
+        data.append('type', user.type)
+        if (user.phoneNumber) {
+          data.append('phoneNumber', user.phoneNumber)
+        }
+        if (user.type == UserTypes.EMP && user.siap) {
+          data.append('siap', user.siap)
+        }
+        if (user.type == UserTypes.STD && user.registration) {
+          data.append('registration', user.registration)
+        }
+        if (selectedImage) {
+          data.append('file', selectedImage)
+        }
+
+        try {
+            setScreenLoading(true);
+            await api.post('/auth/signup', data, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+            setScreenLoading(false);
+            navigation.navigate('validation', {email: user.email});
+            aviso("Só falta confirmar seu email!", "success");
+        } catch (error: any) {
+            setScreenLoading(false);
+            if (error.response){
+                if (error.response.data.message === "Duplicate Email entered") {
+                    aviso("Usuário já cadastrado", "warning");
+                } else if (error.response.data.message === "phoneNumber must be a valid phone number") {
+                    aviso("Número de telefone inválido", "warning");
+                } else {
+                  console.log(error.response)
+                  aviso("Ocorreu um erro inesperado!", "warning");
+                }
+
+            }else {
+                aviso("Ocorreu um erro inesperado!", "warning");
+            }
+        }
+  }
+
   return (
 
       <KeyboardAvoidingView
@@ -83,6 +195,26 @@ export default function CreateAccount() {
 
             <View style={styles.form}>
               <Text style={styles.titleForm}>Cadastro</Text>
+              
+              <View>
+              <View style={styles.optionsImage}>
+                {selectedImage ? (
+                  <View style={styles.image}>
+                    <TouchableOpacity onPress={handleRemoveImage} style={styles.imageTrash}>
+                      <Icon name='trash-can-outline' color={'#000'} style={styles.iconTrash}/>
+                    </TouchableOpacity>
+                    <Image
+                      source={{ uri: selectedImage.uri }}
+                      style={styles.imagePreview} />
+                  </View>
+                ) : 
+                  <TouchableOpacity onPress={handleUpload} style={styles.profileImageContainer}>
+                    <Icon style={styles.profileIcon} name="account" color="#000"/>
+                  </TouchableOpacity>
+                }
+              </View>
+            </View>
+
               <View style={styles.formGroup}>
                 <View style={styles.inputGroupAll}>
                   <InputGroup
@@ -99,7 +231,7 @@ export default function CreateAccount() {
                   />
                   <InputGroup
                     label="Matrícula/SIAPE"
-                    value={user.identification || ''}
+                    value={(user.type === UserTypes.EMP ? user.siap : user.registration) || ''}
                     required={true}
                     atualiza={setIdentificacao}
                     keyboardType='number-pad'
@@ -108,7 +240,12 @@ export default function CreateAccount() {
                     label="Email"
                     value={user.email}
                     required={true}
-                    atualiza={setEmail}/>
+                    atualiza={setEmail}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    keyboardType='email-address'
+                    multiline={true}
+                    />
                   <InputGroup
                     label="Celular"
                     value={user.phoneNumber || ''}
@@ -140,7 +277,7 @@ export default function CreateAccount() {
 
                   <Button
                     typeButton='mainButton'
-                    onPress={() => cadastrar()}
+                    onPress={handleCreateAccount}
                   >
                     <Text style={styles.textBtn}>Cadastrar</Text>
                   </Button>       

@@ -1,5 +1,10 @@
 import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+export const SLIDER_WIDTH = Dimensions.get('window').width + 80
+export const SLIDER_HEIGHT = Dimensions.get('window').height
+export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7)
+export const ITEM_HEIGHT = Math.round(SLIDER_HEIGHT * 0.7)
 
 const styles = StyleSheet.create({
     container: {
@@ -54,6 +59,66 @@ const styles = StyleSheet.create({
     textBtn: {
         fontSize: RFValue(16),
         color: "#fff"
+    },
+
+    optionsImage: {
+        width: '100%',
+        marginTop: RFValue(8),
+
+        display: "flex",
+        alignItems: "center",
+        alignSelf: "center",
+
+        justifyContent: 'center',
+        marginVertical: RFValue(8),
+        overflow: 'hidden'
+    },
+
+    image: {
+        width: ITEM_WIDTH - (0.60 * ITEM_WIDTH),
+        height: ITEM_WIDTH - (0.60 * ITEM_WIDTH),
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: 'space-around',
+        borderRadius: 100,
+    },
+
+    imageTrash: {
+        width: '20%',
+        alignItems: "center",
+        fontSize: RFValue(32)
+    },
+    
+    iconTrash: {
+        fontSize: RFValue(24)
+    },
+
+    imagePreview: {
+        flex: 1,
+        minHeight: RFValue(200),
+        maxHeight: RFValue(300),
+        resizeMode: 'cover',
+        borderWidth: RFValue(2),
+        borderColor: "#D9D9D9",
+        borderRadius: 100,
+    },
+
+    profileImageContainer: {
+        width: ITEM_WIDTH - (0.60 * ITEM_WIDTH),
+        height: ITEM_WIDTH - (0.60 * ITEM_WIDTH),
+        paddingVertical: RFValue(30),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderRadius: 100,
+        backgroundColor: '#D9D9D9',
+        borderColor: 'transparent'
+    },
+
+    profileIcon: {
+        fontSize: RFValue(50)
     },
 });
 
