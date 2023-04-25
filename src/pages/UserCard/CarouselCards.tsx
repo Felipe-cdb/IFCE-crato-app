@@ -3,6 +3,7 @@ import { View, Dimensions, StyleSheet } from "react-native"
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import CarouselCardItem from './CarouselCardItem'
 import { AuthContext } from '../../context/auth'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 export const SLIDER_WIDTH = Dimensions.get('window').width + 80
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7)
@@ -57,8 +58,7 @@ const CarouselCards = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    paddingTop: 60,
-    paddingBottom: 100
+    paddingBottom: RFValue(40)
   },
 });
 

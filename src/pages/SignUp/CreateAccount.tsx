@@ -2,7 +2,7 @@ import React, { useState, useContext, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity,
   KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { AuthContext } from '../../context/auth';
 import { InputGroup, SelectGroup} from '../../components/InputGroup';
@@ -28,7 +28,7 @@ export default function CreateAccount() {
   const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
 
   const { aviso, setScreenLoading } = useContext(AuthContext);
-  const navigation = useNavigation<DrawerNavigationProp<any>>()
+  const navigation = useNavigation<StackNavigationProp<any>>()
 
   useFocusEffect(
     useCallback(() => {
@@ -157,29 +157,31 @@ export default function CreateAccount() {
 
         try {
             setScreenLoading(true);
-            await api.post('/auth/signup', data, {
+            const res = await api.post('auth/signup', data, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             });
+            console.log(res);
             setScreenLoading(false);
             navigation.navigate('validation', {email: user.email});
             aviso("Só falta confirmar seu email!", "success");
         } catch (error: any) {
-            setScreenLoading(false);
-            if (error.response){
-                if (error.response.data.message === "Duplicate Email entered") {
-                    aviso("Usuário já cadastrado", "warning");
-                } else if (error.response.data.message === "phoneNumber must be a valid phone number") {
-                    aviso("Número de telefone inválido", "warning");
-                } else {
-                  console.log(error.response)
-                  aviso("Ocorreu um erro inesperado!", "warning");
-                }
-
-            }else {
-                aviso("Ocorreu um erro inesperado!", "warning");
+          console.log(error)
+          setScreenLoading(false);
+          if (error.response){
+            if (error.response.data.message === "Duplicate Email entered") {
+                aviso("Usuário já cadastrado", "warning");
+            } else if (error.response.data.message === "phoneNumber must be a valid phone number") {
+                aviso("Número de telefone inválido", "warning");
+            } else {
+              console.log(error.response)
+              aviso("Ocorreu um erro inesperado!", "warning");
             }
+
+          }else {
+            aviso("Ocorreu um erro inesperado!", "warning");
+          }
         }
   }
 
@@ -270,7 +272,7 @@ export default function CreateAccount() {
                 <View style={styles.butnGroup}>
                   <Button
                     typeButton='backButton'
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.goBack()}
                   >
                     <Text style={styles.textBtn}>Cancelar</Text>
                   </Button>

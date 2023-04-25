@@ -8,10 +8,10 @@ const UserCard = () => {
 
     return (
         <>
-        <Menu />
-        <SafeAreaView style={styles.container} >
-            <CarouselCards/>
-        </SafeAreaView>
+            <Menu />
+            <SafeAreaView style={styles.container} >
+                <CarouselCards/>
+            </SafeAreaView>
         </>
     )
 }
