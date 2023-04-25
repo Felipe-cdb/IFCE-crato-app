@@ -31,7 +31,8 @@ const userVoid: IUser = {
     email: '',
     roles: [],
     type: '',
-    isActive: true
+    isActive: true,
+    createdAt: ''
 }
 
 export const AuthContext = createContext({} as AuthContextDataProps);
@@ -64,8 +65,13 @@ function AuthProvider({ children }: AuthProviderProps) {
                         email: userResponse.email,
                         roles: userResponse.roles,
                         type: userResponse.type,
+                        siape: userResponse.siape || undefined,
+                        course: userResponse.course || undefined,
+                        avatarUrl: userResponse.avatarUrl || undefined,
+                        registration: userResponse.registration || undefined,
                         phoneNumber: userResponse.phoneNumber || undefined,
-                        isActive: userResponse.isActive || false
+                        isActive: userResponse.isActive || false,
+                        createdAt: userResponse.createdAt,
                     });
                     setIsUserLoaded(true);
                 };
@@ -127,8 +133,13 @@ function AuthProvider({ children }: AuthProviderProps) {
                 email: userResponse.email,
                 roles: userResponse.roles,
                 type: userResponse.type,
+                siape: userResponse.siape || undefined,
+                course: userResponse.course || undefined,
+                avatarUrl: userResponse.avatarUrl || undefined,
+                registration: userResponse.registration || undefined,
                 phoneNumber: userResponse.phoneNumber || undefined,
-                isActive: userResponse.isActive || false
+                isActive: userResponse.isActive || false,
+                createdAt: userResponse.createdAt
             });
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
@@ -179,8 +190,13 @@ function AuthProvider({ children }: AuthProviderProps) {
                 email: userResponse.email,
                 roles: userResponse.roles,
                 type: userResponse.type,
+                siape: userResponse.siape || undefined,
+                course: userResponse.course || undefined,
+                avatarUrl: userResponse.avatarUrl || undefined,
+                registration: userResponse.registration || undefined,
                 phoneNumber: userResponse.phoneNumber || undefined,
-                isActive: userResponse.isActive || false
+                isActive: userResponse.isActive || false,
+                createdAt: userResponse.createdAt,
             });
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);

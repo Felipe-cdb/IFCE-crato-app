@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as ImagePicker from 'expo-image-picker';
 import { api } from '../../config';
 import FormData from 'form-data';
+import { manipulateAsync } from 'expo-image-manipulator'
 
 interface ISelectedImage {
   uri: string,
@@ -99,7 +100,13 @@ export default function CreateAccount() {
           return;
       }
 
-      const localUri = result.assets[0].uri;
+      const manipulatedImage = await manipulateAsync(
+        result.assets[0].uri,
+        [{ resize: { width: 800 } }],
+        { compress: 0.5 }
+      );
+
+      const localUri = manipulatedImage.uri;
       const filename = localUri.split('/').pop();
       const match = /\.(\w+)$/.exec(filename as string);
       const type = match ? `image/${match[1]}` : `image`;
