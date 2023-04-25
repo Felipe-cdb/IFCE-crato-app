@@ -5,6 +5,7 @@ import styles from './style'
 import { IUser } from '../../base/Interfaces'
 import { constantUserType } from '../../base/constants'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { format } from 'date-fns'
 
 type QrCoreData = {
     qrcodeContent: string
@@ -20,14 +21,15 @@ type CardProp = {
 
 const CarouselCardItem = ({ index, item }: CardProp) => {
 
+    console.log(item)
     const flatListData = [
         {
-            key: 'Matrícula',
-            value: '123412341234'
+            key: 'Matrícula/Siap',
+            value: item?.userData?.registration || item?.userData?.registration
         },
         {
             key: 'Curso',
-            value: 'Sistemas de Informação'
+            value: item?.userData?.course
         },
         {
             key: 'Email',
@@ -35,7 +37,7 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
         },
         {
             key: 'Emissão',
-            value: '18/03/2023'
+            value: format(new Date(item?.userData?.createdAt || Date.now()), 'dd/MM/yyyy')
         }
     ]
 
@@ -53,7 +55,7 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                     <View style={styles.square}>
                     </View>
                     <Image
-                    source={{ uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVzc29hfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60' }}
+                    source={{ uri: item.userData.avatarUrl }}
                     style={styles.image}
                 />
                     <View style={styles.textContainer}>
@@ -82,11 +84,6 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
             ) : (
                 <>
                 <View style={styles.validationContainer}>
-                    <View style={styles.codeField}>
-                        <Text style={styles.codeTitle}> 123-432 </Text>
-                        <Text style={styles.title}> Código de Verificação </Text>
-                    </View>
-
                     <View style={styles.validationFooter}>
                         <Text style={styles.smallTitle}> <Icon size={16} name='school-outline' /> IFCE - Campus Crato</Text>
                         <Text style={styles.smallTitle}> <Icon size={16} name='google-maps' /> CE-292, SN - Gisélia Pinheiro, Crato - CE, 63115-500</Text>
