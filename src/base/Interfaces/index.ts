@@ -1,9 +1,9 @@
 import { UserPermitions, UserTypes } from "../Enums"
 
 export interface IUser {
-    name: String;
-    email: String;
-    type: String;
+    name: string;
+    email: string;
+    type: UserTypes;
     roles: UserPermitions[]; // MP, MM, RM
     phoneNumber?: string;
     avatarUrl?: string,
@@ -34,3 +34,5 @@ export interface IUserRegister {
 export interface ICheckRegister extends IUserRegister {
     confirmPassword: string;
 }
+
+export type IdentificationType = 'siap' | 'registration'

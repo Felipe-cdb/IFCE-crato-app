@@ -9,13 +9,15 @@ import { InputGroup, SelectGroup} from '../../components/InputGroup';
 import { ICheckRegister } from '../../base/Interfaces';
 import LogoIF from '../../components/LogoIF';
 import styles from './styles';
-import { UserTypes } from '../../base/Enums';
+import { CourseType, UserTypes } from '../../base/Enums';
 import { Button } from '../../components/Button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as ImagePicker from 'expo-image-picker';
 import { api } from '../../config';
 import FormData from 'form-data';
 import { manipulateAsync } from 'expo-image-manipulator'
+import { checkUserTypeIdentification } from '../../helpers';
+import { courseConstants } from '../../base/constants';
 
 interface ISelectedImage {
   uri: string,
@@ -26,14 +28,14 @@ interface ISelectedImage {
 export default function CreateAccount() {
 
   const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
-  const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STD} as ICheckRegister);
+  const [user, setUser] = useState<ICheckRegister>({type: UserTypes.STUDENT} as ICheckRegister);
 
   const { aviso, setScreenLoading } = useContext(AuthContext);
   const navigation = useNavigation<StackNavigationProp<any>>()
 
   useFocusEffect(
     useCallback(() => {
-      setUser({type: UserTypes.STD} as ICheckRegister);
+      setUser({type: UserTypes.STUDENT} as ICheckRegister);
       setSelectedImage(null)
     }, [])
   )
@@ -52,8 +54,9 @@ export default function CreateAccount() {
   
   const setIdentificacao = (identificacao: string) => {
     const constantKey = {
-      [UserTypes.EMP]: 'siap',
-      [UserTypes.STD]: 'registration'
+      [UserTypes.EMPLOYEETAE]: 'siap',
+      [UserTypes.EMPLOYEETEACHER]: 'siap',
+      [UserTypes.STUDENT]: 'registration'
     }
     setUser(prevState => {
       return {...prevState, [constantKey[user.type]]: identificacao}
@@ -128,8 +131,9 @@ export default function CreateAccount() {
     const data = new FormData();
     if ((!user.name?.trim() || !user.type?.trim() || !user.email?.trim() || !user.password?.trim()
         || !user.confirmPassword.trim())
-        || (user.type == UserTypes.STD ) && !(user.registration ?? '').trim()
-        || (user.type == UserTypes.EMP) && !(user.siap ?? '').trim())
+        || (user.type == UserTypes.STUDENT ) && !(user.registration ?? '').trim()
+        || (user.type == UserTypes.EMPLOYEETAE) && !(user.siap ?? '').trim()
+        || (user.type == UserTypes.EMPLOYEETEACHER) && !(user.siap ?? '').trim())
         {
             aviso('Preencha todos os campos com *', 'danger');
             return; 
@@ -152,12 +156,14 @@ export default function CreateAccount() {
         if (user.phoneNumber) {
           data.append('phoneNumber', user.phoneNumber)
         }
-        if (user.type == UserTypes.EMP && user.siap) {
+        if (checkUserTypeIdentification(user.type) === 'siap') {
           data.append('siap', user.siap)
         }
-        if (user.type == UserTypes.STD && user.registration) {
+
+        if (checkUserTypeIdentification(user.type) === 'registration') {
           data.append('registration', user.registration)
         }
+
         if (selectedImage) {
           data.append('file', selectedImage)
         }
@@ -232,18 +238,25 @@ export default function CreateAccount() {
                     required={true}
                     atualiza={setNome}/>
                   <SelectGroup label="Nível de Acesso" lista={[
-                      { label: "Aluno", value: UserTypes.STD },
-                      { label: "Servidor", value: UserTypes.EMP },
+                      { label: "Aluno", value: UserTypes.STUDENT },
+                      { label: "Servidor TAE", value: UserTypes.EMPLOYEETAE },
+                      { label: "Servidor DOCENTE", value: UserTypes.EMPLOYEETEACHER },
                     ]}
                     required={true}
                     atualiza={setCargo}
                   />
                   <InputGroup
                     label="Matrícula/SIAPE"
-                    value={(user.type === UserTypes.EMP ? user.siap : user.registration) || ''}
+                    value={(checkUserTypeIdentification(user.type) === 'siap' ? user.siap : user.registration) || ''}
                     required={true}
                     atualiza={setIdentificacao}
                     keyboardType='number-pad'
+                  />
+                  <SelectGroup label="Curso" lista={Object.keys(CourseType).map((key) => {
+                    return { label: courseConstants[key], value: key }
+                  } )}
+                    required={false}
+                    atualiza={setCargo}
                   />
                   <InputGroup
                     label="Email"

@@ -5,6 +5,21 @@ export enum UserPermitions{
 }
 
 export enum UserTypes{
-    STD = 'student',
-    EMP = 'employee',
+    STUDENT = 'student',
+    EMPLOYEETAE = 'employeeTae',
+    EMPLOYEETEACHER = 'employeeTeacher',
 }
+
+export enum CourseType {
+    agropecuariaIntegrado = 'agropecuariaIntegrado',
+    informaticaParaInternet = 'informaticaParaInternet',
+    agroindustria = 'agroindustria',
+    lazer = 'lazer',
+    agropecuariaSubsequente = 'agropecuariaSubsequente',
+    sistemasDeInformacao = 'sistemasDeInformacao',
+    zootecnia = 'zootecnia',
+    letrasPortuguesEspanhol = 'letrasPortuguesEspanhol',
+    gestaoEmanejoDeRecursosAmbientais = 'gestaoEmanejoDeRecursosAmbientais',
+    manejoSustentavelDaIrrigacao = 'manejoSustentavelDaIrrigacao',
+    producaoAnimalNoSemiarido = 'producaoAnimalNoSemiarido',
+  }
