@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacityProps, TouchableOpacity } from 'react-native';
+import { TouchableOpacityProps, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ButtonProps extends TouchableOpacityProps{
     typeButton: 'mainButton' |'backButton' | 'extraButton';
+    style?: StyleProp<ViewStyle>;
 }
 
 const stylesButtons = {
@@ -12,17 +13,20 @@ const stylesButtons = {
     extraColor: '#275D8E',
 }
 export const Button = (props: ButtonProps) => (
-    <TouchableOpacity {...props} style={{
-        padding: RFValue(10),
-        borderRadius: RFValue(8),
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: (
-            props.typeButton == 'mainButton' ? stylesButtons.mainColor :
-            (
-                props.typeButton == 'backButton' ? stylesButtons.backColor :
-                stylesButtons.extraColor
+    <TouchableOpacity {...props} style={[
+        props.style,
+        {
+            padding: RFValue(10),
+            borderRadius: RFValue(8),
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: (
+                props.typeButton == 'mainButton' ? stylesButtons.mainColor :
+                (
+                    props.typeButton == 'backButton' ? stylesButtons.backColor :
+                    stylesButtons.extraColor
+                )
             )
-        )
-    }}/>
+        }
+    ]}/>
 );

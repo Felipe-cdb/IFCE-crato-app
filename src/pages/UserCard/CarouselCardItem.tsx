@@ -41,8 +41,8 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                 </View>
                 <View style={styles.informations}>
                     <View style={styles.infoLine}>
-                        <Text style={styles.header}>Matrícula/Siao: </Text>
-                        <Text style={styles.body}>{item?.userData?.registration || item?.userData?.registration}</Text>
+                        <Text style={styles.header}>Matrícula/Siap: </Text>
+                        <Text style={styles.body}>{item?.userData?.registration || item?.userData?.siape}</Text>
                     </View>
                     
                     <View style={styles.infoLine}>
