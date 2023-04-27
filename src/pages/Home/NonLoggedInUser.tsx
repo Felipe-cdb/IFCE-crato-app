@@ -11,6 +11,7 @@ import Comunicado from "../../components/Comunicado";
 import MaisInfo from "../../components/MoreInfo";
 import { Item as ItemType } from "../../base/Types";
 import CommuniqueListEmpty from "../../components/CommuniqueListEmpty";
+import { constantColors } from "../../base/constants";
 
 interface IMoreInformations {
     exibir: boolean;
@@ -82,7 +83,7 @@ function NonLoggedInUser() {
 				<MaisInfo
 					visivel={maisInformacoes.exibir}
 					item={maisInformacoes.item}
-					bgc='#FFF1BF'
+					bgc={constantColors[maisInformacoes.item.category]}
 					setVisivel={setMaisInformacoes}
 				/>
 			}
