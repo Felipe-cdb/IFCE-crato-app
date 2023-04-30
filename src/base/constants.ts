@@ -31,3 +31,8 @@ export const courseConstants: any = {
   ['manejoSustentavelDaIrrigacao']: 'Manejo Sustentável da Irrigação',
   ['producaoAnimalNoSemiarido']: 'Produção Animal no Semiárido',
 }
+
+export const refectoryStatusConstants: any = {
+    ['openToAnswer']: { color: 'green', text: 'Em Aberto' },
+    ['open']: { color: 'green', text: 'Fechado para Respostas' },
+}

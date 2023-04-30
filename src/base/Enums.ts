@@ -23,3 +23,11 @@ export enum CourseType {
     manejoSustentavelDaIrrigacao = 'manejoSustentavelDaIrrigacao',
     producaoAnimalNoSemiarido = 'producaoAnimalNoSemiarido',
   }
+
+export enum RefectoryStatusEnum {
+    open = 'open',
+    openToAnswer = 'openToAnswer',
+    scheduled = 'scheduled',
+    closed = 'closed',
+}
+  

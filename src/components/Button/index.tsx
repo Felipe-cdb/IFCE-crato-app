@@ -15,8 +15,9 @@ export const Button = (props: ButtonProps) => (
     <TouchableOpacity {...props} style={{
         padding: RFValue(10),
         borderRadius: RFValue(8),
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         backgroundColor: (
             props.typeButton == 'mainButton' ? stylesButtons.mainColor :
             (

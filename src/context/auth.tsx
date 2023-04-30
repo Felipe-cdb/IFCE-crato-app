@@ -26,7 +26,7 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-const userVoid: IUser = {
+const userVoid: IUser | any= {
     name: '',
     email: '',
     roles: [],
@@ -170,11 +170,11 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    function signOut(){
+    async function signOut(){
         setIsUserLoaded(false);
         setLoading(false);
         setUser(userVoid);
-        AsyncStorage.clear();
+        await AsyncStorage.clear();
     }
     
     async function confirmCode(email: string, code: string, errorInCode: () => void){

@@ -14,6 +14,7 @@ interface IInputGroupProps extends TextInputProps {
     value: string;
     atualiza: (value: any) => void;
     heigth?: number;
+    borderWidth?: number
 }
 interface ISelectGroupProps {
     label: string;
@@ -22,7 +23,7 @@ interface ISelectGroupProps {
     lista: Item[];
 }
 
-export const InputGroup = ({ keyboardType, label, value, pass, required, atualiza, multiline, heigth, onContentSizeChange }: IInputGroupProps) => {
+export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, required, atualiza, multiline, heigth, onContentSizeChange }: IInputGroupProps) => {
 
     const [borda, setBorda] = useState({});
 
@@ -72,7 +73,7 @@ export const InputGroup = ({ keyboardType, label, value, pass, required, atualiz
                     multiline={multiline}
                     onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, borda, {height: heigth || undefined}]}
+                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, {height: heigth || undefined}]}
                     value={value}
                     onContentSizeChange={onContentSizeChange}
                     keyboardType={keyboardType}
