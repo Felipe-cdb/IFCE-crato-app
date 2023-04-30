@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity,
   KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import * as ImagePicker from 'expo-image-picker';
 
 import { AuthContext } from '../../context/auth';
 import { InputGroup, SelectGroup} from '../../components/InputGroup';
@@ -12,7 +13,6 @@ import styles from './styles';
 import { CourseType, UserTypes } from '../../base/Enums';
 import { Button } from '../../components/Button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import * as ImagePicker from 'expo-image-picker';
 import { api } from '../../config';
 import FormData from 'form-data';
 import { manipulateAsync } from 'expo-image-manipulator'
@@ -95,7 +95,7 @@ export default function CreateAccount() {
 
       const result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [3, 4],
         quality: 1,
       });
 

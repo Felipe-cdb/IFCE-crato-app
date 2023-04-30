@@ -20,6 +20,7 @@ interface AuthContextDataProps {
     confirmCode: (email: string, code: string, errorInCode: () => void) => any;
     resendCode: (email: string, message: string) => any;
     setScreenLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    userReload: () => any;
 }
 
 interface AuthProviderProps {
@@ -86,6 +87,35 @@ function AuthProvider({ children }: AuthProviderProps) {
         userInCache();
         setScreenLoading(false);
     }, []);
+
+    const userReload = async () => {
+        try {
+            const userId = await AsyncStorage.getItem('userId');
+            const res = await api.get(`/users/${userId}`);
+            if (res) {
+                const userResponse = res.data;
+                setUser({
+                    name: userResponse.name,
+                    email: userResponse.email,
+                    roles: userResponse.roles,
+                    type: userResponse.type,
+                    siape: userResponse.siape || undefined,
+                    course: userResponse.course || undefined,
+                    avatarUrl: userResponse.avatarUrl || undefined,
+                    registration: userResponse.registration || undefined,
+                    phoneNumber: userResponse.phoneNumber || undefined,
+                    isActive: userResponse.isActive || false,
+                    createdAt: userResponse.createdAt,
+                });
+                setIsUserLoaded(true);
+            };
+            setLoading(false);
+
+            return;
+        } catch (error: any) {
+            setLoading(false);
+        }
+    }
 
     const aviso = (mensagem: string, tipo: MessageType) => {
         showMessage({
@@ -239,7 +269,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     return(
         <AuthContext.Provider value={{
             signIn, aviso, signOut, setLoggedUser,
-            confirmCode, resendCode, setScreenLoading,
+            confirmCode, resendCode, setScreenLoading,userReload,
             loading, user, isUserLoaded, screenLoading
         }}>
             {children}
