@@ -1,88 +1,133 @@
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from '../../base/styles'
+import { RFValue } from "react-native-responsive-fontsize";
+
+const { 
+    blueColor,
+    defaultPaddingBottom,
+    defaultPaddingTop,
+    defaultPadding,
+    titleFontSize
+} = defaultStyleProperties
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
+        padding: defaultPadding
     },
 
     titlePage: {
-        fontSize: 24,
+        fontSize: defaultStyleProperties.pageTitleFontSize,
         fontWeight: 'bold',
-        marginTop: 30,
         alignSelf: 'center',
     },
 
     //-------------------------Data do Formulário-------------------------
 
     dateForms: {
-        marginTop: 30,
+        alignItems: "flex-start",
+        justifyContent: "center",
+        paddingTop: 20
     },
 
     statusForms: {
         alignSelf: "center",
         fontSize: 16,
-        marginBottom: 20,
+        paddingTop: defaultPaddingTop,
+        paddingBottom: defaultPaddingBottom
     },
 
     dateFormsReference: {
         fontSize: 16,
-        marginBottom: 5,
-        marginLeft: 30,
+        padding: 5,
     },
 
     dateFormsClosing: {
         fontSize: 16,
-        marginLeft: 30,
+        padding: 5,
+        
     },
 
 
     //-------------------------CARDÁPIO-------------------------
     cardapio: {
-        marginTop: 35,
-        marginLeft: 30,
-        paddingRight: 20,
+        width: '100%',
+        paddingTop: defaultPaddingTop,
+        paddingBottom: defaultPaddingBottom
     },
 
     title: {
-        fontSize: 16,
+        fontSize: titleFontSize,
         fontWeight: 'bold',
-        marginBottom: 20,
+        paddingBottom: defaultPaddingBottom
     },
 
     subtitle: {
         fontWeight: 'normal',
         fontSize: 16,
+        alignSelf: "flex-start"
     },
 
-    row: {
+    menuContainer: {
+        paddingTop: defaultPaddingTop,
+        paddingBottom: defaultPaddingBottom,
+        paddingHorizontal: "22%",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center"
+    },
+
+    menuIcon: {
+        fontSize: 20
+    },
+
+    editMenuIconContainer: {
+        backgroundColor: blueColor,
+        padding: RFValue(10),
+        borderRadius: RFValue(8),
         flexDirection: 'row',
-        marginBottom: 15,
-        marginLeft: 20,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: '100%',
+    },
+
+    editMenuIcon: {
+        fontSize: 20
     },
 
     //-------------------------Opções do Dia-------------------------
-    SelectOp: {
-        marginTop: 25,
-        alignSelf: 'flex-start',
-        marginLeft: 30,
-        marginBottom: 40,
+    refectoryChoices: {
+        width: '100%',
+        alignItems: 'flex-start',
     },
 
     //-------------------------Botões-------------------------
-    Buttons: {
-        flexDirection: 'row',
-        justifyContent: "space-between",
-        marginHorizontal: 20,
-        marginBottom: 15,
+    formButton: {
+        paddingVertical: 10,
     },
 
-    ButtonGR: {
-        flexDirection: 'row',
-        justifyContent: "center",
-        marginBottom: 40,
+    formTitle: {
+        fontSize: 16,
+        color: 'white',
+        padding: 2
     },
+
+    actionButtonContainer: {
+        width: '100%',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingTop: defaultPaddingTop
+    },
+
+    actionButtomTitle: {    
+        fontSize: 16,
+        color: 'white',
+        fontWeight: "bold",
+        paddingHorizontal: '10%'
+    }
 
 });
 

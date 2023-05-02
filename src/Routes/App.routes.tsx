@@ -8,7 +8,7 @@ const AppRoutesDrawer = createDrawerNavigator()
 import Home from '../pages/Home';
 import stylesNavigation from "./styles";
 import Refectory from '../pages/Refectory';
-import RefectoryForms from "../pages/RefectoryForms";
+import CreateForms from "../pages/CreateForms";
 import RefectoryReport from "../pages/RefectoryReport";
 import NewCommunicated from '../pages/NewCommunicated';
 import CustomDrawerContent from "../components/CustomDrawer";
@@ -120,8 +120,8 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
         />}
 
         {refactory && <AppRoutesDrawer.Screen
-            name="Dados do Formulário"
-            component={RefectoryForms}
+            name="CreateForm"
+            component={CreateForms}
             options={{
                 headerShown: false,
                 drawerItemStyle: { display: 'none' },

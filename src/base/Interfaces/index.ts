@@ -1,9 +1,9 @@
-import { UserPermitions, UserTypes } from "../Enums"
+import { RefectoryStatusEnum, UserPermitions, UserTypes } from "../Enums"
 
 export interface IUser {
-    name: String;
-    email: String;
-    type: String;
+    name: string;
+    email: string;
+    type: UserTypes;
     roles: UserPermitions[]; // MP, MM, RM
     phoneNumber?: string;
     avatarUrl?: string,
@@ -14,6 +14,14 @@ export interface IUser {
     createdAt: string
 }
 
+export interface IRefectory {
+    id: string;
+    status: RefectoryStatusEnum;
+    vigencyDate: number;
+    startAnswersDate: number;
+    menuUrl: string;
+    hasAnswered: boolean;
+}
 
 export interface IUserLog {
     email: string;
@@ -33,4 +41,14 @@ export interface IUserRegister {
 
 export interface ICheckRegister extends IUserRegister {
     confirmPassword: string;
+}
+
+export type IdentificationType = 'siap' | 'registration'
+
+export type MenuAnswer = {
+    breakfast: number,
+	lunch: number,
+	afternoonSnack: number,
+	dinner: number,
+	nightSnack: number
 }

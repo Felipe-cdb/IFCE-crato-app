@@ -14,6 +14,7 @@ import BoxDialog from "../../components/BoxDialog";
 import { Item as ItemType } from "../../base/Types";
 import { IUser } from "../../base/Interfaces";
 import CommuniqueListEmpty from "../../components/CommuniqueListEmpty";
+import { constantColors } from "../../base/constants";
 
 interface IMoreInformations {
     exibir: boolean;
@@ -96,7 +97,7 @@ function LoggedInUser({ user }: LoggedInUserProps) {
 				<MaisInfo
 					visivel={maisInformacoes.exibir}
 					item={maisInformacoes.item}
-					bgc='#FFF1BF'
+					bgc={constantColors[maisInformacoes.item.category]}
 					setVisivel={setMaisInformacoes}
 				/>
 			}

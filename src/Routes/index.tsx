@@ -6,6 +6,7 @@ import AuthRoutes from './Auth.routes';
 import AppRoutes from './App.routes';
 import { UserPermitions } from '../base/Enums';
 import ScreenLoad from '../components/ScreenLoad';
+import RefectoryProvider from '../context/refectory.context';
 
 const Routes = () => {
   const {isUserLoaded, loading, user, screenLoading} = useContext(AuthContext);
@@ -21,11 +22,14 @@ const Routes = () => {
   return (<>
     <ScreenLoad visivel={screenLoading}/>
     {isUserLoaded ?
-      <AppRoutes
-        mural={user.roles.includes(UserPermitions.MM)}
-        refactory={user.roles.includes(UserPermitions.RM)}
-        permitions={user.roles.includes(UserPermitions.PM)}
-      /> :
+      <RefectoryProvider>
+        <AppRoutes
+          mural={user.roles.includes(UserPermitions.MM)}
+          refactory={user.roles.includes(UserPermitions.RM)}
+          permitions={user.roles.includes(UserPermitions.PM)}
+        />
+      </RefectoryProvider>
+       :
       <AuthRoutes />
     }
   </>)

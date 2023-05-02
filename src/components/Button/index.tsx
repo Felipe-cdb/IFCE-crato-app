@@ -4,7 +4,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ButtonProps extends TouchableOpacityProps{
     typeButton: 'mainButton' |'backButton' | 'extraButton';
-    style?: StyleProp<ViewStyle>;
+    customStyle?: object
 }
 
 const stylesButtons = {
@@ -13,20 +13,19 @@ const stylesButtons = {
     extraColor: '#275D8E',
 }
 export const Button = (props: ButtonProps) => (
-    <TouchableOpacity {...props} style={[
-        props.style,
-        {
-            padding: RFValue(10),
-            borderRadius: RFValue(8),
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: (
-                props.typeButton == 'mainButton' ? stylesButtons.mainColor :
-                (
-                    props.typeButton == 'backButton' ? stylesButtons.backColor :
-                    stylesButtons.extraColor
+    <TouchableOpacity {...props} style={{
+        padding: RFValue(10),
+        borderRadius: RFValue(8),
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        backgroundColor: (
+            props.typeButton == 'mainButton' ? stylesButtons.mainColor :
+            (
+                props.typeButton == 'backButton' ? stylesButtons.backColor :
+                stylesButtons.extraColor
                 )
-            )
-        }
-    ]}/>
+                ),
+        ...props.customStyle,
+    }}/>
 );

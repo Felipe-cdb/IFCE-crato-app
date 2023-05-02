@@ -1,52 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import styles from "./styles";
+import { RefectoryContext } from '../../context/refectory.context'
 
-interface RefectoryChoicesProps {
-    onSelectBreakfast: (isSelected: boolean) => void;
-    onSelectLunch: (isSelected: boolean) => void;
-    onSelectAfternoonSnack: (isSelected: boolean) => void;
-    onSelectDinner: (isSelected: boolean) => void;
-    onSelectEveningSnack: (isSelected: boolean) => void;
-}
+type MenuType = 'breakfast' | 'lunch'|'afternoonSnack'|'dinner'|'nightSnack'
 
-export function RefectoryChoices({
-    onSelectBreakfast,
-    onSelectLunch,
-    onSelectAfternoonSnack,
-    onSelectDinner,
-    onSelectEveningSnack,
-}: RefectoryChoicesProps) {
-    const [breakfastSelected, setBreakfastSelected] = useState(false);
-    const [lunchSelected, setLunchSelected] = useState(false);
-    const [afternoonSnackSelected, setAfternoonSnackSelected] = useState(false);
-    const [dinnerSelected, setDinnerSelected] = useState(false);
-    const [eveningSnackSelected, setEveningSnackSelected] = useState(false);
-
-    function handleBreakfastSelection() {
-        setBreakfastSelected(!breakfastSelected);
-        onSelectBreakfast(!breakfastSelected);
-    }
-
-    function handleLunchSelection() {
-        setLunchSelected(!lunchSelected);
-        onSelectLunch(!lunchSelected);
-    }
-
-    function handleAfternoonSnackSelection() {
-        setAfternoonSnackSelected(!afternoonSnackSelected);
-        onSelectAfternoonSnack(!afternoonSnackSelected);
-    }
-
-    function handleDinnerSelection() {
-        setDinnerSelected(!dinnerSelected);
-        onSelectDinner(!dinnerSelected);
-    }
-
-    function handleEveningSnackSelection() {
-        setEveningSnackSelected(!eveningSnackSelected);
-        onSelectEveningSnack(!eveningSnackSelected);
+export function RefectoryChoices() {
+    const { checkboxAnswerFields, setCheckboxAnswerFields } = useContext(RefectoryContext)
+    
+    const handleChange = (key: MenuType) => {
+        const value = checkboxAnswerFields[key] === 0 ? 1 : 0 
+        setCheckboxAnswerFields({...checkboxAnswerFields, [key]: value })
     }
 
     return (
@@ -55,50 +20,50 @@ export function RefectoryChoices({
 
             <TouchableOpacity
                 style={styles.optionContainer}
-                onPress={handleBreakfastSelection}
+                onPress={() => handleChange('breakfast')}
             >
                 <View style={styles.checkbox}>
-                    {breakfastSelected && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.breakfast && <View style={styles.checkedBox} />}
                 </View>
                 <Text style={styles.optionText}>Café da Manhã</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.optionContainer}
-                onPress={handleLunchSelection}
+                onPress={() => handleChange('lunch')}
             >
                 <View style={styles.checkbox}>
-                    {lunchSelected && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.lunch && <View style={styles.checkedBox} />}
                 </View>
                 <Text style={styles.optionText}>Almoço</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.optionContainer}
-                onPress={handleAfternoonSnackSelection}
+                onPress={() => handleChange('afternoonSnack')}
             >
                 <View style={styles.checkbox}>
-                    {afternoonSnackSelected && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.afternoonSnack && <View style={styles.checkedBox} />}
                 </View>
                 <Text style={styles.optionText}>Lanche da Tarde</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.optionContainer}
-                onPress={handleDinnerSelection}
+                onPress={() => handleChange('dinner')}
             >
                 <View style={styles.checkbox}>
-                    {dinnerSelected && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.dinner && <View style={styles.checkedBox} />}
                 </View>
                 <Text style={styles.optionText}>Janta</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.optionContainer}
-                onPress={handleEveningSnackSelection}
+                onPress={() => handleChange('nightSnack')}
             >
                 <View style={styles.checkbox}>
-                    {eveningSnackSelected && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.nightSnack && <View style={styles.checkedBox} />}
                 </View>
                 <Text style={styles.optionText}>Lanche da Noite</Text>
             </TouchableOpacity>

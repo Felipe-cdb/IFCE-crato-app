@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        alignItems: "flex-start"
     },
 
     title: {
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 18,
         marginBottom: 25,
     },
     optionContainer: {
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     optionText: {
         marginLeft: 15,
         fontSize: 14,
+        fontWeight: "bold"
     },
     checkbox: {
         width: 20,

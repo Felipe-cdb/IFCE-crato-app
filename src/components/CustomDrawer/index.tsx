@@ -14,6 +14,7 @@ const CustomDrawerContent = (props: any) => {
     const { signOut, isUserLoaded } = useContext(AuthContext);
 
     function sair(){
+        props.navigation.navigate('Mural')
         signOut();
     }
 
