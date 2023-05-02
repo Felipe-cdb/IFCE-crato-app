@@ -33,6 +33,7 @@ export const courseConstants: any = {
 }
 
 export const refectoryStatusConstants: any = {
-    ['openToAnswer']: { color: 'green', text: 'Em Aberto' },
-    ['open']: { color: 'green', text: 'Fechado para Respostas' },
+    ['openToAnswer']: { color: '#19882C', text: 'Em Aberto' },
+    ['open']: { color: '#19882C', text: 'Fechado para Respostas' },
+    ['scheduled']: { color: '#275D8E', text: 'Agendado' },
 }

@@ -15,6 +15,7 @@ type RefectoryContextProps = {
   clearRefectory(): void
   checkboxAnswerFields: MenuAnswer
   setCheckboxAnswerFields: React.Dispatch<React.SetStateAction<MenuAnswer>>
+  loadCurrentRefectory(): Promise<IRefectory | null>
 }
 
 export const RefectoryContext = createContext({} as RefectoryContextProps)
@@ -37,24 +38,14 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
                 const dateToCompare = addDays(parsedRefectory.vigencyDate, 1)
 
                 if(isAfter(new Date().valueOf(), dateToCompare)) {
-                    await clearRefectory()
-                    const currentRefectory = await loadCurrentRefectory()
-                    
-                    if (currentRefectory) {
-                        await setRefectoryStoraged(currentRefectory)
-                    }
-                    setRefectory(currentRefectory)
+                    await loadCurrentRefectory()     
                 }
 
                 if (!refectory) {
                     setRefectory(JSON.parse(storagedRefectory))
                 }
             } else {
-                const currentRefectory = await loadCurrentRefectory()
-                if (currentRefectory) {
-                    await setRefectoryStoraged(currentRefectory)
-                }
-                setRefectory(currentRefectory)
+                await loadCurrentRefectory()
             }
         }
 
@@ -66,16 +57,20 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
             const res = await api.get(`/refectory/current-refectory`);
             if (!!res.data) {
                 const response = res.data;
-                return {
+                const refectoryData = {
                     id: response.id,
                     menuUrl: response.menuUrl,
                     startAnswersDate: response.startAnswersDate,
                     status: response.status,
                     vigencyDate: response.vigencyDate,
                     hasAnswered: response.hasAnswered
-                };
+                }
+
+                await setRefectoryStoraged(refectoryData)
+                return refectoryData;
             };
 
+            await clearRefectory()
             return null;
         } catch (error: any) {
             return null
@@ -113,7 +108,8 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
             refectory,
             setRefectoryStoraged,
             checkboxAnswerFields,
-            setCheckboxAnswerFields
+            setCheckboxAnswerFields,
+            loadCurrentRefectory
         }}>
             {children}
         </RefectoryContext.Provider>

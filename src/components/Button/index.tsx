@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacityProps, TouchableOpacity } from 'react-native';
+import { TouchableOpacityProps, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ButtonProps extends TouchableOpacityProps{
     typeButton: 'mainButton' |'backButton' | 'extraButton';
+    customStyle?: object
 }
 
 const stylesButtons = {
@@ -23,7 +24,8 @@ export const Button = (props: ButtonProps) => (
             (
                 props.typeButton == 'backButton' ? stylesButtons.backColor :
                 stylesButtons.extraColor
-            )
-        )
+                )
+                ),
+        ...props.customStyle,
     }}/>
 );

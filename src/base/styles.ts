@@ -8,5 +8,7 @@ export const defaultStyleProperties = {
     defaultPaddingTop: 10,
     defaultPaddingBottom: 10,
 
-    titleFontSize: 18
+    titleFontSize: 18,
+    pageTitleFontSize: 24,
+    subTitleFontSize: 16
 }

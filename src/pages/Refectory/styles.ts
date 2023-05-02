@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
 
     titlePage: {
-        fontSize: 24,
+        fontSize: defaultStyleProperties.pageTitleFontSize,
         fontWeight: 'bold',
         alignSelf: 'center',
     },

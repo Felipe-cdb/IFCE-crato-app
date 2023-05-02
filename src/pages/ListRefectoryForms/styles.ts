@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -6,46 +8,27 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
     },
+    titlePageContainer: {
+        width: '100%',
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row"
+    },
+    
     titlePage: {
-        fontSize: 24,
+        fontSize: defaultStyleProperties.pageTitleFontSize,
         fontWeight: 'bold',
-        marginTop: 30,
+        marginVertical: 15,
         alignSelf: 'center',
+        paddingHorizontal: RFValue(20),
     },
 
-    // Tabela 
-    tableContainer: {
-        width: '95%',
-        height: 320,
-        backgroundColor: 'white',
-        marginTop: 20,
-        borderRadius: 10,
-        overflow: 'hidden',
-        marginBottom: 20,
+    buttonTitle: {
+        fontSize: 16,
+        color: 'white',
+        fontWeight: "bold"
     },
-    tableHeader: {
-        backgroundColor: '#E5E5E5',
-        flexDirection: 'row',
-        height: 40,
-        alignItems: 'center',
-    },
-    tableHeaderText: {
-        flex: 1,
-        textAlign: 'center',
-        fontWeight: 'bold',
-    },
-    tableRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 40,
-    },
-    tableRowText: {
-        flex: 1,
-        paddingLeft: 10,
-    },
-    tableRowButton: {
-        paddingRight: 10,
-    },
+
 });
 
 export default styles;
