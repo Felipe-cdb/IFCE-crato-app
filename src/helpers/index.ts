@@ -10,3 +10,7 @@ export const checkUserTypeIdentification = (userType: UserTypes): Identification
             return 'registration'
     }
 }
+
+export const getFormatedDate = (date: Date): number => {
+    return new Date(`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`).valueOf()
+}
