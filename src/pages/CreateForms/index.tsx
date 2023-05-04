@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, ScrollView, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,20 +12,53 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { defaultStyleProperties } from '../../base/styles';
 import Tooltip from '../../components/Tooltip';
 import { addDays, addHours, format } from 'date-fns';
+import { getFormatedDate } from '../../helpers'
+import { AuthContext } from '../../context/auth';
+import { api } from '../../config';
 
 type Form = {
-    vigencyDate: number
-    startAnswerDate: number
+    vigencyDate: string,
+    startAnswerDate: string,
+    keyName: string,
 }
 
 function CreateForms() {
-    const [text, onChangeText] = React.useState('');
     const [ formsToCreate, setFormsToCreate ] = React.useState<Form[]>([{
-        vigencyDate: addDays(new Date().valueOf(), 1).valueOf(),
-        startAnswerDate: new Date().valueOf()
+        vigencyDate: addDays(getFormatedDate(new Date()), 1).valueOf().toString(),
+        startAnswerDate: getFormatedDate(new Date()).toString(),
+        keyName: 'key-0'
     }]);
+
+    const { aviso } = useContext(AuthContext)
   
     const navigation = useNavigation<DrawerNavigationProp<any>>();
+
+    const handleNewFormDates = () => {
+        setFormsToCreate([...formsToCreate, { 
+            keyName: `key-${formsToCreate.length}`,
+            vigencyDate: addDays(Number(formsToCreate.at(-1)?.vigencyDate), 1).valueOf().toString(),
+            startAnswerDate: addDays(Number(formsToCreate.at(-1)?.startAnswerDate), 1).valueOf().toString(),
+         }])
+    }
+
+    const handleSave = async () => {
+        const serializedForms = formsToCreate.map((item) => (
+            {
+                vigencyDate: parseInt(item.vigencyDate)
+            }
+        ))
+        try {
+            await api.post('refectory/create', { vigencyDates: serializedForms, menuUrl: 'https://ifce.edu.br/crato' })
+            aviso('Formulários adicionados com sucesso', 'success')
+            navigation.goBack()
+        } catch (error) {
+            aviso('Falha ao criar formulários', 'danger')
+        }
+    }
+
+    const handleRemoveForm = () => {
+        setFormsToCreate(formsToCreate.slice(0, -1))
+    }
 
     return (
         <View style={styles.container}>
@@ -38,29 +71,34 @@ function CreateForms() {
             </View>
 
             <ScrollView style={styles.inputContainer}>
-                <View style={styles.dateContainer}>
-                    <View>
-                        <Text style={styles.subtitle} >Data de referência </Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Selecione a data'
-                            onChangeText={onChangeText}
-                            value={text}
-                        />
+                { formsToCreate.map((item, index) => (
+                    <View key={index} style={styles.dateContainer}>
+                        <View>
+                            <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                                <Text style={styles.subtitle} >Data de referência </Text>
+                                { formsToCreate.length > 1 && formsToCreate.length -1 === index ? <Icon onPress={handleRemoveForm} size={RFValue(20)} name='close'/> : '' }
+                            </View>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Selecione a data'
+                                value={format(Number(item.vigencyDate), 'dd/MM/yyyy')}
+                            />
+                        </View>
+
+                        <View style={styles.dateIntervalContainer}>
+                            <Text style={styles.dateIntervalText}>
+                                Período
+                            </Text>
+                            <Text style={{fontSize: 16}} > <Text style={{fontWeight: 'bold'}}>De</Text> { format(Number(item.startAnswerDate) , 'dd/MM/yyyy') } às 00:00 </Text>
+                            <Text style={{fontSize: 16}} > <Text style={{fontWeight: 'bold'}}>Até</Text> { format(Number(item.startAnswerDate) , 'dd/MM/yyyy') } às 19:00 </Text>
+
+                        </View>
                     </View>
 
-                    <View style={styles.dateIntervalContainer}>
-                        <Text style={styles.dateIntervalText}>
-                            Período
-                        </Text>
-                        <Text style={{fontSize: 16}} > <Text style={{fontWeight: 'bold'}}>De</Text> 27/11/2023 às 00:00 </Text>
-                        <Text style={{fontSize: 16}} > <Text style={{fontWeight: 'bold'}}>Até</Text> 27/11/2023 às 19:00</Text>
-
-                    </View>
-                </View>
+                )) }
 
                 <View style={styles.iconContainer}>
-                    <Icon color={defaultStyleProperties.greenColor} size={30} name='plus-box-multiple-outline'/>
+                    <Icon onPress={handleNewFormDates} color={defaultStyleProperties.greenColor} size={30} name='plus-box-multiple-outline'/>
                 </View>
             </ScrollView>
             
@@ -69,7 +107,7 @@ function CreateForms() {
                 <Text >Voltar</Text>
                 </ButtonComponent>
 
-                <ButtonComponent typeButton='mainButton'>
+                <ButtonComponent onPress={handleSave} typeButton='mainButton'>
                     <Text>
                         Salvar
                     </Text>

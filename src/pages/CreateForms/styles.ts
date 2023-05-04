@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     },
 
     iconContainer: {
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 20,
     },
 
     actionButtonContainer: {
