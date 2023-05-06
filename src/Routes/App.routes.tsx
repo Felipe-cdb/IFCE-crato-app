@@ -9,7 +9,6 @@ import Home from '../pages/Home';
 import stylesNavigation from "./styles";
 import Refectory from '../pages/Refectory';
 import CreateForms from "../pages/CreateForms";
-import RefectoryReport from "../pages/RefectoryReport";
 import NewCommunicated from '../pages/NewCommunicated';
 import CustomDrawerContent from "../components/CustomDrawer";
 import ListRefectoryForms from "../pages/ListRefectoryForms";
@@ -23,7 +22,7 @@ interface ManagerProps {
     permitions?: boolean,
 };
 
-const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
+const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
     <StatusBar backgroundColor={'#19882C'} barStyle={"light-content"} translucent />
 
     <AppRoutesDrawer.Navigator
@@ -77,20 +76,6 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
             }}
         />
 
-        <AppRoutesDrawer.Screen
-            name="Identificação"
-            component={UserCard}
-            options={{
-                headerShown: false,
-                drawerIcon: () => (
-                    <Icon name="card-account-details-outline"
-                        color="#000"
-                        style={stylesNavigation.icons}
-                    />
-                )
-            }}
-        />
-        
         {refactory && <AppRoutesDrawer.Screen
             name="Formulários do Refeitório"
             component={ListRefectoryForms}
@@ -98,20 +83,6 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="clipboard-edit-outline"
-                        color="#000"
-                        style={stylesNavigation.icons}
-                    />
-                )
-            }}
-        />}
-        
-        {refactory && <AppRoutesDrawer.Screen
-            name="Relatório do Refeitório"
-            component={RefectoryReport}
-            options={{
-                headerShown: false,
-                drawerIcon: () => (
-                    <Icon name="chart-bar"
                         color="#000"
                         style={stylesNavigation.icons}
                     />
@@ -129,6 +100,20 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
         />}
 
         <AppRoutesDrawer.Screen
+            name="Identificação"
+            component={UserCard}
+            options={{
+                headerShown: false,
+                drawerIcon: () => (
+                    <Icon name="card-account-details-outline"
+                        color="#000"
+                        style={stylesNavigation.icons}
+                    />
+                )
+            }}
+        />
+
+        <AppRoutesDrawer.Screen
             name="EditProfile"
             component={EditProfile}
             options={{
@@ -142,7 +127,7 @@ const  AppRoutesRoutes = ({mural, permitions,refactory}: ManagerProps) => (<>
                 )
             }}
         />
-        
+
         <AppRoutesDrawer.Screen
             name="Notifications"
             component={Notifications}
