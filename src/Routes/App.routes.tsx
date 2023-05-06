@@ -76,20 +76,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
             }}
         />
 
-        <AppRoutesDrawer.Screen
-            name="Identificação"
-            component={UserCard}
-            options={{
-                headerShown: false,
-                drawerIcon: () => (
-                    <Icon name="card-account-details-outline"
-                        color="#000"
-                        style={stylesNavigation.icons}
-                    />
-                )
-            }}
-        />
-
         {refactory && <AppRoutesDrawer.Screen
             name="Formulários do Refeitório"
             component={ListRefectoryForms}
@@ -112,6 +98,20 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 drawerItemStyle: { display: 'none' },
             }}
         />}
+
+        <AppRoutesDrawer.Screen
+            name="Identificação"
+            component={UserCard}
+            options={{
+                headerShown: false,
+                drawerIcon: () => (
+                    <Icon name="card-account-details-outline"
+                        color="#000"
+                        style={stylesNavigation.icons}
+                    />
+                )
+            }}
+        />
 
         <AppRoutesDrawer.Screen
             name="EditProfile"
