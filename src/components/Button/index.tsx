@@ -1,16 +1,18 @@
 import React from 'react';
-import { TouchableOpacityProps, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
+import { TouchableOpacityProps, TouchableOpacity } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { defaultStyleProperties } from '../../base/styles';
 
-interface ButtonProps extends TouchableOpacityProps{
-    typeButton: 'mainButton' |'backButton' | 'extraButton';
+interface ButtonProps extends TouchableOpacityProps {
+    typeButton: 'mainButton' | 'backButton' | 'redButton' | 'extraButton';
     customStyle?: object
 }
 
 const stylesButtons = {
-    mainColor: '#379936',
-    backColor: '#696969',
-    extraColor: '#275D8E',
+    mainColor: defaultStyleProperties.greenColor,
+    backColor: defaultStyleProperties.grayColor,
+    redColor: defaultStyleProperties.redColor,
+    extraColor: defaultStyleProperties.blueColor,
 }
 export const Button = (props: ButtonProps) => (
     <TouchableOpacity {...props} style={{
@@ -21,11 +23,14 @@ export const Button = (props: ButtonProps) => (
         justifyContent: 'space-around',
         backgroundColor: (
             props.typeButton == 'mainButton' ? stylesButtons.mainColor :
-            (
-                props.typeButton == 'backButton' ? stylesButtons.backColor :
-                stylesButtons.extraColor
+                (
+                    props.typeButton == 'backButton' ? stylesButtons.backColor :
+                        (
+                            props.typeButton == 'redButton' ? stylesButtons.redColor :
+                                stylesButtons.extraColor
+                        )
                 )
-                ),
+        ),
         ...props.customStyle,
-    }}/>
+    }} />
 );
