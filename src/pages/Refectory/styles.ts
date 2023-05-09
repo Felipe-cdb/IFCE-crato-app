@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { defaultStyleProperties } from '../../base/styles'
 import { RFValue } from "react-native-responsive-fontsize";
 
-const { 
+const {
     blueColor,
     defaultPaddingBottom,
     defaultPaddingTop,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     dateFormsClosing: {
         fontSize: 16,
         padding: 5,
-        
+
     },
 
 
@@ -76,11 +76,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: "22%",
         flexDirection: "row",
         justifyContent: "space-evenly",
-        alignItems: "center"
+        alignItems: "center",
+        marginVertical: 10,
     },
 
     menuIcon: {
-        fontSize: 20
+        fontSize: 20,
+        marginLeft: 8,
     },
 
     editMenuIconContainer: {
@@ -90,7 +92,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: '100%',
     },
 
     editMenuIcon: {
@@ -114,6 +115,11 @@ const styles = StyleSheet.create({
         padding: 2
     },
 
+    formIcon: {
+        fontSize: 20,
+        marginLeft: 8,
+    },
+
     actionButtonContainer: {
         width: '100%',
         flexDirection: "row",
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
         paddingTop: defaultPaddingTop
     },
 
-    actionButtomTitle: {    
+    actionButtomTitle: {
         fontSize: 16,
         color: 'white',
         fontWeight: "bold",
