@@ -4,18 +4,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IRefectory, MenuAnswer } from '../base/Interfaces'
 import { api } from '../config'
 import { addDays, isAfter } from 'date-fns';
+import { RefectoryStatusEnum } from '../base/Enums';
 
 interface RefectoryProviderProps {
     children: ReactNode;
 }
 
 type RefectoryContextProps = {
-  refectory: IRefectory | null
-  setRefectoryStoraged(refectoryData: IRefectory): Promise<void>
-  clearRefectory(): void
-  checkboxAnswerFields: MenuAnswer
-  setCheckboxAnswerFields: React.Dispatch<React.SetStateAction<MenuAnswer>>
-  loadCurrentRefectory(): Promise<IRefectory | null>
+    refectory: IRefectory | null
+    setRefectoryStoraged(refectoryData: IRefectory): Promise<void>
+    clearRefectory(): void
+    checkboxAnswerFields: MenuAnswer
+    setCheckboxAnswerFields: React.Dispatch<React.SetStateAction<MenuAnswer>>
+    loadCurrentRefectory(): Promise<IRefectory | null>
 }
 
 export const RefectoryContext = createContext({} as RefectoryContextProps)
@@ -33,12 +34,16 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
     useEffect(() => {
         const cachedRefectory = async () => {
             const storagedRefectory = await AsyncStorage.getItem('@refectory');
-            if(storagedRefectory){
+            if (storagedRefectory) {
                 const parsedRefectory: IRefectory = JSON.parse(storagedRefectory)
                 const dateToCompare = addDays(parsedRefectory.vigencyDate, 1)
 
-                if(isAfter(new Date().valueOf(), dateToCompare)) {
-                    await loadCurrentRefectory()     
+                if (isAfter(new Date().valueOf(), dateToCompare.setUTCHours(0, 0, 0, 0))) {
+                    await loadCurrentRefectory()
+                }
+
+                if (new Date().getHours() >= 19 && refectory?.status !== RefectoryStatusEnum.open) {
+                    await loadCurrentRefectory()
                 }
 
                 if (!refectory) {
@@ -77,7 +82,7 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
         }
     }
 
-    const setRefectoryStoraged = async (refectoryData: IRefectory) => { 
+    const setRefectoryStoraged = async (refectoryData: IRefectory) => {
         await AsyncStorage.removeItem('@refectory')
         await AsyncStorage.setItem('@refectory', JSON.stringify({
             id: refectoryData.id,
