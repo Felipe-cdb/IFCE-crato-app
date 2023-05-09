@@ -3,6 +3,7 @@ export const defaultStyleProperties = {
     greenColor: '#379936',
     grayColor: '#696969',
     blueColor: '#275D8E',
+    redColor: '#C91517',
 
     defaultPadding: 20,
     defaultPaddingTop: 10,
