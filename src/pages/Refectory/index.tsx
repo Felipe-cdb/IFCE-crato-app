@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, View, TouchableOpacity, Alert, SafeAreaView, RefreshControl } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -13,6 +13,7 @@ import MenuFormUrlModal from '../../components/MenuFormUrlModal';
 import styles from './styles';
 import { refectoryStatusConstants } from '../../base/constants';
 import { format } from 'date-fns';
+import { RefreshControl } from 'react-native-gesture-handler'
 
 import { RefectoryContext } from '../../context/refectory.context'
 import { AuthContext } from '../../context/auth'
@@ -64,7 +65,6 @@ const Refectory = () => {
     return (
         <>
             <Menu />
-            <SafeAreaView>
                 {!refectory
                     ?
                     (
@@ -151,8 +151,6 @@ const Refectory = () => {
                             </ScrollView>
                         </>
                     )}
-            </SafeAreaView>
-
         </>
     )
 }

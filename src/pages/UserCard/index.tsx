@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import CarouselCards from './CarouselCards'
 import Menu from '../../components/Menu'
 
@@ -9,9 +9,9 @@ const UserCard = () => {
     return (
         <>
             <Menu />
-            <SafeAreaView style={styles.container} >
+            <View style={styles.container} >
                 <CarouselCards/>
-            </SafeAreaView>
+            </View>
         </>
     )
 }
