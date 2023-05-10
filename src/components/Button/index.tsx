@@ -1,11 +1,11 @@
 import React from 'react';
-import { TouchableOpacityProps, TouchableOpacity } from 'react-native';
+import { TouchableOpacityProps, TouchableOpacity, ViewStyle } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { defaultStyleProperties } from '../../base/styles';
 
 interface ButtonProps extends TouchableOpacityProps {
     typeButton: 'mainButton' | 'backButton' | 'redButton' | 'extraButton';
-    customStyle?: object
+    customStyle?: ViewStyle
 }
 
 const stylesButtons = {

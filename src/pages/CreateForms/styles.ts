@@ -4,11 +4,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        // flexDirection: "column",
-        // alignItems: "center",
-        // justifyContent: "space-between",
-        // backgroundColor: 'blue'
+        flex: 1,
+        paddingBottom: RFValue(8)
     },
     
     titlePageContainer: {
@@ -20,7 +17,7 @@ const styles = StyleSheet.create({
 
     inputContainer: {
         padding: 20,
-        height: '70%'
+        height: '70%',
     },
 
 
@@ -33,7 +30,10 @@ const styles = StyleSheet.create({
     },
 
     dateContainer: {
-        marginBottom: RFValue(7)
+        backgroundColor: '#E8E8E8',
+        marginBottom: RFValue(7),
+        padding: RFValue(16),
+        borderRadius: 8
     },
 
     subtitle: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
 
     dateIntervalContainer: {
-        marginVertical: RFValue(15)
+        marginVertical: RFValue(8)
     },
 
     dateIntervalText: {
@@ -62,18 +62,22 @@ const styles = StyleSheet.create({
     iconContainer: {
         alignItems: "center",
         marginBottom: 20,
+        paddingBottom: RFValue(16)
     },
 
     actionButtonContainer: {
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         flexDirection: 'row',
-        // position: 'relative',
-        // // flex: 0.1,
-        // left: 0,
-        // right: 0,
-        // top: '100%'
+        paddingTop: RFValue(16),
+        paddingHorizontal: RFValue(24)
     },
+
+    btnText: {
+        fontSize: RFValue(16),
+        color: '#FFF',
+        fontWeight: 'bold'
+    }
 
 });
 
