@@ -20,36 +20,23 @@ const styles = StyleSheet.create({
 
     contentsInfo: {
         fontSize: RFValue(20),
+        fontWeight: '600',
         textAlign: "justify",
-        marginBottom: 15,
+        marginBottom: RFValue(8),
     },
 
     containerBtn: {
         width: '90%',
-        marginTop: 16,
+        marginTop: RFValue(12),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
     },
 
-    btnOk: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        backgroundColor: '#379936',
-        borderRadius: 16,
-    },
-
-    btnCancel: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        backgroundColor: '#C80E0E',
-        borderRadius: 16,
-    },
-
     textBtn: {
-        fontSize: RFValue(16),
+        fontSize: RFValue(12),
         color: '#FFF',
-        fontWeight: '400'
+        fontWeight: '700'
     }
 });
 

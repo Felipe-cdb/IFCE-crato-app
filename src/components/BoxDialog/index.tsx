@@ -5,29 +5,42 @@ import { api } from "../../config";
 import { AuthContext } from "../../context/auth";
 
 import styles from "./styles";
+import { Button } from "../Button";
 
 type BoxProps = {
-    visivel: boolean;
-    menosInformacoes: () => void;
-    communiqueId: string;
+    visible: boolean;
+    lessInfo: () => void;
+    deleteId: string;
     refreshing: () => void;
+    typeDeletion: 'communique' | 'form_refectory'
 }
 
-function BoxDialog({ visivel, menosInformacoes, communiqueId, refreshing }: BoxProps) {
+function BoxDialog({ visible, lessInfo, deleteId, refreshing, typeDeletion }: BoxProps) {
     
     const { aviso } = useContext(AuthContext);
 
     const handleDelete = async () =>{
-        try {
-            await api.delete(`communique/${communiqueId}`);
-            aviso('Comunicado removido com sucesso', 'success');
-            refreshing();
-        } catch (error) {
-            console.log(error);
-            aviso('Falha na exclusão do comunicado', 'danger');
+        if (typeDeletion == 'communique'){
+            try {
+                await api.delete(`communique/${deleteId}`);
+                aviso('Comunicado removido com sucesso', 'success');
+                refreshing();
+            } catch (error) {
+                console.log(error);
+                aviso('Falha na exclusão do comunicado', 'danger');
+            }
+        } else if (typeDeletion == 'form_refectory'){
+            try {
+                await api.delete(`refectory/${deleteId}`);
+                aviso('Formulário removido com sucesso', 'success');
+                refreshing();
+            } catch (error) {
+                console.log(error);
+                aviso('Falha na exclusão do comunicado', 'danger');
+            }
         }
 
-        menosInformacoes();
+        lessInfo();
 
     }
     
@@ -35,10 +48,10 @@ function BoxDialog({ visivel, menosInformacoes, communiqueId, refreshing }: BoxP
         <Modal
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
-            isVisible={visivel}
+            isVisible={visible}
             backdropOpacity={0.8}
-            onBackButtonPress={menosInformacoes}
-            onBackdropPress={menosInformacoes}
+            onBackButtonPress={lessInfo}
+            onBackdropPress={lessInfo}
             statusBarTranslucent={true}
         >
             <View style={styles.viewModal}>
@@ -46,29 +59,32 @@ function BoxDialog({ visivel, menosInformacoes, communiqueId, refreshing }: BoxP
 
                         <View>
                             <Text style={styles.contentsInfo}>
-                                Confirmar exclusão de comunicado?
+                                Excluir {
+                                    typeDeletion == 'communique' ?
+                                    'comunicado' : 'formulário'
+                                }?
                             </Text>
                         </View>
 
                         <View style={styles.containerBtn}>
 
-                            <Pressable
-                                style={styles.btnCancel}
-                                onPress={() => menosInformacoes()}
+                            <Button
+                                typeButton="backButton"
+                                onPress={() => lessInfo()}
                             >
                                 <Text style={styles.textBtn}>
-                                    Não
+                                    Cancelar
                                 </Text>
-                            </Pressable>
+                            </Button>
 
-                            <Pressable
-                                style={styles.btnOk}
+                            <Button
+                                typeButton="mainButton"
                                 onPress={handleDelete}
                             >
                                 <Text style={styles.textBtn}>
-                                    Sim
+                                    Confirmar
                                 </Text>
-                            </Pressable>
+                            </Button>
                         </View>
                     </View>
             </View>
