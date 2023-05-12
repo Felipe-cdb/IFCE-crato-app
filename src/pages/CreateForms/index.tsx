@@ -3,16 +3,16 @@ import { View, Text, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePickerModal  from 'react-native-modal-datetime-picker';
+import { useFocusEffect } from '@react-navigation/native';
 
 import Menu from "../../components/Menu";
-
 import styles from "./styles";
-import { Button, Button as ButtonComponent } from '../../components/Button';
+import { Button as ButtonComponent } from '../../components/Button';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { defaultStyleProperties } from '../../base/styles';
 import Tooltip from '../../components/Tooltip';
-import { addDays, addHours, format, subDays } from 'date-fns';
+import { addDays, format, subDays } from 'date-fns';
 import { getFormatedDate } from '../../helpers'
 import { AuthContext } from '../../context/auth';
 import { api } from '../../config';
@@ -32,7 +32,7 @@ function CreateForms() {
     }]);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     
-    const { aviso } = useContext(AuthContext)
+    const { aviso, setScreenLoading } = useContext(AuthContext)
     const { refectory } = useContext(RefectoryContext)
 
     const navigation = useNavigation<DrawerNavigationProp<any>>();
@@ -46,6 +46,7 @@ function CreateForms() {
     }
 
     const handleSave = async () => {
+        setScreenLoading(true);
         const serializedForms = formsToCreate.map((item) => (
             {
                 vigencyDate: parseInt(item.vigencyDate)
@@ -55,9 +56,16 @@ function CreateForms() {
             await api.post('refectory/create', { vigencyDates: serializedForms, menuUrl: refectory?.menuUrl || "" })
             aviso('Formulários adicionados com sucesso', 'success')
             navigation.goBack()
-        } catch (error) {
-            aviso('Falha ao criar formulários', 'danger')
+        } catch (error: any) {
+            if(error.response){
+                if(error.response.data.message == "Some provided vigency date already exists"){
+                    aviso('Data de vigência fornecida já existe', 'danger');
+                }
+            } else {
+                aviso('Falha ao criar formulários', 'danger')
+            }
         }
+        setScreenLoading(false);
     }
 
     const handleRemoveForm = () => {
@@ -80,6 +88,16 @@ function CreateForms() {
         }])
         hideDatePicker();
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setFormsToCreate([{
+                vigencyDate: addDays(getFormatedDate(new Date()), 1).valueOf().toString(),
+                startAnswerDate: getFormatedDate(new Date()).toString(),
+                keyName: 'key-0'
+            }]);
+        }, [])
+    )
 
     return (
         <View style={styles.container}>
@@ -104,7 +122,7 @@ function CreateForms() {
                                     <Text style={styles.subtitle} >Data de referência </Text>
                                     {formsToCreate.length > 1 && formsToCreate.length - 1 === index ? <Icon onPress={handleRemoveForm} size={RFValue(20)} name='close' /> : ''}
                                 </View>
-                                <Button
+                                <ButtonComponent
                                     typeButton='extraButton'
                                     onPress={showDatePicker}
                                     disabled={index>0}
@@ -117,7 +135,7 @@ function CreateForms() {
                                         fontSize: 18,
                                         fontWeight: 'bold'
                                     }}>{format(Number(item.vigencyDate), 'dd/MM/yyyy')}</Text>
-                                </Button>
+                                </ButtonComponent>
                                 <DateTimePickerModal
                                     isVisible={isDatePickerVisible}
                                     mode="date"
