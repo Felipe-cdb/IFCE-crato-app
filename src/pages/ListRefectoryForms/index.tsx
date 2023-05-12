@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RefreshControl } from 'react-native-gesture-handler';
+import { useFocusEffect } from '@react-navigation/native';
 
 import Menu from '../../components/Menu';
 import { Button as ButtonComponent } from '../../components/Button';
@@ -31,6 +32,16 @@ function ListRefectoryForms() {
         }
         setRefreshing(false);
     }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setRefreshing(true);
+
+            return(
+                onRefresh()
+            )
+        }, [])
+    )
 
     useEffect(() => {
         loadFormularies()
@@ -62,11 +73,14 @@ function ListRefectoryForms() {
                 justifyContent: 'space-between'
             }}>
                 <FlatList
+                    style={{width: '100%'}}
                     showsVerticalScrollIndicator={false}
                     data={formularies}
                     renderItem={({item}) => (<FormModel
                         status={item.status}
                         vigencyDate={item.vigencyDate}
+                        id={item.id}
+                        onRefresh={onRefresh}
                     />)}
                     keyExtractor={(item: IRefectory) => item.id}
                     refreshControl={
