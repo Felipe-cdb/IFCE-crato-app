@@ -52,7 +52,7 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                     
                     <View style={styles.infoLine}>
                         <Text style={styles.header}>Email: </Text>
-                        <Text style={styles.body}>{item?.userData?.email}</Text>
+                        <Text ellipsizeMode='tail' numberOfLines={1} style={styles.body}>{item?.userData?.email}</Text>
                     </View>
                     
                     <View style={styles.infoLine}>

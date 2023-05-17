@@ -15,9 +15,11 @@ type BoxProps = {
     isVisible: boolean;
     setVisible: () => void;
     action: 'update' | 'create';
+    description?: string;
+    setPropMenuUrl?: (value: string) => void;
 }
 
-function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
+function MenuFormUrlModal({ isVisible, setVisible, action, description, setPropMenuUrl}: BoxProps) {
     
     const [menuUrl, setMenuUrl] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -43,6 +45,13 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
             console.log(error.response);
             aviso('Falha ao atualizar link para cardápio', 'danger');
         }
+    }
+
+    const handleActionCreateMenuUrl = () => {
+        if(setPropMenuUrl) {
+            setPropMenuUrl(menuUrl)
+        }
+        setVisible()
     }
 
     const handleMenuUrl = (v: string) => {
@@ -73,7 +82,7 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
                             <InputGroup 
                                 atualiza={(v) => handleMenuUrl(v)}
                                 required={true}
-                                label={'Anexe o link da planila aqui'}
+                                label={ description ?? 'Anexe o link da planila aqui' }
                                 multiline={false}
                                 value={menuUrl}
                                 heigth={40}
@@ -85,7 +94,7 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
                         <View style={styles.containerBtn}>
                             <Pressable
                                 style={styles.btnOk}
-                                onPress={handleUpdateMenuUrl}
+                                onPress={action === 'update' ? handleUpdateMenuUrl : handleActionCreateMenuUrl}
                             >
                                 <Text style={styles.textBtn}>
                                     { loading ? 

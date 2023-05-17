@@ -15,6 +15,7 @@ import Tooltip from '../../components/Tooltip';
 import { addDays, format, subDays } from 'date-fns';
 import { getFormatedDate } from '../../helpers'
 import { AuthContext } from '../../context/auth';
+import MenuFormUrlModal from '../../components/MenuFormUrlModal'
 import { api } from '../../config';
 import { RefectoryContext } from '../../context/refectory.context';
 
@@ -31,7 +32,9 @@ function CreateForms() {
         keyName: 'key-0'
     }]);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    
+    const [menuUrl, setMenuUrl] = React.useState<string>('')
+    const [modalIsVisible, setModalIsVisible] = React.useState<boolean>(false)
+
     const { aviso, setScreenLoading } = useContext(AuthContext)
     const { refectory } = useContext(RefectoryContext)
 
@@ -46,6 +49,11 @@ function CreateForms() {
     }
 
     const handleSave = async () => {
+        if(!refectory?.menuUrl && !menuUrl) {
+            setModalIsVisible(true)
+            return
+        }
+
         setScreenLoading(true);
         const serializedForms = formsToCreate.map((item) => (
             {
@@ -53,7 +61,7 @@ function CreateForms() {
             }
         ))
         try {
-            await api.post('refectory/create', { vigencyDates: serializedForms, menuUrl: refectory?.menuUrl || "" })
+            await api.post('refectory/create', { vigencyDates: serializedForms, menuUrl: refectory?.menuUrl || menuUrl })
             aviso('Formulários adicionados com sucesso', 'success')
             navigation.goBack()
         } catch (error: any) {
@@ -61,6 +69,7 @@ function CreateForms() {
                 if(error.response.data.message == "Some provided vigency date already exists"){
                     aviso('Data de vigência fornecida já existe', 'danger');
                 }
+                aviso('Falha ao criar formulários', 'danger')
             } else {
                 aviso('Falha ao criar formulários', 'danger')
             }
@@ -102,6 +111,13 @@ function CreateForms() {
     return (
         <View style={styles.container}>
             <Menu />
+            <MenuFormUrlModal
+                isVisible={modalIsVisible}
+                action='create'
+                setVisible={() => setModalIsVisible(!modalIsVisible)}
+                description='Precisamos de um link para o cardápio antes de continuar'
+                setPropMenuUrl={setMenuUrl}
+            />
             <View style={styles.titlePageContainer} >
                 <Text style={styles.titlePage}>Novo Formulário</Text>
                 <Tooltip tooltipText='O período de abertura e encerramento para respostas do formulário é atribuída automaticamente a depender da data de referência durante criação.'>
@@ -139,6 +155,7 @@ function CreateForms() {
                                 <DateTimePickerModal
                                     isVisible={isDatePickerVisible}
                                     mode="date"
+                                    locale='pt_BR'
                                     onConfirm={handleConfirm}
                                     onCancel={hideDatePicker}
                                 />
