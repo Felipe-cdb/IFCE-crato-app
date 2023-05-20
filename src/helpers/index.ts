@@ -11,6 +11,13 @@ export const checkUserTypeIdentification = (userType: UserTypes): Identification
     }
 }
 
-export const getFormatedDate = (date: Date): number => {
-    return new Date(`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`).valueOf()
-}
+export function formatDate(date: Date, monthName = false) {
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = monthName ? date.toLocaleString('default', { month: 'long' }) : String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    if (monthName) {
+        return `${day} de ${month} de ${year}`;
+    }
+    return `${day}/${month}/${year}`
+  }

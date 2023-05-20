@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { constantColors } from "../../base/constants";
 import { Item as ItemType } from "../../base/Types";
 import styles from "./styles";
@@ -61,7 +61,7 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
                             <Text style={styles.maisText}>Saiba mais</Text>
                         </TouchableOpacity>)
                     }
-                    <Text style={[styles.textComunicado, styles.date]}>{format(new Date(item.createdAt), 'dd/MM/yyyy')}</Text>
+                    <Text style={[styles.textComunicado, styles.date]}>{format(parseISO(item.createdAt), 'dd/MM/yyyy')}</Text>
                 </View>
                 
             </View>

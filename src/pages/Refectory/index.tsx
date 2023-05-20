@@ -12,16 +12,16 @@ import { OpenURLButton } from '../../components/OpenUrlButton';
 import MenuFormUrlModal from '../../components/MenuFormUrlModal';
 import styles from './styles';
 import { refectoryStatusConstants } from '../../base/constants';
-import { format } from 'date-fns';
 import { RefreshControl } from 'react-native-gesture-handler'
 
 import { RefectoryContext } from '../../context/refectory.context'
 import { AuthContext } from '../../context/auth'
-import { UserPermitions } from '../../base/Enums';
+import { RefectoryStatusEnum, UserPermitions } from '../../base/Enums';
 import ButtonLoading from '../../components/ButtonLoading';
 import { defaultStyleProperties } from '../../base/styles';
 import { api } from '../../config';
 import RefectoryAlreadyAnswered from './RefectoryAlreadyAnswered';
+import { formatDate } from '../../helpers';
 
 const Refectory = () => {
     const [isVisible, setVisible] = React.useState<boolean>(false)
@@ -89,10 +89,10 @@ const Refectory = () => {
 
                                     <View style={styles.dateForms}>
                                         <Text style={styles.statusForms}>Status: <Text style={{ color: refectoryStatusConstants[refectory.status].color, fontWeight: 'bold' }}> {refectoryStatusConstants[refectory.status].text} </Text> </Text>
-                                        <Text style={styles.dateFormsReference}>Formulário referente a {format(refectory.vigencyDate, 'dd/MM/yyyy')}</Text>
+                                        <Text style={styles.dateFormsReference}>Formulário referente a { formatDate(new Date(refectory.vigencyDate)) }</Text>
                                         <Text style={styles.dateFormsClosing}>
                                             <Text numberOfLines={2} style={{ color: 'red' }}>Encerramento</Text>:
-                                            Respostas aceitas até {format(refectory.startAnswersDate, 'dd/MM/yyyy')} às 19h
+                                            Respostas aceitas até {formatDate(new Date(refectory.startAnswersDate))} às 19h
                                         </Text>
                                     </View>
 
@@ -119,7 +119,7 @@ const Refectory = () => {
                                     </View>
 
                                     <View style={styles.refectoryChoices}>
-                                        {refectory.hasAnswered ? <RefectoryAlreadyAnswered /> : <RefectoryChoices />}
+                                        {refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open ? <RefectoryAlreadyAnswered /> : <RefectoryChoices />}
                                     </View>
 
                                     {!user.roles.includes(UserPermitions.RM) ? '' : (
@@ -136,8 +136,8 @@ const Refectory = () => {
                                             <Text style={styles.actionButtomTitle} >Voltar</Text>
                                         </ButtonComponent>
 
-                                        <ButtonComponent disabled={refectory.hasAnswered} typeButton='mainButton' onPress={handleSubmit}>
-                                            <Text style={{ ...styles.actionButtomTitle, opacity: refectory.hasAnswered ? 0.2 : 1 }} >
+                                        <ButtonComponent disabled={refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open} typeButton='mainButton' onPress={handleSubmit}>
+                                            <Text style={{ ...styles.actionButtomTitle, opacity: refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open ? 0.2 : 1 }} >
                                                 {loading ?
                                                     <ButtonLoading size={'small'} color={defaultStyleProperties.blueColor} />
                                                     :

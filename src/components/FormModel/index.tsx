@@ -3,16 +3,15 @@ import { View, Text, TouchableOpacity} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { refectoryStatusConstants } from '../../base/constants'
-import { format } from 'date-fns'
-import ptBrLocale from 'date-fns/locale/pt-BR'
 
 import styles from './styles'
 import { RefectoryStatusEnum } from '../../base/Enums'
 import BoxDialog from '../BoxDialog'
+import { formatDate } from '../../helpers';
 
 type Props = {
     status: RefectoryStatusEnum,
-    vigencyDate: number,
+    vigencyDate: string,
     id: string,
     onRefresh: () => void
 }
@@ -44,7 +43,7 @@ const FormModel = ({ status, vigencyDate, id, onRefresh }: Props) => {
 
                 <View style={styles.formDateContainer}>
                     <Icon color={'white'} style={styles.formDateIcon} name='calendar-blank'/>
-                    <Text style={styles.formDateText} > { format(vigencyDate, `dd 'de' MMMM 'de' yyyy`, { locale: ptBrLocale }) } </Text>
+                    <Text style={styles.formDateText} > { formatDate(new Date(vigencyDate), true) } </Text>
                 </View>
             </View>
         </>

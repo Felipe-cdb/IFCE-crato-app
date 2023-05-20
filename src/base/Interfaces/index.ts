@@ -17,8 +17,8 @@ export interface IUser {
 export interface IRefectory {
     id: string;
     status: RefectoryStatusEnum;
-    vigencyDate: number;
-    startAnswersDate: number;
+    vigencyDate: string;
+    startAnswersDate: string;
     menuUrl: string;
     hasAnswered: boolean;
 }

@@ -3,7 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IRefectory, MenuAnswer } from '../base/Interfaces'
 import { api } from '../config'
-import { addDays, isAfter } from 'date-fns';
+import { addDays, isAfter, parseISO } from 'date-fns';
 import { RefectoryStatusEnum } from '../base/Enums';
 
 interface RefectoryProviderProps {
@@ -36,7 +36,7 @@ const RefectoryProvider = ({ children }: RefectoryProviderProps) => {
             const storagedRefectory = await AsyncStorage.getItem('@refectory');
             if (storagedRefectory) {
                 const parsedRefectory: IRefectory = JSON.parse(storagedRefectory)
-                const dateToCompare = addDays(parsedRefectory.vigencyDate, 1)
+                const dateToCompare = addDays(parseISO(parsedRefectory.vigencyDate), 1)
 
                 if (isAfter(new Date().valueOf(), dateToCompare.setUTCHours(0, 0, 0, 0))) {
                     await loadCurrentRefectory()
