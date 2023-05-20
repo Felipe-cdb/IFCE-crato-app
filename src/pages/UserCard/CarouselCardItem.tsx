@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text, Image, FlatList } from "react-native"
+import { View, Text, Image } from "react-native"
 
 import styles from './style'
 import { IUser } from '../../base/Interfaces'
 import { constantUserType } from '../../base/constants'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 type QrCoreData = {
     qrcodeContent: string
@@ -57,7 +57,7 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                     
                     <View style={styles.infoLine}>
                         <Text style={styles.header}>Emissão: </Text>
-                        <Text style={styles.body}>{format(new Date(item?.userData?.createdAt || Date.now()), 'dd/MM/yyyy')}</Text>
+                        <Text style={styles.body}>{format(parseISO(item?.userData?.createdAt || String(new Date())), 'dd/MM/yyyy')}</Text>
                     </View>
                 </View>
             </>) : (<>

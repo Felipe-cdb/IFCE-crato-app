@@ -20,11 +20,12 @@ const RefectoryAlreadyAnswered = () => {
     
             <Text style={{
                 fontSize: RFValue(14),
-                fontWeight: '700',
+                fontWeight: '500',
+                textAlign: 'center',
                 color: '#19882C',
                 opacity: 0.6,
             }}>
-                Parabéns, você já enviou a sua resposta!
+                Resposta já enviada, ou o formulário não aceita mais respostas
             </Text>
         </View>
     )
