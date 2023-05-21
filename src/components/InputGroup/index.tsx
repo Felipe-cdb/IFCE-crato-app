@@ -5,6 +5,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { useFocusEffect } from '@react-navigation/native';
 
 import styles from "./styles";
+import { defaultStyleProperties } from "../../base/styles";
 
 interface IInputGroupProps extends TextInputProps {
     label: string;
@@ -29,9 +30,9 @@ export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, requ
 
     useFocusEffect(
         useCallback(() => {
-          setBorda({});
+            setBorda({});
         }, [])
-      )
+    )
 
     const endInput = () => {
         if (value?.trim()) {
@@ -42,38 +43,38 @@ export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, requ
         if (!value && required) {
             setBorda({
                 borderWidth: 1,
-                borderColor:'#C91517'
+                borderColor: defaultStyleProperties.redColor
             });
             return;
         }
 
         if (required && !(value?.trim())) {
             atualiza('');
-            setBorda('#C91517');
+            setBorda(defaultStyleProperties.redColor);
             return;
         }
 
     }
 
-    return(
-        <View style={styles.containerInpu}>
+    return (
+        <View style={styles.containerInput}>
             <Text style={styles.label}>
-                {label}{required && <Text style={{color: '#C91517'}}>*</Text>}
+                {label}{required && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
-           {pass
-                ?<TextInput
+            {pass
+                ? <TextInput
                     onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, borda, {height: heigth || RFValue(40)}]}
+                    style={[styles.inputEntry, borda, { height: heigth || RFValue(40) }]}
                     secureTextEntry={true}
                     textContentType='password'
                     value={value}
                 />
-                :<TextInput
+                : <TextInput
                     multiline={multiline}
                     onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, {height: heigth || undefined}]}
+                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, { height: heigth || undefined }]}
                     value={value}
                     onContentSizeChange={onContentSizeChange}
                     keyboardType={keyboardType}
@@ -84,11 +85,11 @@ export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, requ
     )
 };
 
-export const SelectGroup = ({ label, lista, required, atualiza}: ISelectGroupProps) => {
-    return(
-        <View style={styles.containerInpu}>
+export const SelectGroup = ({ label, lista, required, atualiza }: ISelectGroupProps) => {
+    return (
+        <View style={styles.containerInput}>
             <Text style={styles.label}>
-                {label}{required && <Text style={{color: '#C91517'}}>*</Text>}
+                {label}{required && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
             <View style={styles.inputEntry}>
                 <RNPickerSelect

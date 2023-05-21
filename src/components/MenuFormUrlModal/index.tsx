@@ -18,7 +18,7 @@ type BoxProps = {
 }
 
 function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
-    
+
     const [menuUrl, setMenuUrl] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -30,11 +30,11 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
         try {
             await api.put('refectory/menu-url', { menuUrl });
             aviso('Link para cardápio atualizado com sucesso', 'success');
-            
+
             if (refectory) {
                 await setRefectoryStoraged({ ...refectory, menuUrl })
             }
-            
+
             clearInputs()
             setLoading(false)
             setVisible();
@@ -52,8 +52,8 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
     const clearInputs = () => {
         setMenuUrl('')
     }
-    
-    return(
+
+    return (
         <Modal
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
@@ -64,41 +64,41 @@ function MenuFormUrlModal({ isVisible, setVisible, action }: BoxProps) {
             statusBarTranslucent={true}
         >
             <View style={styles.viewModal}>
-                    <View style={styles.contentModalInfo}>
-                        <Icon style={styles.closeIcon} onPress={setVisible} name="close"/>
-                        <View style={{ width: '100%' }}>
-                            <Text style={styles.contentsInfo}>
-                                Cardápio
-                            </Text>
-                            <InputGroup 
-                                atualiza={(v) => handleMenuUrl(v)}
-                                required={true}
-                                label={'Anexe o link da planila aqui'}
-                                multiline={false}
-                                value={menuUrl}
-                                heigth={40}
-                                textContentType="URL"
-                                borderWidth={1}
-                            />
-                        </View>
-
-                        <View style={styles.containerBtn}>
-                            <Pressable
-                                style={styles.btnOk}
-                                onPress={handleUpdateMenuUrl}
-                            >
-                                <Text style={styles.textBtn}>
-                                    { loading ? 
-                                    <ButtonLoading size={'small'} color={defaultStyleProperties.blueColor}/>
-                                    : 
-                                    'Salvar'
-                                    }
-                                </Text>
-                            </Pressable>
-                        </View>
+                <View style={styles.contentModalInfo}>
+                    <Icon style={styles.closeIcon} onPress={setVisible} name="close" />
+                    <View style={styles.inputMenu}>
+                        <Text style={styles.contentsInfo}>
+                            Cardápio
+                        </Text>
+                        <InputGroup
+                            atualiza={(v) => handleMenuUrl(v)}
+                            required={true}
+                            label={'Anexe o link da planila aqui'}
+                            multiline={false}
+                            value={menuUrl}
+                            heigth={40}
+                            textContentType="URL"
+                            borderWidth={1}
+                        />
                     </View>
+
+                    <View style={styles.containerBtn}>
+                        <Pressable
+                            style={styles.btnOk}
+                            onPress={handleUpdateMenuUrl}
+                        >
+                            <Text style={styles.textBtn}>
+                                {loading ?
+                                    <ButtonLoading size={'small'} color={defaultStyleProperties.blueColor} />
+                                    :
+                                    'Salvar'
+                                }
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
             </View>
-            
+
         </Modal>
     );
 }

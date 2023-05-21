@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -31,9 +32,9 @@ const styles = StyleSheet.create({
     checkedBox: {
         width: 10,
         height: 10,
-        backgroundColor: "#30942F",
+        backgroundColor: defaultStyleProperties.greenColor,
         borderWidth: 1,
-        borderColor: "#30942F",
+        borderColor: defaultStyleProperties.greenColor,
     },
 });
 

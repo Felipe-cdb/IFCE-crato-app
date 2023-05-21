@@ -16,9 +16,9 @@ interface ComunicadoProps {
 function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoProps) {
     const [showMore, setShowMore] = useState(false);
     const [numLines, setNumLines] = useState<number | undefined>(undefined);
-    
+
     useEffect(() => {
-        if(item.resource || item.referenceLinks?.length) setShowMore(true);
+        if (item.resource || item.referenceLinks?.length) setShowMore(true);
     }, [])
 
     const handleTextLayout = ({ nativeEvent }: any) => {
@@ -35,15 +35,15 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
         })
     }
 
-    return(
+    return (
         <>
-            <View style={[styles.comunicadoContainer, {backgroundColor: constantColors[item.category]}]}>
+            <View style={[styles.comunicadoContainer, { backgroundColor: constantColors[item.category] }]}>
                 {(isGestorDeMural && setDeletion) &&
                     (<TouchableOpacity
                         style={styles.apagarComunicado}
                         onPress={() => setDeletion(item.id)}
                     >
-                        <Icon name="close" style={styles.apagarIcon} color="#000" />
+                        <Icon name="close" style={styles.apagarIcon} />
                     </TouchableOpacity>)
                 }
                 <View style={styles.textContent}>
@@ -57,13 +57,13 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
                 <View style={styles.footerCard}>
                     {showMore &&
                         (<TouchableOpacity style={styles.btnMais} onPress={() => maisInfo()}>
-                            <Icon name="add-circle-outline" style={styles.iconMais}/>
+                            <Icon name="add-circle-outline" style={styles.iconMais} />
                             <Text style={styles.maisText}>Saiba mais</Text>
                         </TouchableOpacity>)
                     }
                     <Text style={[styles.textComunicado, styles.date]}>{format(new Date(item.createdAt), 'dd/MM/yyyy')}</Text>
                 </View>
-                
+
             </View>
         </>
     );

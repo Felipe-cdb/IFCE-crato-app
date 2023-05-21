@@ -1,9 +1,10 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
 
-    comunicadoContainer:{
+    comunicadoContainer: {
         borderRadius: 15,
         display: "flex",
         flexDirection: "column",
@@ -20,7 +21,8 @@ const styles = StyleSheet.create({
     apagarIcon: {
         width: RFPercentage(7),
         fontSize: RFPercentage(4),
-        textAlign: 'right'
+        textAlign: 'right',
+        color: defaultStyleProperties.blackColor
     },
 
     textContent: {
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
 
     footerCard: {
         display: "flex",
-        flexDirection: "row",      
+        flexDirection: "row",
         marginTop: 5,
         paddingBottom: 3,
     },

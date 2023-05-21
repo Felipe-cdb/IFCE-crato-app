@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 export default StyleSheet.create({
     viewModal: {
@@ -15,7 +16,11 @@ export default StyleSheet.create({
         alignItems: "center",
         padding: 20,
         borderRadius: 16,
-        backgroundColor: '#FFF',
+        backgroundColor: defaultStyleProperties.whiteColor,
+    },
+
+    inputMenu: {
+        width: '100%'
     },
 
     closeIcon: {
@@ -25,8 +30,7 @@ export default StyleSheet.create({
     },
 
     urlInput: {
-         height: 40,
-        // margin: 12,
+        height: 40,
         borderWidth: 1,
         padding: 10,
     },
@@ -48,14 +52,14 @@ export default StyleSheet.create({
     btnOk: {
         paddingHorizontal: 10,
         paddingVertical: 5,
-        backgroundColor: '#379936',
+        backgroundColor: defaultStyleProperties.greenColor,
         borderRadius: 10,
         width: '100%'
     },
 
     textBtn: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: '400',
         alignSelf: "center"
     }

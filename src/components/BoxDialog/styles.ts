@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     viewModal: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 20,
         borderRadius: 25,
-        backgroundColor: '#FFF',
+        backgroundColor: defaultStyleProperties.whiteColor,
     },
 
     contentsInfo: {
@@ -35,20 +36,20 @@ const styles = StyleSheet.create({
     btnOk: {
         paddingHorizontal: 10,
         paddingVertical: 5,
-        backgroundColor: '#379936',
+        backgroundColor: defaultStyleProperties.greenColor,
         borderRadius: 16,
     },
 
     btnCancel: {
         paddingHorizontal: 10,
         paddingVertical: 5,
-        backgroundColor: '#C80E0E',
+        backgroundColor: defaultStyleProperties.redColor,
         borderRadius: 16,
     },
 
     textBtn: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: '400'
     }
 });
