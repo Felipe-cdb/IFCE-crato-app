@@ -87,7 +87,8 @@ export default StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: "bold",
-    fontSize: RFValue(24)
+    textAlign: "center",
+    fontSize: RFValue(20)
   },
 
   subtitle: {
@@ -105,15 +106,15 @@ export default StyleSheet.create({
   infoLine: {
     width: '100%',
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     justifyContent: "flex-start",
     flexWrap: 'wrap'
   },
 
   header: {
     color: "#222",
-    fontSize: RFValue(20),
+    fontSize: RFValue(18),
     fontWeight: "bold",
   },
 

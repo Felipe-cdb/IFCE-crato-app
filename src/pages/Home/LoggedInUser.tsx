@@ -103,10 +103,11 @@ function LoggedInUser({ user }: LoggedInUserProps) {
 			}
 
 			<BoxDialog
-				visivel={deletion.exibir}
-				menosInformacoes={() => setDeletion({exibir: false, item: ''})}
-				communiqueId={deletion.item}
+				visible={deletion.exibir}
+				lessInfo={() => setDeletion({exibir: false, item: ''})}
+				deleteId={deletion.item}
 				refreshing={onRefresh}
+				typeDeletion="communique"
 			/>
 
             <Menu/>

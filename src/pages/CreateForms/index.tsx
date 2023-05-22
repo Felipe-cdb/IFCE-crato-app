@@ -3,61 +3,68 @@ import { View, Text, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePickerModal  from 'react-native-modal-datetime-picker';
+import { useFocusEffect } from '@react-navigation/native';
 
 import Menu from "../../components/Menu";
-
 import styles from "./styles";
-import { Button, Button as ButtonComponent } from '../../components/Button';
+import { Button as ButtonComponent } from '../../components/Button';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { defaultStyleProperties } from '../../base/styles';
 import Tooltip from '../../components/Tooltip';
-import { addDays, addHours, format, subDays } from 'date-fns';
-import { getFormatedDate } from '../../helpers'
+import { addDays, subDays } from 'date-fns';
 import { AuthContext } from '../../context/auth';
+import MenuFormUrlModal from '../../components/MenuFormUrlModal'
 import { api } from '../../config';
 import { RefectoryContext } from '../../context/refectory.context';
+import { formatDate } from '../../helpers';
 
 type Form = {
-    vigencyDate: string,
-    startAnswerDate: string,
-    keyName: string,
+    vigencyDate: string
 }
 
 function CreateForms() {
     const [formsToCreate, setFormsToCreate] = useState<Form[]>([{
-        vigencyDate: addDays(getFormatedDate(new Date()), 1).valueOf().toString(),
-        startAnswerDate: getFormatedDate(new Date()).toString(),
-        keyName: 'key-0'
+        vigencyDate: addDays(new Date(), 1).toISOString()
     }]);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    
-    const { aviso } = useContext(AuthContext)
+    const [menuUrl, setMenuUrl] = React.useState<string>('')
+    const [modalIsVisible, setModalIsVisible] = React.useState<boolean>(false)
+
+    const { aviso, setScreenLoading } = useContext(AuthContext)
     const { refectory } = useContext(RefectoryContext)
 
     const navigation = useNavigation<DrawerNavigationProp<any>>();
 
     const handleNewFormDates = () => {
         setFormsToCreate([...formsToCreate, {
-            keyName: `key-${formsToCreate.length}`,
-            vigencyDate: addDays(Number(formsToCreate[formsToCreate.length - 1]?.vigencyDate), 1).valueOf().toString(),
-            startAnswerDate: addDays(Number(formsToCreate[formsToCreate.length - 1]?.startAnswerDate), 1).valueOf().toString(),
+            vigencyDate: addDays(new Date(formsToCreate[formsToCreate.length - 1].vigencyDate), 1).toISOString(),
         }])
     }
 
     const handleSave = async () => {
-        const serializedForms = formsToCreate.map((item) => (
-            {
-                vigencyDate: parseInt(item.vigencyDate)
-            }
-        ))
+        if(!refectory?.menuUrl && !menuUrl) {
+            setModalIsVisible(true)
+            return
+        }
+
+        setScreenLoading(true);
         try {
-            await api.post('refectory/create', { vigencyDates: serializedForms, menuUrl: refectory?.menuUrl || "" })
+            await api.post('refectory/create', { vigencyDates: formsToCreate, menuUrl: refectory?.menuUrl || menuUrl })
             aviso('Formulários adicionados com sucesso', 'success')
             navigation.goBack()
-        } catch (error) {
-            aviso('Falha ao criar formulários', 'danger')
+        } catch (error: any) {
+            if(error.response){
+                if(error.response.data.message == "Some provided vigency date already exists"){
+                    aviso('Data de vigência fornecida já existe', 'danger');
+                } else {
+                    aviso('Falha ao criar formulários', 'danger')
+                }
+            } else {
+                aviso('Falha ao criar formulários', 'danger')
+            }
         }
+        setScreenLoading(false);
     }
 
     const handleRemoveForm = () => {
@@ -74,19 +81,32 @@ function CreateForms() {
 
     const handleConfirm = (date: Date) => {
         setFormsToCreate([{
-            keyName: `key-${formsToCreate.length}`,
-            vigencyDate: date.valueOf().toString(),
-            startAnswerDate: subDays(date, 1).valueOf().toString(),
+            vigencyDate: date.toISOString(),
         }])
         hideDatePicker();
     };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setFormsToCreate([{
+                vigencyDate: addDays((new Date()), 1).toString(),
+            }]);
+        }, [])
+    )
+
     return (
         <View style={styles.container}>
             <Menu />
+            <MenuFormUrlModal
+                isVisible={modalIsVisible}
+                action='create'
+                setVisible={() => setModalIsVisible(!modalIsVisible)}
+                description='Precisamos de um link para o cardápio antes de continuar'
+                setPropMenuUrl={setMenuUrl}
+            />
             <View style={styles.titlePageContainer} >
                 <Text style={styles.titlePage}>Novo Formulário</Text>
-                <Tooltip tooltipText='O período de abertura e encerramento para respostas do formulário é atribuída automaticamente a depender da data de referência durante criação.'>
+                <Tooltip tooltipText='O período de abertura e encerramento para respostas do formulário é atribuída automaticamente a depender da data de referência informada.'>
                     <Icon size={20} name="information-outline" />
                 </Tooltip>
             </View>
@@ -104,7 +124,7 @@ function CreateForms() {
                                     <Text style={styles.subtitle} >Data de referência </Text>
                                     {formsToCreate.length > 1 && formsToCreate.length - 1 === index ? <Icon onPress={handleRemoveForm} size={RFValue(20)} name='close' /> : ''}
                                 </View>
-                                <Button
+                                <ButtonComponent
                                     typeButton='extraButton'
                                     onPress={showDatePicker}
                                     disabled={index>0}
@@ -116,11 +136,12 @@ function CreateForms() {
                                         color: '#FFF',
                                         fontSize: 18,
                                         fontWeight: 'bold'
-                                    }}>{format(Number(item.vigencyDate), 'dd/MM/yyyy')}</Text>
-                                </Button>
+                                    }}>{formatDate(new Date(item.vigencyDate))}</Text>
+                                </ButtonComponent>
                                 <DateTimePickerModal
                                     isVisible={isDatePickerVisible}
                                     mode="date"
+                                    locale='pt_BR'
                                     onConfirm={handleConfirm}
                                     onCancel={hideDatePicker}
                                 />
@@ -128,10 +149,9 @@ function CreateForms() {
 
                             <View style={styles.dateIntervalContainer}>
                                 <Text style={styles.dateIntervalText}>
-                                    Período
+                                    Intervalo para respostas
                                 </Text>
-                                <Text style={{ fontSize: 16 }} > <Text style={{ fontWeight: 'bold' }}>De</Text> {format(Number(item.startAnswerDate), 'dd/MM/yyyy')} às 00:00 </Text>
-                                <Text style={{ fontSize: 16 }} > <Text style={{ fontWeight: 'bold' }}>Até</Text> {format(Number(item.startAnswerDate), 'dd/MM/yyyy')} às 19:00 </Text>
+                                <Text style={{ fontSize: 16 }} > <Text style={{ fontWeight: 'bold' }}> {formatDate(subDays(new Date(item.vigencyDate), 1))} </Text> entre 00:00 e 19:00 Horas</Text>
 
                             </View>
                         </View>

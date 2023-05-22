@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
 
     contentsInfo: {
         fontSize: RFValue(20),
+        fontWeight: '600',
         textAlign: "justify",
-        marginBottom: 15,
+        marginBottom: RFValue(8),
     },
 
     containerBtn: {
         width: '90%',
-        marginTop: 16,
+        marginTop: RFValue(12),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     textBtn: {
         fontSize: RFValue(16),
         color: defaultStyleProperties.whiteColor,
-        fontWeight: '400'
+        fontWeight: '700'
     }
 });
 

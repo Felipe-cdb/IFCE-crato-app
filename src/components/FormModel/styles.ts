@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
         padding: RFValue(10),
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 10,
+        marginVertical: RFValue(8),
         alignSelf: 'center',
-        borderRadius: RFValue(10)
+        borderRadius: RFValue(8)
     },
 
     formStatusContainer: {
@@ -19,13 +19,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         paddingVertical: RFValue(5),
-        marginBottom: RFValue(14)
+        marginBottom: RFValue(16)
     },
 
     formStatusText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 14
+        fontSize: RFValue(16)
+    },
+    formTrashIcon: {
+        fontSize: RFValue(16),
+        color: 'white'
     },
 
     formDateContainer: {
