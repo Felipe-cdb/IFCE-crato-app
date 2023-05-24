@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     containerMenu: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
         paddingTop: '10%',
         paddingBottom: 10,
 
-        backgroundColor: '#19882C'
+        backgroundColor: defaultStyleProperties.greenColor
     },
 
     logoMenuContent: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         height: RFValue(48),
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: '#FFF',
+        backgroundColor: defaultStyleProperties.whiteColor,
         borderRadius: RFPercentage(50),
     },
 
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
     },
 
     iconsMenu: {
-        fontSize: RFPercentage(4)
+        fontSize: RFPercentage(4),
+        color: defaultStyleProperties.whiteColor
     },
 });
 

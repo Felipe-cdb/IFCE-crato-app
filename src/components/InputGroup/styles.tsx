@@ -1,8 +1,9 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
-    containerInpu: {
+    containerInput: {
         width: '100%',
         marginVertical: RFValue(8)
     },
@@ -10,6 +11,10 @@ const styles = StyleSheet.create({
     label: {
         fontSize: RFValue(16),
         marginBottom: RFValue(8)
+    },
+
+    mandatoryInput: {
+        color: defaultStyleProperties.redColor
     },
 
     inputEntry: {
