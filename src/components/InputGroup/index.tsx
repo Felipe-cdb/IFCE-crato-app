@@ -73,7 +73,7 @@ export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, requ
                     multiline={multiline}
                     onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, {height: heigth || undefined}]}
+                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, {height: heigth || RFValue(40)}]}
                     value={value}
                     onContentSizeChange={onContentSizeChange}
                     keyboardType={keyboardType}
