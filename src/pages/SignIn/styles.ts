@@ -71,8 +71,82 @@ const styles = StyleSheet.create({
 
     textBtn: {
         fontSize: RFPercentage(2.5),
-    }
+    },
 
+// ------------- Screen Reset PassWord ------------ //
+    containerBack: {
+        width: '100%',
+        paddingVertical: RFValue(8)
+    },
+
+    iconBack: {
+        fontSize: RFValue(32),
+        color: '#000'
+    },
+
+    contentResentMail: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: 'space-between',
+        paddingBottom: RFValue(16)
+    },
+
+    containerTitle: {
+        width: '100%',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    iconInformations: {
+        fontSize: RFValue(20),
+        paddingTop: RFValue(5),
+        marginLeft: 3,
+        color: "#000"
+    },
+    
+    titleValidation: {
+        fontSize: RFValue(24),
+        fontWeight: 'bold',
+    },
+    
+    titleIconValidation: {
+        fontSize: RFValue(20),
+        fontWeight: 'bold',
+    },
+
+    containerCodeValidation: {
+        width: '100%',
+        alignItems: "center",
+        marginTop: RFValue(8)
+    },
+
+    codeInformtions: {
+        width: '100%',
+        textAlign: 'left',
+        fontSize: RFValue(16),
+        marginBottom: RFValue(8)
+    },
+    
+    btnNewCode: {
+        marginTop: RFValue(16),
+    },
+
+    passWordContainer: {
+        marginTop: RFValue(24)
+    },
+
+    textBtnCode: {
+        fontSize: RFValue(16),
+        color: "#407CFF",
+        textDecorationLine: "underline",
+    },
+
+    btnText: {
+        fontSize: RFValue(16),
+        color: '#FFF',
+        fontWeight: 'bold'
+    }
 })
 
 export default styles;
