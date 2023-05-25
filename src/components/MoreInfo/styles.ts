@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     viewModal: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: 49,
         height: 28,
-        backgroundColor: '#379936',
+        backgroundColor: defaultStyleProperties.greenColor,
         borderRadius: 18.85,
 
         display: "flex",

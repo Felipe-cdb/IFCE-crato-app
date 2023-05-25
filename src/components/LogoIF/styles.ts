@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     containerLogo: {
@@ -7,7 +8,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 10,
     },
-    
+
     contenteLogo: {
         width: "30%",
         alignItems: "center",
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(2),
         marginTop: RFValue(4),
         borderTopWidth: 1,
-        borderTopColor: '#379936',
+        borderTopColor: defaultStyleProperties.greenColor,
         textAlign: 'center'
     },
 

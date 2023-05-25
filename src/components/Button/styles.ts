@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     buttonText: {
-        color: '#FFFFFF',
+        color: defaultStyleProperties.whiteColor,
     },
     iconStyles: {
         justifyContent: 'center',

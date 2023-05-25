@@ -15,6 +15,7 @@ import ListRefectoryForms from "../pages/ListRefectoryForms";
 import EditProfile from "../pages/EditProfile";
 import UserCard from "../pages/UserCard";
 import Notifications from "../pages/Notifications";
+import { defaultStyleProperties } from "../base/styles";
 
 interface ManagerProps {
     mural?: boolean,
@@ -23,7 +24,7 @@ interface ManagerProps {
 };
 
 const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
-    <StatusBar backgroundColor={'#19882C'} barStyle={"light-content"} translucent />
+    <StatusBar backgroundColor={defaultStyleProperties.greenColor} barStyle={"light-content"} translucent />
 
     <AppRoutesDrawer.Navigator
         initialRouteName="Mural"
@@ -40,7 +41,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="text-box-multiple-outline"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -55,7 +55,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 drawerIcon: () => (
                     <Icon
                         name="note-plus"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -69,7 +68,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="silverware-fork-knife"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -83,7 +81,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="clipboard-edit-outline"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -106,7 +103,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="card-account-details-outline"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -121,7 +117,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 drawerItemStyle: { display: 'none' },
                 drawerIcon: () => (
                     <Icon name="silverware-fork-knife"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -136,7 +131,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
                 drawerItemStyle: { display: 'none' },
                 drawerIcon: () => (
                     <Icon name="silverware-fork-knife"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
