@@ -10,6 +10,8 @@ import LogoIF from '../../components/LogoIF';
 import styles from './styles'
 import ScreenLoad from '../../components/ScreenLoad';
 import { Button } from '../../components/Button';
+import { EmailRegex } from '../../base/Regexs';
+import { api } from '../../config';
 
 export default function Login() {
 
@@ -19,25 +21,32 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [visible, setVisible] = useState(true);
-  // const [resetEmail, setResetEmail] = useState(false);   
   const [loading, setLoading] = useState<boolean>(false);
 
 
-  // const handleResetSenha = () => {
-  //   if (!email.trim()) {
-  //     aviso("Insira um email válido", 'warning')
-  //     return;
-  //   }
+  const handleResetSenha = async () => {
+    if (!EmailRegex.test(email)) {
+      aviso('Insira um email válido', 'warning');
+      return;
+    }
 
-  //   try {
-  //     setResetEmail(true);
-  //     aviso("Email de recuperação de senha enviado com sucesso", 'success');
-  //     return;
-
-  //   } catch (error) {
-  //     aviso("Ocorreu um erro inesperado, tente mais tarde!", 'success');
-  //   }
-  // }
+    try {
+      await api.post('/auth/forgot-password', {email});
+      navigation.navigate('resetPass', {email});
+      aviso("Email de recuperação de senha enviado com sucesso", 'success');
+      return;
+    } catch (error: any) {
+      if(error.response.data.message == 'User not found.'){
+        aviso("Usuário não encontrado!", 'danger');
+        return;
+      }
+      if(error.response.data.message == 'Pleace enter a correct email.'){
+        aviso("Email inserido inválido!", 'danger');
+        return;
+      }
+      aviso("Ocorreu um erro inesperado, tente mais tarde!", 'danger');
+    }
+  }
 
   const entrar = async () => {
     setLoading(true)
@@ -93,9 +102,9 @@ export default function Login() {
             </TouchableOpacity>
         </View>
 
-        {/* <TouchableOpacity onPress={() => handleResetSenha()}>
+        <TouchableOpacity onPress={() => handleResetSenha()}>
             <Text style={styles.textLink}>Esqueceu a senha?</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         </View>
 
         <View style={styles.btnGroup}>

@@ -13,6 +13,7 @@ interface AuthContextDataProps {
     loading: boolean;
     isUserLoaded: boolean;
     screenLoading: boolean;
+    changeUserValues: (userResponse: any) => any;
     signOut: () => any;
     signIn: (user: IUserLog) => void;
     aviso: (m: string, t: MessageType) => void;
@@ -61,19 +62,7 @@ function AuthProvider({ children }: AuthProviderProps) {
                 const res = await api.get(`/users/${userId}`);
                 if (res) {
                     const userResponse = res.data;
-                    setUser({
-                        name: userResponse.name,
-                        email: userResponse.email,
-                        roles: userResponse.roles,
-                        type: userResponse.type,
-                        siape: userResponse.siape || undefined,
-                        course: userResponse.course || undefined,
-                        avatarUrl: userResponse.avatarUrl || undefined,
-                        registration: userResponse.registration || undefined,
-                        phoneNumber: userResponse.phoneNumber || undefined,
-                        isActive: userResponse.isActive || false,
-                        createdAt: userResponse.createdAt,
-                    });
+                    changeUserValues(userResponse);
                     setIsUserLoaded(true);
                 };
                 setLoading(false);
@@ -88,25 +77,29 @@ function AuthProvider({ children }: AuthProviderProps) {
         setScreenLoading(false);
     }, []);
 
+    const changeUserValues = (userResponse: any) => {
+        setUser({
+            name: userResponse.name,
+            email: userResponse.email,
+            roles: userResponse.roles,
+            type: userResponse.type,
+            siape: userResponse.siape || undefined,
+            course: userResponse.course || undefined,
+            avatarUrl: userResponse.avatarUrl || undefined,
+            registration: userResponse.registration || undefined,
+            phoneNumber: userResponse.phoneNumber || undefined,
+            isActive: userResponse.isActive || false,
+            createdAt: userResponse.createdAt,
+        });
+    }
+
     const userReload = async () => {
         try {
             const userId = await AsyncStorage.getItem('userId');
             const res = await api.get(`/users/${userId}`);
             if (res) {
                 const userResponse = res.data;
-                setUser({
-                    name: userResponse.name,
-                    email: userResponse.email,
-                    roles: userResponse.roles,
-                    type: userResponse.type,
-                    siape: userResponse.siape || undefined,
-                    course: userResponse.course || undefined,
-                    avatarUrl: userResponse.avatarUrl || undefined,
-                    registration: userResponse.registration || undefined,
-                    phoneNumber: userResponse.phoneNumber || undefined,
-                    isActive: userResponse.isActive || false,
-                    createdAt: userResponse.createdAt,
-                });
+                changeUserValues(userResponse);
                 setIsUserLoaded(true);
             };
             setLoading(false);
@@ -158,19 +151,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             const response = await api.post("/auth/login", JSON.stringify(userLog));
 
             const userResponse = response.data.user;
-            setUser({
-                name: userResponse.name,
-                email: userResponse.email,
-                roles: userResponse.roles,
-                type: userResponse.type,
-                siape: userResponse.siape || undefined,
-                course: userResponse.course || undefined,
-                avatarUrl: userResponse.avatarUrl || undefined,
-                registration: userResponse.registration || undefined,
-                phoneNumber: userResponse.phoneNumber || undefined,
-                isActive: userResponse.isActive || false,
-                createdAt: userResponse.createdAt
-            });
+            changeUserValues(userResponse);
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
@@ -215,19 +196,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             }));
 
             const userResponse = response.data.user;
-            setUser({
-                name: userResponse.name,
-                email: userResponse.email,
-                roles: userResponse.roles,
-                type: userResponse.type,
-                siape: userResponse.siape || undefined,
-                course: userResponse.course || undefined,
-                avatarUrl: userResponse.avatarUrl || undefined,
-                registration: userResponse.registration || undefined,
-                phoneNumber: userResponse.phoneNumber || undefined,
-                isActive: userResponse.isActive || false,
-                createdAt: userResponse.createdAt,
-            });
+            changeUserValues(userResponse);
             AsyncStorage.setItem('token', response.data.token);
             AsyncStorage.setItem('userId', userResponse.id);
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
@@ -268,7 +237,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     return(
         <AuthContext.Provider value={{
-            signIn, aviso, signOut, setLoggedUser,
+            signIn, aviso, signOut, setLoggedUser, changeUserValues,
             confirmCode, resendCode, setScreenLoading,userReload,
             loading, user, isUserLoaded, screenLoading
         }}>
