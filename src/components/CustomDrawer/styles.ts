@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     drawerContent: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
 
     drawerMenu: {
         padding: 15,
-        backgroundColor: '#19882C',
+        backgroundColor: defaultStyleProperties.greenColor,
         marginTop: -4
     },
 
@@ -20,13 +21,20 @@ const styles = StyleSheet.create({
 
     icons: {
         fontSize: RFValue(24),
-        marginRight: 15
+        marginRight: 15,
+        color: defaultStyleProperties.blackColor
     },
-    
+
+    iconback: {
+        fontSize: RFValue(30),
+        marginRight: 15,
+        color: defaultStyleProperties.whiteColor
+    },
+
     textBack: {
         fontWeight: '700',
         fontSize: RFPercentage(3.5),
-        color: '#fff'
+        color: defaultStyleProperties.whiteColor
     },
 
     footerDrawer: {
@@ -34,7 +42,7 @@ const styles = StyleSheet.create({
         marginBottom: RFValue(30),
 
         borderTopWidth: 1.5,
-        borderTopColor: '#19882C'
+        borderTopColor: defaultStyleProperties.greenColor
     },
 
     contentExit: {

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { defaultStyleProperties } from '../../base/styles'
 
 const styles = StyleSheet.create({
     formContainer: {
@@ -37,8 +38,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flexDirection: 'row'
     },
-    formDateIcon: {
-        fontSize: 14
+
+    icon: {
+        fontSize: 14,
+        color: defaultStyleProperties.whiteColor
     },
 
     formDateText: {

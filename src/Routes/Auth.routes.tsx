@@ -10,10 +10,11 @@ import stylesNavigation from "./styles";
 const AuthDrawer = createDrawerNavigator();
 import CustomDrawerContent from "../components/CustomDrawer";
 import Home from '../pages/Home';
+import { defaultStyleProperties } from '../base/styles';
 
 const AuthRoutes = () => (<>
 
-    <StatusBar backgroundColor={'#19882C'} barStyle={"light-content"} translucent />
+    <StatusBar backgroundColor={defaultStyleProperties.greenColor} barStyle={"light-content"} translucent />
 
     <AuthDrawer.Navigator
         initialRouteName='Mural'
@@ -30,7 +31,6 @@ const AuthRoutes = () => (<>
                 headerShown: false,
                 drawerIcon: () => (
                     <Icon name="text-box-multiple-outline"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -45,7 +45,6 @@ const AuthRoutes = () => (<>
                 swipeEnabled: false,
                 drawerIcon: () => (
                     <Icon name="login"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )
@@ -60,7 +59,6 @@ const AuthRoutes = () => (<>
                 swipeEnabled: false,
                 drawerIcon: () => (
                     <Icon name="account-plus-outline"
-                        color="#000"
                         style={stylesNavigation.icons}
                     />
                 )

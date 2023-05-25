@@ -1,8 +1,9 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
-    
+
     inputLog: {
         width: '100%',
         fontSize: RFValue(14),
@@ -25,21 +26,22 @@ const styles = StyleSheet.create({
     },
 
     iconEye: {
-        fontSize: RFPercentage(3)
+        fontSize: RFPercentage(3),
+        color: defaultStyleProperties.blackColor
     },
-    
+
     viewPass: {
         position: "absolute",
         right: RFValue(8),
     },
-    
+
     viewModal: {
         width: '100%',
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center",
         padding: RFValue(8),
-        backgroundColor: '#FFF',
+        backgroundColor: defaultStyleProperties.whiteColor,
     },
 
     contentModalInfo: {
@@ -58,13 +60,13 @@ const styles = StyleSheet.create({
 
     textBtnCacel: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     },
 
     textBtnsave: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     }
 });

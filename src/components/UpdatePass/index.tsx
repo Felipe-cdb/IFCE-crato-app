@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import Modal from 'react-native-modal';
-import { View, Text, TextInput, TouchableOpacity,
-    Keyboard, StyleProp, ViewStyle } from 'react-native';
+import {
+    View, Text, TextInput, TouchableOpacity,
+    Keyboard, StyleProp, ViewStyle
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { api } from "../../config";
@@ -21,14 +23,14 @@ type InputPassProp = {
     label: string;
 }
 
-const InpuPass = ({pass, setPass, label} : InputPassProp) => {
+const InpuPass = ({ pass, setPass, label }: InputPassProp) => {
 
     const [visible, setVisible] = useState(true);
     const [border, setBorder] = useState<StyleProp<ViewStyle>>({});
 
     const handletextInput = (value: string) => {
         setPass(value);
-        if(!value.trim()){
+        if (!value.trim()) {
             setBorder({
                 borderWidth: 1,
                 borderColor: 'red'
@@ -39,8 +41,8 @@ const InpuPass = ({pass, setPass, label} : InputPassProp) => {
         setBorder({});
     }
 
-    return(
-        <View style={{marginTop: 24}}>
+    return (
+        <View style={{ marginTop: 24 }}>
             <Text style={styles.label}>{label}</Text>
             <View style={styles.contntInpuPass}>
                 <TextInput
@@ -53,8 +55,8 @@ const InpuPass = ({pass, setPass, label} : InputPassProp) => {
                 />
                 <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
                     {
-                    visible ? <Icon name="visibility" style={styles.iconEye} color="#000" />
-                    : <Icon name="visibility-off" style={styles.iconEye} color="#000" />
+                        visible ? <Icon name="visibility" style={styles.iconEye} />
+                            : <Icon name="visibility-off" style={styles.iconEye} />
                     }
                 </TouchableOpacity>
             </View>
@@ -90,10 +92,10 @@ function UpdatePass({ visivel, close }: BoxProps) {
             keyboardDidHideListener.remove();
         };
     }, []);
-    
 
-    const handleUpdatePass = async () =>{
-        if(!currentPass.trim() || !newPass.trim() || !confirmNewPass.trim()) {
+
+    const handleUpdatePass = async () => {
+        if (!currentPass.trim() || !newPass.trim() || !confirmNewPass.trim()) {
             aviso('Preencha todos os campos para prosseguir', 'warning');
             return;
         }
@@ -107,7 +109,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
             aviso('A senha deve ter no minimo 8 caracteres', 'warning');
             return;
         }
-        
+
         try {
             setScreenLoading(true);
             await api.patch('users/update-password', {
@@ -120,17 +122,17 @@ function UpdatePass({ visivel, close }: BoxProps) {
         } catch (error: any) {
             setScreenLoading(false);
             console.log(error.response);
-            if(error.response){
-                if(error.response.data.message === 'Invalid current password'){
+            if (error.response) {
+                if (error.response.data.message === 'Invalid current password') {
                     aviso('A senha atual está incorreta', 'danger');
-                }    
+                }
             } else {
                 aviso('Houve um contratempo, tente novamente mais tarde.', 'danger')
             }
         }
     }
-    
-    return(
+
+    return (
         <Modal
             animationIn={"slideInDown"}
             animationOut={"slideOutDown"}
@@ -140,7 +142,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
             backdropOpacity={0.1}
             onBackButtonPress={close}
             statusBarTranslucent={true}
-            style={{paddingBottom: keyboardHeight-56}}
+            style={{ paddingBottom: keyboardHeight - 56 }}
         >
             <View style={styles.viewModal}>
                 <View style={styles.contentModalInfo}>
@@ -150,13 +152,13 @@ function UpdatePass({ visivel, close }: BoxProps) {
                         setPass={setCurrentPass}
                         label="Senha atual"
                     />
-                    
+
                     <InpuPass
                         pass={newPass}
                         setPass={setNewPass}
                         label="Nova senha"
                     />
-                    
+
                     <InpuPass
                         pass={confirmNewPass}
                         setPass={setConfirmNewPass}
