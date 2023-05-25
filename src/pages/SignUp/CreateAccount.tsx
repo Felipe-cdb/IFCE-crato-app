@@ -42,7 +42,13 @@ export default function CreateAccount() {
 
   const setNome = (nome: string) => {
     setUser(prevState => {
-      return {...prevState, name: nome}
+      return {...prevState, name: nome.trim()}
+    })
+  }
+
+  const setCurso = (curso: string) => {
+    setUser(prevState => {
+      return {...prevState, course: curso}
     })
   }
   
@@ -164,6 +170,10 @@ export default function CreateAccount() {
           data.append('registration', user.registration)
         }
 
+        if (user.type === UserTypes.STUDENT && user.course) {
+          data.append('course', user.course)
+        }
+
         if (selectedImage) {
           data.append('file', selectedImage)
         }
@@ -175,7 +185,6 @@ export default function CreateAccount() {
                 'Content-Type': 'multipart/form-data'
               }
             });
-            console.log(res);
             setScreenLoading(false);
             navigation.navigate('validation', {email: user.email});
             aviso("Só falta confirmar seu email!", "success");
@@ -204,7 +213,7 @@ export default function CreateAccount() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         enabled style={styles.container}
       >
-        <ScrollView style={styles.scrollContainer} keyboardShouldPersistTaps={'handled'}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContainer} keyboardShouldPersistTaps={'handled'}>
           <View style={styles.content}>
             <LogoIF />
 
@@ -256,7 +265,7 @@ export default function CreateAccount() {
                     return { label: courseConstants[key], value: key }
                   } )}
                     required={false}
-                    atualiza={setCargo}
+                    atualiza={setCurso}
                   />
                   <InputGroup
                     label="Email"
@@ -266,7 +275,6 @@ export default function CreateAccount() {
                     autoCapitalize='none'
                     autoCorrect={false}
                     keyboardType='email-address'
-                    multiline={true}
                     />
                   <InputGroup
                     label="Celular"
