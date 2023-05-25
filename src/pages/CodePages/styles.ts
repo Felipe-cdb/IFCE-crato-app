@@ -21,9 +21,22 @@ const styles = StyleSheet.create({
         marginTop: RFValue(56)
     },
 
+    titleValidationContainer: {
+        width: '100%',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
     titleValidation: {
         fontSize: RFValue(24),
         fontWeight: 'bold'
+    },
+
+    iconInformation: {
+        fontSize: RFValue(24),
+        marginLeft: 3,
+        color: '#000'
     },
 
     infosValidation: {

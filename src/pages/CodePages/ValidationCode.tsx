@@ -8,10 +8,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import styles from "./styles";
 import CodeInput from "../../components/CodeInput";
 import { AuthContext } from "../../context/auth";
+import Tooltip from "../../components/Tooltip/index";
 
 const ValidationCode = ({ route }: any) => {
 
-    const email = route.params!.email;
+    const email = route.params?.email || 'pedro@mail.com';
     const [code, setCode] = useState<string>('');
     const navigation = useNavigation<StackNavigationProp<any>>();
     const { confirmCode, resendCode } = useContext(AuthContext);
@@ -59,7 +60,14 @@ const ValidationCode = ({ route }: any) => {
             </View>
 
             <View style={styles.contentValidation}>
-                <Text style={styles.titleValidation}>Verificação de E-mail</Text>
+                <View style={styles.titleValidationContainer}>
+                    <Text style={styles.titleValidation}>Verificação de E-mail</Text>
+                    <Tooltip
+                        tooltipText='Caso não encontre o email na caixa principal, verifique em SPANS.'
+                    >
+                        <Icon style={styles.iconInformation} name="information-outline"/>
+                    </Tooltip>
+                </View>
 
                 <View style={styles.infosValidation}>
                     <Text style={styles.infoText}>Um código de 4 dígitos foi enviado para:</Text>
