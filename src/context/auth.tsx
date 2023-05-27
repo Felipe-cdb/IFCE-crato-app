@@ -79,6 +79,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     const changeUserValues = (userResponse: any) => {
         setUser({
+            id: userResponse.id,
             name: userResponse.name,
             email: userResponse.email,
             roles: userResponse.roles,
@@ -225,7 +226,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         try {
             const response = await api.post('/auth/resend/email-code', JSON.stringify({email}))
             aviso(message, 'success');
-            console.log(response.data)
         } catch (error: any) {
             if (error.response && error.response.data.message === "User not found or already is active"){
                 aviso("Usuário não encontrado", "warning");
