@@ -16,6 +16,7 @@ import EditProfile from "../pages/EditProfile";
 import UserCard from "../pages/UserCard";
 import Notifications from "../pages/Notifications";
 import { defaultStyleProperties } from "../base/styles";
+import Users from "../pages/Users";
 
 interface ManagerProps {
     mural?: boolean,
@@ -90,6 +91,15 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
         {refactory && <AppRoutesDrawer.Screen
             name="CreateForm"
             component={CreateForms}
+            options={{
+                headerShown: false,
+                drawerItemStyle: { display: 'none' },
+            }}
+        />}
+
+        {permitions && <AppRoutesDrawer.Screen
+            name="Users"
+            component={Users}
             options={{
                 headerShown: false,
                 drawerItemStyle: { display: 'none' },

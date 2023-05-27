@@ -8,10 +8,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from "../../context/auth";
 
 import styles from "./styles";
+import { UserPermitions } from "../../base/Enums";
 
 const CustomDrawerContent = (props: any) => {
 
-    const { signOut, isUserLoaded } = useContext(AuthContext);
+    const { signOut, isUserLoaded, user } = useContext(AuthContext);
 
     function sair() {
         props.navigation.navigate('Mural')
@@ -41,6 +42,15 @@ const CustomDrawerContent = (props: any) => {
                         Editar Perfil
                     </Text>
                 </TouchableOpacity>
+
+                { user && user.roles.includes(UserPermitions.PM) ? (
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Users')} style={styles.contentExit}>
+                        <Icon name="account-details" style={styles.icons} />
+                        <Text style={styles.textExit}>
+                            Permissões
+                        </Text>
+                    </TouchableOpacity>
+                ) : ''}
 
                 <TouchableOpacity
                     onPress={() => sair()}

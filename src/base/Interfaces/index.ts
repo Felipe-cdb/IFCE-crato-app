@@ -1,6 +1,7 @@
 import { RefectoryStatusEnum, UserPermitions, UserTypes } from "../Enums"
 
 export interface IUser {
+    id: string;
     name: string;
     email: string;
     type: UserTypes;
