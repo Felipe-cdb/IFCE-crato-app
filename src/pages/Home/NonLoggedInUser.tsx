@@ -12,58 +12,59 @@ import MaisInfo from "../../components/MoreInfo";
 import { Item as ItemType } from "../../base/Types";
 import CommuniqueListEmpty from "../../components/CommuniqueListEmpty";
 import { constantColors } from "../../base/constants";
+import { defaultStyleProperties } from "../../base/styles";
 
 interface IMoreInformations {
-    exibir: boolean;
-    item: ItemType | null;
+	exibir: boolean;
+	item: ItemType | null;
 }
 
 
 function NonLoggedInUser() {
 
-	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({exibir: false, item: null});
+	const [maisInformacoes, setMaisInformacoes] = useState<IMoreInformations>({ exibir: false, item: null });
 	const [communiques, setCommuniques] = useState<ItemType[]>([])
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 	const [refreshing, setRefreshing] = useState<boolean>(true)
-	
+
 	const loadCommuniques = () => {
 		api.get('/communique')
-		.then((res: any) => {
-			setCommuniques(res.data.list);
-			setRefreshing(false);
-		})
-		.catch((error: any) => {
-			setRefreshing(false);
-		})
+			.then((res: any) => {
+				setCommuniques(res.data.list);
+				setRefreshing(false);
+			})
+			.catch((error: any) => {
+				setRefreshing(false);
+			})
 	}
-	
+
 	const findCommuniques = () => {
 		api.get(`/communique?categories=${selectedCategories.toString()}`)
-		.then((res: any) => {
-			setCommuniques(res.data.list);
-			setRefreshing(false);
-		})
-		.catch((error: any) => {
-			setRefreshing(false);
-		})
+			.then((res: any) => {
+				setCommuniques(res.data.list);
+				setRefreshing(false);
+			})
+			.catch((error: any) => {
+				setRefreshing(false);
+			})
 	}
-	
+
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
-		if(selectedCategories.length) findCommuniques();
+		if (selectedCategories.length) findCommuniques();
 		else loadCommuniques();
-  	}, [selectedCategories, refreshing]);
-	
-	
+	}, [selectedCategories, refreshing]);
+
+
 	useEffect(() => {
-		if(selectedCategories.length) findCommuniques();
+		if (selectedCategories.length) findCommuniques();
 		else loadCommuniques();
 	}, [selectedCategories])
 
-    const RenderItem = ({ item }: {item: ItemType}) => {
-        return(
-            <View style={styles.cardComponent}>
-                <Comunicado
+	const RenderItem = ({ item }: { item: ItemType }) => {
+		return (
+			<View style={styles.cardComponent}>
+				<Comunicado
 					exibir={setMaisInformacoes}
 					item={item}
 				/>
@@ -72,8 +73,8 @@ function NonLoggedInUser() {
 	}
 
 	const ItemSeparatorComponent = () => {
-        return(
-            <View style={styles.lineSeparator}/>
+		return (
+			<View style={styles.lineSeparator} />
 		)
 	}
 
@@ -88,44 +89,44 @@ function NonLoggedInUser() {
 				/>
 			}
 
-            <Menu/>
-            <View style={styles.filtros}>
-                <ScrollView
-                    horizontal
-                    centerContent
-                    contentContainerStyle={{flexGrow: 1, justifyContent: "space-evenly"}}
-                >
-					
-                    {FILTROS.map(item => (
-                        <Filtros
+			<Menu />
+			<View style={styles.filtros}>
+				<ScrollView
+					horizontal
+					centerContent
+					contentContainerStyle={styles.scrollFiltros}
+				>
+
+					{FILTROS.map(item => (
+						<Filtros
 							key={item.key}
 							selectedCategories={selectedCategories}
 							setSelectedCategories={setSelectedCategories}
 							item={item.label}
 						/>
-                    ))}
-                </ScrollView>
-            </View>
+					))}
+				</ScrollView>
+			</View>
 
-			<View style={[styles.contentComunicados, {flex: 1}]}>
+			<View style={styles.contentComunicados}>
 				<FlatList
 					showsVerticalScrollIndicator={false}
 					ItemSeparatorComponent={ItemSeparatorComponent}
 					data={communiques}
 					renderItem={RenderItem}
-					ListEmptyComponent={CommuniqueListEmpty}				
+					ListEmptyComponent={CommuniqueListEmpty}
 					refreshControl={
 						<RefreshControl
 							refreshing={refreshing}
 							onRefresh={onRefresh}
-							colors={['#19882C']}
-							tintColor={'#19882C'}
+							colors={[defaultStyleProperties.greenColor]}
+							tintColor={defaultStyleProperties.greenColor}
 						/>}
 					keyExtractor={(item: ItemType) => item.id.toString()}
 				/>
 			</View>
-        </View>
-    )
+		</View>
+	)
 }
 
 export default NonLoggedInUser;

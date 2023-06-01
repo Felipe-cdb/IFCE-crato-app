@@ -1,16 +1,24 @@
 import { StyleSheet } from "react-native";
 import { defaultStyleProperties } from '../../base/styles'
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const {
     blueColor,
+    redColor,
+    whiteColor,
+    greenColor,
     defaultPaddingBottom,
     defaultPaddingTop,
     defaultPadding,
-    titleFontSize
+    pageTitleFontSize
 } = defaultStyleProperties
 
 const styles = StyleSheet.create({
+
+    scrollViewContainer: {
+        height: '100%'
+    },
+
     container: {
         flex: 1,
         flexDirection: "column",
@@ -19,70 +27,73 @@ const styles = StyleSheet.create({
     },
 
     titlePage: {
-        fontSize: defaultStyleProperties.pageTitleFontSize,
+        fontSize: pageTitleFontSize,
         fontWeight: 'bold',
         alignSelf: 'center',
     },
 
-    //-------------------------Data do Formulário-------------------------
+    //--------------Data do Formulário------------
 
     dateForms: {
         alignItems: "flex-start",
         justifyContent: "center",
-        paddingTop: 20
+        paddingTop: RFValue(24)
     },
 
     statusForms: {
         alignSelf: "center",
-        fontSize: 16,
+        fontSize: RFValue(19),
         paddingTop: defaultPaddingTop,
         paddingBottom: defaultPaddingBottom
     },
 
     dateFormsReference: {
-        fontSize: 16,
-        padding: 5,
+        fontSize: RFValue(19),
+        padding: RFValue(6),
     },
 
     dateFormsClosing: {
-        fontSize: 16,
-        padding: 5,
-
+        fontSize: RFValue(19),
+        padding: RFValue(6),
     },
 
+    redText: {
+        color: redColor
+    },
 
-    //-------------------------CARDÁPIO-------------------------
-    cardapio: {
+    //----------CARDÁPIO---------------
+    menu: {
         width: '100%',
         paddingTop: defaultPaddingTop,
         paddingBottom: defaultPaddingBottom
     },
 
     title: {
-        fontSize: titleFontSize,
+        fontSize: RFValue(19),
         fontWeight: 'bold',
         paddingBottom: defaultPaddingBottom
     },
 
     subtitle: {
         fontWeight: 'normal',
-        fontSize: 16,
+        fontSize: RFValue(19),
         alignSelf: "flex-start"
     },
 
     menuContainer: {
         paddingTop: defaultPaddingTop,
         paddingBottom: defaultPaddingBottom,
-        paddingHorizontal: "22%",
+        paddingHorizontal: RFPercentage(12),
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
-        marginVertical: 10,
+        marginVertical: RFValue(12),
     },
 
-    menuIcon: {
-        fontSize: 20,
-        marginLeft: 8,
+    iconStyle: {
+        fontSize: RFValue(26),
+        marginLeft: RFValue(10),
+        color: whiteColor
     },
 
     editMenuIconContainer: {
@@ -95,29 +106,25 @@ const styles = StyleSheet.create({
     },
 
     editMenuIcon: {
-        fontSize: 20
+        fontSize: RFValue(24),
+        color: whiteColor
     },
 
-    //-------------------------Opções do Dia-------------------------
+    //-------------Opções do Dia----------------
     refectoryChoices: {
         width: '100%',
         alignItems: 'flex-start',
     },
 
-    //-------------------------Botões-------------------------
+    //--------------Botões---------------------
     formButton: {
-        paddingVertical: 10,
+        paddingVertical: RFValue(12),
     },
 
     formTitle: {
-        fontSize: 16,
-        color: 'white',
-        padding: 2
-    },
-
-    formIcon: {
-        fontSize: 20,
-        marginLeft: 8,
+        fontSize: RFValue(18),
+        color: whiteColor,
+        padding: RFValue(2)
     },
 
     actionButtonContainer: {
@@ -129,12 +136,58 @@ const styles = StyleSheet.create({
     },
 
     actionButtomTitle: {
-        fontSize: 16,
-        color: 'white',
+        fontSize: RFValue(18),
+        color: whiteColor,
         fontWeight: "bold",
-        paddingHorizontal: '10%'
-    }
+        paddingHorizontal: RFPercentage(4),
+    },
 
+    //-------------------------EmptyRefectory-------------------------
+    containerEmpty: {
+        height: '100%',
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    iconEmpty: {
+        fontSize: RFValue(80),
+        color: greenColor,
+        opacity: 0.6,
+    },
+
+    textEmpty: {
+        fontSize: RFValue(16),
+        fontWeight: '700',
+        color: greenColor,
+        opacity: 0.6,
+
+    },
+
+    //-------------------------RefectoryAlreadyAnswered---------------------
+    containerAlreadyAnswered: {
+        height: '100%',
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "center",
+        paddingVertical: RFPercentage(8),
+    },
+
+    iconAlreadyAnswered: {
+        fontSize: RFValue(45),
+        color: greenColor,
+        opacity: 0.6,
+    },
+
+    textAlreadyAnswered: {
+        fontSize: RFValue(16),
+        fontWeight: '500',
+        textAlign: 'center',
+        color: greenColor,
+        opacity: 0.6,
+
+    }
 });
 
 export default styles;

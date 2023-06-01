@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -31,13 +32,20 @@ const styles = StyleSheet.create({
 
     iconProfile: {
         fontSize: RFValue(96),
-        color: '#000'
+        color: defaultStyleProperties.blackColor
     },
 
+    //Esse estilo não está sendo aplicado ao botão,
+    //segue o newPassBtn original comentado e abaixo dele o adptado para solução temporaria usando uma view
+    // newPassBtn: {
+    //     width: '70%',
+    //     marginTop: 10,
+    //     padding: 10,
+    // },
+
     newPassBtn: {
-        width: '70%',
-        marginTop: RFValue(24),
-        padding: 10,
+        width: '100%',
+        marginTop: RFValue(16),
     },
 
     containerBtnPass: {
@@ -49,12 +57,12 @@ const styles = StyleSheet.create({
 
     textResetPass: {
         fontSize: RFValue(16),
-        color: '#FFF'
+        color: defaultStyleProperties.whiteColor
     },
 
-    iconResetPass : {
-        fontSize: RFValue(22),
-        color: '#FFF'
+    iconResetPass: {
+        fontSize: RFValue(28),
+        color: defaultStyleProperties.whiteColor
     },
 
     footer: {
@@ -65,17 +73,12 @@ const styles = StyleSheet.create({
         marginTop: RFPercentage(20)
     },
 
-    textBtnCacel: {
+    footerBtn: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     },
 
-    textBtnsave: {
-        fontSize: RFValue(16),
-        color: '#FFF',
-        fontWeight: 'bold'
-    }
 });
 
 export default styles;

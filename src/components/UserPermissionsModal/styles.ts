@@ -46,22 +46,27 @@ export default StyleSheet.create({
         fontSize: RFValue(defaultStyleProperties.subTitleFontSize),
     },
 
+    iconStyle: {
+        fontSize: RFValue(14),
+        color: defaultStyleProperties.whiteColor
+    },
+
     identificationContainerStyle: {
         marginBottom: RFValue(10)
     },
 
-    identificationStyle: { 
+    identificationStyle: {
         marginTop: RFValue(7),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start"
-     },
+    },
 
-    identificationTextStyle: { 
+    identificationTextStyle: {
         color: defaultStyleProperties.whiteColor,
         fontSize: RFValue(defaultStyleProperties.subTitleFontSize),
         marginLeft: RFValue(10)
-     },
+    },
 
     emailStyle: {
         marginTop: RFValue(7),
@@ -82,7 +87,6 @@ export default StyleSheet.create({
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
-        // marginLeft: 25,
         backgroundColor: defaultStyleProperties.whiteColor,
         borderColor: defaultStyleProperties.grayColor
     },

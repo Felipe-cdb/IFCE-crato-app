@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +49,8 @@ const styles = StyleSheet.create({
     },
 
     iconEye: {
-        fontSize: RFPercentage(3)
+        fontSize: RFPercentage(3),
+        color: defaultStyleProperties.blackColor
     },
 
     viewPass: {
@@ -71,9 +73,14 @@ const styles = StyleSheet.create({
 
     textBtn: {
         fontSize: RFPercentage(2.5),
+        color: defaultStyleProperties.whiteColor
     },
 
-// ------------- Screen Reset PassWord ------------ //
+    sigUpBtn: {
+        marginTop: 16
+    },
+
+    // ------------- Screen Reset PassWord ------------ //
     containerBack: {
         width: '100%',
         paddingVertical: RFValue(8)
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
 
     iconBack: {
         fontSize: RFValue(32),
-        color: '#000'
+        color: defaultStyleProperties.blackColor
     },
 
     contentResentMail: {
@@ -102,14 +109,14 @@ const styles = StyleSheet.create({
         fontSize: RFValue(20),
         paddingTop: RFValue(5),
         marginLeft: 3,
-        color: "#000"
+        color: defaultStyleProperties.blackColor
     },
-    
+
     titleValidation: {
         fontSize: RFValue(24),
         fontWeight: 'bold',
     },
-    
+
     titleIconValidation: {
         fontSize: RFValue(20),
         fontWeight: 'bold',
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
         fontSize: RFValue(16),
         marginBottom: RFValue(8)
     },
-    
+
     btnNewCode: {
         marginTop: RFValue(16),
     },

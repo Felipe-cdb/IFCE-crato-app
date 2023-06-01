@@ -25,14 +25,14 @@ type BoxProps = {
 
 function UserPermissionsModal({ isVisible, setVisible, id, name, email, identification, type, roles }: BoxProps) {
 
-    const [ checkboxAnswerFields, setCheckboxAnswerFields ] = React.useState<UserPermitions[]>(roles)
+    const [checkboxAnswerFields, setCheckboxAnswerFields] = React.useState<UserPermitions[]>(roles)
     const [loading, setLoading] = React.useState<boolean>(false)
-    
+
     const { aviso } = useContext(AuthContext);
 
     const handleChange = (key: UserPermitions) => {
         const alreadyExists = checkboxAnswerFields.includes(key)
-        if(alreadyExists) {
+        if (alreadyExists) {
             setCheckboxAnswerFields(checkboxAnswerFields.filter(item => item !== key))
         } else {
             setCheckboxAnswerFields([...checkboxAnswerFields, key])
@@ -42,7 +42,7 @@ function UserPermissionsModal({ isVisible, setVisible, id, name, email, identifi
     const handleSave = async () => {
         setLoading(true)
         try {
-            await api.patch(`/users/roles/${id}`, {roles: checkboxAnswerFields})
+            await api.patch(`/users/roles/${id}`, { roles: checkboxAnswerFields })
             setLoading(false)
             setVisible()
             aviso('Permissões atualizadas com sucesso.', 'success')
@@ -65,74 +65,72 @@ function UserPermissionsModal({ isVisible, setVisible, id, name, email, identifi
         >
             <View style={styles.viewModal}>
                 <View style={styles.contentModalInfo}>
-                <Icon style={styles.closeIcon} onPress={setVisible} name="close" />
-                
-                <View>
-                    <View style={styles.nameContainer}>
-                        <Text
-                        ellipsizeMode='tail'
-                        numberOfLines={1}
-                        style={styles.nameText}> {name} </Text>
-                        <Text style={styles.typeText}> { type } </Text>
-                    </View>
-
-                    <View style={styles.identificationContainerStyle}>
-                        <View style={styles.identificationStyle}>
-                            <Icon
-                            name='badge-account-horizontal-outline'
-                            size={RFValue(14)}
-                            color={defaultStyleProperties.whiteColor}
-                            />
-                            <Text style={styles.identificationTextStyle}>
-                                {identification} 
-                            </Text>
-                        </View>
-                        <View style={styles.emailStyle}>
-                            <Icon
-                            name='email'
-                            size={RFValue(14)}
-                            color={defaultStyleProperties.whiteColor}
-                            />
-                            <Text
-                            ellipsizeMode='tail'
-                            numberOfLines={1}
-                            style={styles.emailTextStyle}>
-                                {email} 
-                            </Text>
-                        </View>
-                    </View>
-                </View>
+                    <Icon style={styles.closeIcon} onPress={setVisible} name="close" />
 
                     <View>
-                    <TouchableOpacity
-                        style={styles.optionContainer}
-                        onPress={() => handleChange(UserPermitions.PM)}
-                    >
-                        <View style={styles.checkbox}>
-                            {checkboxAnswerFields.includes(UserPermitions.PM) && <Icon style={styles.checkedBox} name='check-bold'/> }
+                        <View style={styles.nameContainer}>
+                            <Text
+                                ellipsizeMode='tail'
+                                numberOfLines={1}
+                                style={styles.nameText}> {name} </Text>
+                            <Text style={styles.typeText}> {type} </Text>
                         </View>
-                        <Text style={styles.optionText}>Gestor de Permissões</Text>
-                    </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.optionContainer}
-                        onPress={() => handleChange(UserPermitions.RM)}
-                    >
-                        <View style={styles.checkbox}>
-                            {checkboxAnswerFields.includes(UserPermitions.RM) && <Icon style={styles.checkedBox} name='check-bold'/> }
+                        <View style={styles.identificationContainerStyle}>
+                            <View style={styles.identificationStyle}>
+                                <Icon
+                                    name='badge-account-horizontal-outline'
+                                    style={styles.iconStyle}
+                                />
+                                <Text style={styles.identificationTextStyle}>
+                                    {identification}
+                                </Text>
+                            </View>
+                            <View style={styles.emailStyle}>
+                                <Icon
+                                    name='email'
+                                    style={styles.iconStyle}
+                                />
+                                <Text
+                                    ellipsizeMode='tail'
+                                    numberOfLines={1}
+                                    style={styles.emailTextStyle}>
+                                    {email}
+                                </Text>
+                            </View>
                         </View>
-                        <Text style={styles.optionText}>Gestor de Refeitório</Text>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity
-                        style={styles.optionContainer}
-                        onPress={() => handleChange(UserPermitions.MM)}
-                    >
-                        <View style={styles.checkbox}>
-                            {checkboxAnswerFields.includes(UserPermitions.MM) && <Icon style={styles.checkedBox} name='check-bold'/> }
-                        </View>
-                        <Text style={styles.optionText}>Gestor de Mural</Text>
-                    </TouchableOpacity>
+                    </View>
+
+                    <View>
+                        <TouchableOpacity
+                            style={styles.optionContainer}
+                            onPress={() => handleChange(UserPermitions.PM)}
+                        >
+                            <View style={styles.checkbox}>
+                                {checkboxAnswerFields.includes(UserPermitions.PM) && <Icon style={styles.checkedBox} name='check-bold' />}
+                            </View>
+                            <Text style={styles.optionText}>Gestor de Permissões</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.optionContainer}
+                            onPress={() => handleChange(UserPermitions.RM)}
+                        >
+                            <View style={styles.checkbox}>
+                                {checkboxAnswerFields.includes(UserPermitions.RM) && <Icon style={styles.checkedBox} name='check-bold' />}
+                            </View>
+                            <Text style={styles.optionText}>Gestor de Refeitório</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.optionContainer}
+                            onPress={() => handleChange(UserPermitions.MM)}
+                        >
+                            <View style={styles.checkbox}>
+                                {checkboxAnswerFields.includes(UserPermitions.MM) && <Icon style={styles.checkedBox} name='check-bold' />}
+                            </View>
+                            <Text style={styles.optionText}>Gestor de Mural</Text>
+                        </TouchableOpacity>
 
                     </View>
 

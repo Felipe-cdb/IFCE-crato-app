@@ -169,11 +169,11 @@ function UpdatePass({ visivel, close }: BoxProps) {
 
                 <View style={styles.footer}>
                     <Button typeButton="backButton" onPress={close}>
-                        <Text style={styles.textBtnCacel}>Cancelar</Text>
+                        <Text style={styles.textBtn}>Cancelar</Text>
                     </Button>
 
                     <Button typeButton="mainButton" onPress={handleUpdatePass}>
-                        <Text style={styles.textBtnsave}>Salvar</Text>
+                        <Text style={styles.textBtn}>Salvar</Text>
                     </Button>
                 </View>
             </View>

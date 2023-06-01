@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import DateTimePickerModal  from 'react-native-modal-datetime-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useFocusEffect } from '@react-navigation/native';
 
 import Menu from "../../components/Menu";
@@ -43,7 +43,7 @@ function CreateForms() {
     }
 
     const handleSave = async () => {
-        if(!refectory?.menuUrl && !menuUrl) {
+        if (!refectory?.menuUrl && !menuUrl) {
             setModalIsVisible(true)
             return
         }
@@ -54,8 +54,8 @@ function CreateForms() {
             aviso('Formulários adicionados com sucesso', 'success')
             navigation.goBack()
         } catch (error: any) {
-            if(error.response){
-                if(error.response.data.message == "Some provided vigency date already exists"){
+            if (error.response) {
+                if (error.response.data.message == "Some provided vigency date already exists") {
                     aviso('Data de vigência fornecida já existe', 'danger');
                 } else {
                     aviso('Falha ao criar formulários', 'danger')
@@ -107,36 +107,30 @@ function CreateForms() {
             <View style={styles.titlePageContainer} >
                 <Text style={styles.titlePage}>Novo Formulário</Text>
                 <Tooltip tooltipText='O período de abertura e encerramento para respostas do formulário é atribuída automaticamente a depender da data de referência informada.'>
-                    <Icon size={20} name="information-outline" />
+                    <Icon style={styles.iconInformation} name="information-outline" />
                 </Tooltip>
             </View>
 
-            <View style={{
-                flex: 1,
-            }}>
+            <View style={styles.container}>
                 <ScrollView style={styles.inputContainer}>
                     {formsToCreate.map((item, index) => (
                         <View key={index} style={styles.dateContainer}>
                             <View>
-                                <View style={{
-                                    alignItems: 'center', justifyContent: 'space-between',
-                                    flexDirection: 'row', marginVertical: 8 }}>
+                                <View style={styles.HeadContainier}>
                                     <Text style={styles.subtitle} >Data de referência </Text>
-                                    {formsToCreate.length > 1 && formsToCreate.length - 1 === index ? <Icon onPress={handleRemoveForm} size={RFValue(20)} name='close' /> : ''}
+                                    {formsToCreate.length > 1 && formsToCreate.length - 1 === index ? <Icon onPress={handleRemoveForm} style={styles.iconClosed} name='close' /> : ''}
                                 </View>
                                 <ButtonComponent
                                     typeButton='extraButton'
                                     onPress={showDatePicker}
-                                    disabled={index>0}
+                                    disabled={index > 0}
                                     customStyle={{
-                                        opacity: index>0 ? 0.7 : 1
+                                        opacity: index > 0 ? 0.7 : 1
                                     }}
                                 >
-                                    <Text style={{
-                                        color: '#FFF',
-                                        fontSize: 18,
-                                        fontWeight: 'bold'
-                                    }}>{formatDate(new Date(item.vigencyDate))}</Text>
+                                    <Text style={styles.dateInput}>
+                                        {formatDate(new Date(item.vigencyDate))}
+                                    </Text>
                                 </ButtonComponent>
                                 <DateTimePickerModal
                                     isVisible={isDatePickerVisible}
@@ -151,15 +145,17 @@ function CreateForms() {
                                 <Text style={styles.dateIntervalText}>
                                     Intervalo para respostas
                                 </Text>
-                                <Text style={{ fontSize: 16 }} > <Text style={{ fontWeight: 'bold' }}> {formatDate(subDays(new Date(item.vigencyDate), 1))} </Text> entre 00:00 e 19:00 Horas</Text>
-
+                                <Text style={styles.dateIntervalText}>
+                                    <Text style={styles.boldText}>
+                                        {formatDate(subDays(new Date(item.vigencyDate), 1))}
+                                    </Text> entre 00:00 e 19:00 Horas
+                                </Text>
                             </View>
                         </View>
-
                     ))}
 
                     <View style={styles.iconContainer}>
-                        <Icon onPress={handleNewFormDates} color={defaultStyleProperties.greenColor} size={30} name='plus-box-multiple-outline' />
+                        <Icon onPress={handleNewFormDates} style={styles.iconAddDate} name='plus-box-multiple-outline' />
                     </View>
                 </ScrollView>
 

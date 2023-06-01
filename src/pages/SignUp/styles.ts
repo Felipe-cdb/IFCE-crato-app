@@ -1,5 +1,7 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet, Dimensions } from "react-native";
+import { color } from "react-native-reanimated";
+import { defaultStyleProperties } from "../../base/styles";
 
 export const SLIDER_WIDTH = Dimensions.get('window').width + 80
 export const SLIDER_HEIGHT = Dimensions.get('window').height
@@ -11,7 +13,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: RFPercentage(4),
     },
-    
+
     scrollContainer: {
         height: '100%',
     },
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 30,
     },
-    
+
     form: {
         width: '100%',
         height: '70%',
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     butnGroup: {
         width: '90%',
         marginTop: 16,
-        
+
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
 
     textBtn: {
         fontSize: RFValue(16),
-        color: "#fff"
+        color: defaultStyleProperties.whiteColor
     },
 
     optionsImage: {
@@ -89,9 +91,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         fontSize: RFValue(32)
     },
-    
+
     iconTrash: {
-        fontSize: RFValue(24)
+        fontSize: RFValue(24),
+        color: defaultStyleProperties.blackColor
     },
 
     imagePreview: {
@@ -118,7 +121,8 @@ const styles = StyleSheet.create({
     },
 
     profileIcon: {
-        fontSize: RFValue(50)
+        fontSize: RFValue(50),
+        color: defaultStyleProperties.blackColor
     },
 });
 

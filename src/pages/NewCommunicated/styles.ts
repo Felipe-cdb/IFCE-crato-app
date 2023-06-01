@@ -1,5 +1,6 @@
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
 
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         marginVertical: RFValue(8),
         overflow: 'hidden',
     },
-    
+
     image: {
         width: '100%',
 
@@ -54,9 +55,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         fontSize: RFValue(32)
     },
-    
+
     iconTrash: {
-        fontSize: RFValue(24)
+        fontSize: RFValue(24),
+        color: defaultStyleProperties.blackColor
     },
 
     imagePreview: {
@@ -78,11 +80,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderWidth: 2,
         borderColor: "#D9D9D9",
-        borderRadius: 16,
+        borderRadius: RFValue(18),
     },
 
     clipIcon: {
-        fontSize: RFValue(32)
+        fontSize: RFValue(32),
+        color: defaultStyleProperties.blackColor
     },
 
     containeLink: {
@@ -103,41 +106,42 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: '#275D8E',
+        backgroundColor: defaultStyleProperties.blueColor,
         paddingHorizontal: RFPercentage(1.5),
         paddingVertical: RFPercentage(1),
         borderRadius: RFValue(16),
-        marginTop: RFValue(24) 
+        marginTop: RFValue(24)
     },
 
     plus: {
-        fontSize: RFValue(16)
+        fontSize: RFValue(16),
+        color: defaultStyleProperties.whiteColor
     },
 
     butnGroup: {
         width: '100%',
-        paddingHorizontal: 24,
-        paddingTop: 24,
+        paddingHorizontal: RFValue(28),
+        paddingTop: RFValue(28),
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"
     },
 
     butnCancelar: {
-        backgroundColor: "#696969",
-        padding: 10,
-        borderRadius: 25
+        backgroundColor: defaultStyleProperties.grayColor,
+        padding: RFValue(12),
+        borderRadius: RFValue(26)
     },
 
     butnCriar: {
-        backgroundColor: "#379936",
-        padding: 10,
-        borderRadius: 25
+        backgroundColor: defaultStyleProperties.greenColor,
+        padding: RFValue(12),
+        borderRadius: RFValue(26)
     },
 
     textBtn: {
         fontSize: RFValue(16),
-        color: "#fff"
+        color: defaultStyleProperties.whiteColor
     }
 });
 

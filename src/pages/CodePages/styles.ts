@@ -1,20 +1,23 @@
-import  { RFValue, RFPercentage }  from  "react-native-responsive-fontsize" ;
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         marginTop: RFPercentage(4),
+        paddingHorizontal: RFValue(16),
     },
     // Validation Code
     containerBack: {
         width: '100%',
-        paddingVertical: RFValue(8)
+        paddingVertical: RFValue(10)
     },
 
     iconBack: {
+        marginTop: RFValue(16),
         fontSize: RFValue(32),
-        color: '#000'
+        color: defaultStyleProperties.blackColor
     },
 
     contentValidation: {
@@ -29,14 +32,14 @@ const styles = StyleSheet.create({
     },
 
     titleValidation: {
-        fontSize: RFValue(24),
+        fontSize: defaultStyleProperties.titleFontSize,
         fontWeight: 'bold'
     },
 
     iconInformation: {
         fontSize: RFValue(24),
-        marginLeft: 3,
-        color: '#000'
+        marginLeft: RFValue(5),
+        color: defaultStyleProperties.blackColor
     },
 
     infosValidation: {
@@ -86,27 +89,27 @@ const styles = StyleSheet.create({
         paddingRight: '5%',
         marginBottom: '30%'
     },
-    
+
     titleSucess: {
-        fontSize: RFValue(24),
+        fontSize: defaultStyleProperties.pageTitleFontSize,
         fontWeight: 'bold'
     },
-    
+
     textSucess: {
         width: '87%',
-        marginTop: RFValue(8),
+        marginTop: RFValue(10),
         fontSize: RFValue(16)
     },
 
     btnContinue: {
-        borderWidth: 2,
+        borderWidth: RFValue(4),
         marginTop: RFValue(40),
         paddingVertical: RFValue(16),
-        borderColor: '#696969',
+        borderColor: defaultStyleProperties.grayColor,
         width: '100%',
         alignSelf: "center",
         alignItems: "center",
-        borderRadius: RFValue(8)
+        borderRadius: RFValue(10)
     },
 
     textContinue: {

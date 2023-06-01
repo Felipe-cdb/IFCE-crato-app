@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import styles from "./styles";
 import { RefectoryContext } from '../../context/refectory.context'
 
-type MenuType = 'breakfast' | 'lunch'|'afternoonSnack'|'dinner'|'nightSnack'
+type MenuType = 'breakfast' | 'lunch' | 'afternoonSnack' | 'dinner' | 'nightSnack'
 
 export function RefectoryChoices() {
     const { checkboxAnswerFields, setCheckboxAnswerFields } = useContext(RefectoryContext)
-    
+
     const handleChange = (key: MenuType) => {
-        const value = checkboxAnswerFields[key] === 0 ? 1 : 0 
-        setCheckboxAnswerFields({...checkboxAnswerFields, [key]: value })
+        const value = checkboxAnswerFields[key] === 0 ? 1 : 0
+        setCheckboxAnswerFields({ ...checkboxAnswerFields, [key]: value })
     }
 
     return (
@@ -23,7 +24,7 @@ export function RefectoryChoices() {
                 onPress={() => handleChange('breakfast')}
             >
                 <View style={styles.checkbox}>
-                    {!!checkboxAnswerFields.breakfast && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.breakfast && <Icon style={styles.checkIcon} name='check-bold' />}
                 </View>
                 <Text style={styles.optionText}>Café da Manhã</Text>
             </TouchableOpacity>
@@ -33,7 +34,7 @@ export function RefectoryChoices() {
                 onPress={() => handleChange('lunch')}
             >
                 <View style={styles.checkbox}>
-                    {!!checkboxAnswerFields.lunch && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.lunch && <Icon style={styles.checkIcon} name='check-bold' />}
                 </View>
                 <Text style={styles.optionText}>Almoço</Text>
             </TouchableOpacity>
@@ -43,7 +44,7 @@ export function RefectoryChoices() {
                 onPress={() => handleChange('afternoonSnack')}
             >
                 <View style={styles.checkbox}>
-                    {!!checkboxAnswerFields.afternoonSnack && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.afternoonSnack && <Icon style={styles.checkIcon} name='check-bold' />}
                 </View>
                 <Text style={styles.optionText}>Lanche da Tarde</Text>
             </TouchableOpacity>
@@ -53,7 +54,7 @@ export function RefectoryChoices() {
                 onPress={() => handleChange('dinner')}
             >
                 <View style={styles.checkbox}>
-                    {!!checkboxAnswerFields.dinner && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.dinner && <Icon style={styles.checkIcon} name='check-bold' />}
                 </View>
                 <Text style={styles.optionText}>Janta</Text>
             </TouchableOpacity>
@@ -63,7 +64,7 @@ export function RefectoryChoices() {
                 onPress={() => handleChange('nightSnack')}
             >
                 <View style={styles.checkbox}>
-                    {!!checkboxAnswerFields.nightSnack && <View style={styles.checkedBox} />}
+                    {!!checkboxAnswerFields.nightSnack && <Icon style={styles.checkIcon} name='check-bold' />}
                 </View>
                 <Text style={styles.optionText}>Lanche da Noite</Text>
             </TouchableOpacity>

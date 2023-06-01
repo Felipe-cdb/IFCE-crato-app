@@ -223,7 +223,7 @@ export default function CreateAccount() {
                 {selectedImage ? (
                   <View style={styles.image}>
                     <TouchableOpacity onPress={handleRemoveImage} style={styles.imageTrash}>
-                      <Icon name='trash-can-outline' color={'#000'} style={styles.iconTrash} />
+                      <Icon name='trash-can-outline' style={styles.iconTrash} />
                     </TouchableOpacity>
                     <Image
                       source={{ uri: selectedImage.uri }}
@@ -231,7 +231,7 @@ export default function CreateAccount() {
                   </View>
                 ) :
                   <TouchableOpacity onPress={handleUpload} style={styles.profileImageContainer}>
-                    <Icon style={styles.profileIcon} name="account" color="#000" />
+                    <Icon style={styles.profileIcon} name="account" />
                   </TouchableOpacity>
                 }
               </View>

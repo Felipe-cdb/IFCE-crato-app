@@ -1,27 +1,13 @@
 import { Text, View } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import styles from "./styles"
 
 const EmptyRefectory = () => {
     return (
-        <View style={{
-            height: '100%',
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <Icon name="silverware-fork-knife" style={{
-                fontSize: RFValue(80),
-                color: '#19882C',
-                opacity: 0.6,
-            }}/>
-    
-            <Text style={{
-                fontSize: RFValue(16),
-                fontWeight: '700',
-                color: '#19882C',
-                opacity: 0.6,
-            }}>
+        <View style={styles.containerEmpty}>
+            <Icon name="silverware-fork-knife" style={styles.iconEmpty} />
+
+            <Text style={styles.textEmpty}>
                 Não há formulários no momento!
             </Text>
         </View>

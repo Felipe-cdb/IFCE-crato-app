@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         padding: RFValue(8),
+        borderRadius: RFValue(8),
         backgroundColor: defaultStyleProperties.whiteColor,
     },
 
@@ -52,23 +53,18 @@ const styles = StyleSheet.create({
 
     footer: {
         width: '100%',
-        marginTop: RFValue(24),
+        marginTop: RFValue(28),
+        marginBottom: RFValue(8),
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center"
     },
 
-    textBtnCacel: {
+    textBtn: {
         fontSize: RFValue(16),
         color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     },
-
-    textBtnsave: {
-        fontSize: RFValue(16),
-        color: defaultStyleProperties.whiteColor,
-        fontWeight: 'bold'
-    }
 });
 
 export default styles;
