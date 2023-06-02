@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import { defaultStyleProperties } from "../../base/styles";
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: RFValue(8)
     },
-    
+
     titlePageContainer: {
         width: '100%',
         alignItems: "center",
@@ -16,24 +16,34 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        padding: 20,
-        height: '70%',
+        padding: RFValue(20),
+        height: RFPercentage(70),
     },
-
 
     titlePage: {
         fontSize: defaultStyleProperties.pageTitleFontSize,
         fontWeight: 'bold',
-        marginVertical: 10,
+        marginVertical: RFValue(12),
         alignSelf: 'center',
-        paddingHorizontal: RFValue(10),
+        paddingHorizontal: RFValue(14),
+    },
+
+    iconInformation: {
+        fontSize: RFValue(24),
     },
 
     dateContainer: {
         backgroundColor: '#E8E8E8',
         marginBottom: RFValue(7),
         padding: RFValue(16),
-        borderRadius: 8
+        borderRadius: RFValue(8)
+    },
+
+    HeadContainier: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginVertical: RFValue(10)
     },
 
     subtitle: {
@@ -41,13 +51,14 @@ const styles = StyleSheet.create({
         marginBottom: RFValue(5),
     },
 
-    input: {
-        height: RFValue(40),
-        width: RFValue(180),
-        borderRadius: RFValue(10),
-        backgroundColor: '#D9D9D9',
-        padding: RFValue(10),
-        borderWidth: 1
+    iconClosed: {
+        fontSize: RFValue(20)
+    },
+
+    dateInput: {
+        color: defaultStyleProperties.whiteColor,
+        fontSize: 18,
+        fontWeight: 'bold'
     },
 
     dateIntervalContainer: {
@@ -59,10 +70,19 @@ const styles = StyleSheet.create({
         marginBottom: RFValue(5),
     },
 
+    boldText: {
+        fontWeight: 'bold',
+    },
+
     iconContainer: {
         alignItems: "center",
-        marginBottom: 20,
+        marginBottom: RFValue(24),
         paddingBottom: RFValue(16)
+    },
+
+    iconAddDate: {
+        fontSize: RFValue(32),
+        color: defaultStyleProperties.greenColor,
     },
 
     actionButtonContainer: {
@@ -75,7 +95,7 @@ const styles = StyleSheet.create({
 
     btnText: {
         fontSize: RFValue(16),
-        color: '#FFF',
+        color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     }
 

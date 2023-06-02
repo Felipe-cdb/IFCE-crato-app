@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { defaultStyleProperties } from "../../base/styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
     container: {
@@ -8,34 +9,33 @@ const styles = StyleSheet.create({
 
     title: {
         fontWeight: "bold",
-        fontSize: 18,
-        marginBottom: 25,
+        fontSize: RFValue(19),
+        marginBottom: RFValue(30),
     },
     optionContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 20,
+        marginBottom: RFValue(24),
     },
     optionText: {
-        marginLeft: 15,
-        fontSize: 14,
+        marginLeft: RFValue(18),
+        fontSize: RFValue(16),
         fontWeight: "bold"
     },
     checkbox: {
-        width: 20,
-        height: 20,
+        width: RFValue(24),
+        height: RFValue(24),
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginLeft: 25,
+        marginLeft: RFValue(30),
     },
-    checkedBox: {
-        width: 10,
-        height: 10,
-        backgroundColor: defaultStyleProperties.greenColor,
-        borderWidth: 1,
-        borderColor: defaultStyleProperties.greenColor,
+
+    checkIcon: {
+        fontSize: RFValue(18),
+        color: defaultStyleProperties.greenColor,
     },
+
 });
 
 export default styles;

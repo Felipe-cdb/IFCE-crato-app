@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/auth";
 import { Button as ButtonComponent } from '../../components/Button'
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { RFValue } from "react-native-responsive-fontsize";
+import styles from "./styles";
 
 const Users = () => {
     const [users, setUsers] = React.useState<IUser[]>([])
@@ -38,34 +38,32 @@ const Users = () => {
 
 
     return (
-        <View style={{flex: 1,
-            flexDirection: "column",
-            alignItems: "center"}}>
-        <Menu />
-        <SearchBar 
-            clicked={clicked}
-            setClicked={setClicked}
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
+        <View style={styles.container}>
+            <Menu />
+            <SearchBar
+                clicked={clicked}
+                setClicked={setClicked}
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
             />
-        <FlatList
-                    style={{width: '100%'}}
-                    showsVerticalScrollIndicator={false}
-                    data={users}
-                    renderItem={({item}) => (<UserInfos
-                        id={item.id}
-                        name={item.name}
-                        email={item.email}
-                        identification={item.siape ?? item.registration ?? ''}
-                        type={item.type}
-                        roles={item.roles}
-                    />)}
-                    keyExtractor={(item) => item.email}
-                />
+            <FlatList
+                style={styles.flatStyle}
+                showsVerticalScrollIndicator={false}
+                data={users}
+                renderItem={({ item }) => (<UserInfos
+                    id={item.id}
+                    name={item.name}
+                    email={item.email}
+                    identification={item.siape ?? item.registration ?? ''}
+                    type={item.type}
+                    roles={item.roles}
+                />)}
+                keyExtractor={(item) => item.email}
+            />
 
-        <ButtonComponent customStyle={{ marginBottom: RFValue(40), marginTop: RFValue(20) }} typeButton='backButton' onPress={() => navigation.navigate('Formulários do Refeitório')} >
-            <Text style={{ color: 'white' }}>Voltar</Text>
-        </ButtonComponent>
+            <ButtonComponent customStyle={styles.buttonBack} typeButton='backButton' onPress={() => navigation.navigate('Mural')} >
+                <Text style={styles.textbuttonBack}>Voltar</Text>
+            </ButtonComponent>
         </View>
     )
 }

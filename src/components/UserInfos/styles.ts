@@ -30,18 +30,23 @@ const styles = StyleSheet.create({
         marginBottom: RFValue(10)
     },
 
-    identificationStyle: { 
+    identificationStyle: {
         marginTop: RFValue(7),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start"
-     },
+    },
 
-    identificationTextStyle: { 
+    identificationTextStyle: {
         color: defaultStyleProperties.whiteColor,
         fontSize: RFValue(defaultStyleProperties.subTitleFontSize),
         marginLeft: RFValue(10)
-     },
+    },
+
+    iconStyle: {
+        fontSize: RFValue(14),
+        color: defaultStyleProperties.whiteColor
+    },
 
     emailStyle: {
         marginTop: RFValue(7),

@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity,
-    KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {
+  View, Text, TextInput, TouchableOpacity,
+  KeyboardAvoidingView, Platform, ScrollView
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -31,16 +33,16 @@ export default function Login() {
     }
 
     try {
-      await api.post('/auth/forgot-password', {email});
-      navigation.navigate('resetPass', {email});
+      await api.post('/auth/forgot-password', { email });
+      navigation.navigate('resetPass', { email });
       aviso("Email de recuperação de senha enviado com sucesso", 'success');
       return;
     } catch (error: any) {
-      if(error.response.data.message == 'User not found.'){
+      if (error.response.data.message == 'User not found.') {
         aviso("Usuário não encontrado!", 'danger');
         return;
       }
-      if(error.response.data.message == 'Pleace enter a correct email.'){
+      if (error.response.data.message == 'Pleace enter a correct email.') {
         aviso("Email inserido inválido!", 'danger');
         return;
       }
@@ -50,7 +52,7 @@ export default function Login() {
 
   const entrar = async () => {
     setLoading(true)
-    await signIn({email, password: senha});
+    await signIn({ email, password: senha });
     setLoading(false)
   }
 
@@ -66,11 +68,11 @@ export default function Login() {
         showsVerticalScrollIndicator={false}
         scrollEnabled={true}
       >
-        <ScreenLoad visivel={loading}/>
-        <LogoIF/>
-        
+        <ScreenLoad visivel={loading} />
+        <LogoIF />
+
         <Text style={styles.titleForm}>IFCE Crato Aluno</Text>
-          
+
         <View style={styles.contenteForm}>
           <View style={styles.contntInpuPass}>
             <TextInput
@@ -84,7 +86,7 @@ export default function Login() {
               placeholder='Email'
             />
           </View>
-        <View style={styles.contntInpuPass}>
+          <View style={styles.contntInpuPass}>
             <TextInput
               style={styles.inputLog}
               value={senha}
@@ -96,15 +98,15 @@ export default function Login() {
             />
             <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
               {
-                visible ? <Icon name="visibility" style={styles.iconEye} color="#000" />
-                : <Icon name="visibility-off" style={styles.iconEye} color="#000" />
+                visible ? <Icon name="visibility" style={styles.iconEye} />
+                  : <Icon name="visibility-off" style={styles.iconEye} />
               }
             </TouchableOpacity>
-        </View>
+          </View>
 
-        <TouchableOpacity onPress={() => handleResetSenha()}>
+          <TouchableOpacity onPress={() => handleResetSenha()}>
             <Text style={styles.textLink}>Esqueceu a senha?</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.btnGroup}>
@@ -112,11 +114,11 @@ export default function Login() {
             typeButton='mainButton'
             onPress={() => entrar()}
           >
-            <Text style={[styles.textBtn, {color: '#fff'}]}>Entrar</Text>
+            <Text style={styles.textBtn}>Entrar</Text>
           </Button>
 
-          <TouchableOpacity style={{marginTop: 16}} onPress={() => navigation.navigate('Cadastro')}>
-            <Text style={[styles.textLink, styles.textBtn]}>Ainda não é Cadastrado?</Text>
+          <TouchableOpacity style={styles.sigUpBtn} onPress={() => navigation.navigate('Cadastro')}>
+            <Text style={styles.textLink}>Ainda não é Cadastrado?</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

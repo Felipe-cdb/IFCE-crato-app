@@ -15,10 +15,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { IRefectory } from '../../base/Interfaces';
 import { api } from '../../config';
 import { AuthContext } from '../../context/auth';
+import { defaultStyleProperties } from '../../base/styles';
 
 function ListRefectoryForms() {
     const navigation = useNavigation<StackNavigationProp<any>>();
-    const [formularies, setFormularies ] = useState<IRefectory[]>([])
+    const [formularies, setFormularies] = useState<IRefectory[]>([])
     const [refreshing, setRefreshing] = useState<boolean>(true)
 
     const { aviso } = useContext(AuthContext)
@@ -26,7 +27,7 @@ function ListRefectoryForms() {
     const loadFormularies = async () => {
         try {
             const response = await api.get(`refectory/?resPerPage=${10}&page=${1}`)
-            if (response.data) setFormularies(response.data.list.sort((a: IRefectory, b: IRefectory) => a.vigencyDate > b.vigencyDate ? 1 : -1 ))
+            if (response.data) setFormularies(response.data.list.sort((a: IRefectory, b: IRefectory) => a.vigencyDate > b.vigencyDate ? 1 : -1))
         } catch (error) {
             aviso('Falha ao carregar lista de formulários', 'warning')
         }
@@ -37,7 +38,7 @@ function ListRefectoryForms() {
         React.useCallback(() => {
             setRefreshing(true);
 
-            return(
+            return (
                 onRefresh()
             )
         }, [])
@@ -48,9 +49,9 @@ function ListRefectoryForms() {
     }, []);
 
     const onRefresh = useCallback(() => {
-		setRefreshing(true);
-		loadFormularies();
-  	}, [refreshing]);
+        setRefreshing(true);
+        loadFormularies();
+    }, [refreshing]);
 
     return (
         <View style={styles.container}>
@@ -61,22 +62,16 @@ function ListRefectoryForms() {
                     Lista de formulários
                 </Text>
                 <Tooltip tooltipText='Apenas os formulários agendados poderão ser excluídos.'>
-                    <Icon size={20} name="information-outline"/>
+                    <Icon size={20} name="information-outline" />
                 </Tooltip>
             </View>
 
-            <View style={{
-                width: '100%',
-                flex: 1,
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-            }}>
+            <View style={styles.listStyle}>
                 <FlatList
-                    style={{width: '100%'}}
+                    style={{ width: '100%' }}
                     showsVerticalScrollIndicator={false}
                     data={formularies}
-                    renderItem={({item}) => (<FormModel
+                    renderItem={({ item }) => (<FormModel
                         status={item.status}
                         vigencyDate={item.vigencyDate}
                         id={item.id}
@@ -87,35 +82,26 @@ function ListRefectoryForms() {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={onRefresh}
-                            colors={['#19882C']}
-                            tintColor={'#19882C'}
+                            colors={[defaultStyleProperties.greenColor]}
+                            tintColor={defaultStyleProperties.greenColor}
                         />}
                 />
-
-                <View style={{
-                    width: '90%',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginVertical: RFValue(20)
-                    
-                }}>
-                    <ButtonComponent typeButton='backButton' onPress={() => navigation.goBack()} >
-                        <Text style={styles.buttonTitle} >Voltar</Text>
-                    </ButtonComponent>
-                    
-                    <ButtonComponent
-                        typeButton='extraButton'
-                        onPress={() => navigation.navigate('CreateForm')}
-                    >
-                        <Text style={styles.buttonTitle} >Novo Formulário</Text>
-                        <Icon color={'white'} style={{
-                            fontSize: 16,
-                            marginHorizontal: 5
-                        }} name='file-image-plus-outline'/>
-                    </ButtonComponent>
-                </View>
             </View>
-            
+
+            <View style={styles.buttonContainer}>
+                <ButtonComponent typeButton='backButton' onPress={() => navigation.goBack()} >
+                    <Text style={styles.buttonTitle}>Voltar</Text>
+                </ButtonComponent>
+
+                <ButtonComponent
+                    typeButton='extraButton'
+                    onPress={() => navigation.navigate('CreateForm')}
+                >
+                    <Text style={styles.buttonTitle}>Novo Formulário</Text>
+                    <Icon style={styles.buttonStyle} name='file-image-plus-outline' />
+                </ButtonComponent>
+            </View>
+
         </View>
     );
 }

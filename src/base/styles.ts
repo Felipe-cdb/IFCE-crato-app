@@ -1,3 +1,4 @@
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const defaultStyleProperties = {
     greenColor: '#379936',
@@ -7,11 +8,11 @@ export const defaultStyleProperties = {
     blackColor: '#000000',
     whiteColor: '#FFFFFF',
 
-    defaultPadding: 20,
-    defaultPaddingTop: 10,
-    defaultPaddingBottom: 10,
+    defaultPadding: RFValue(22),
+    defaultPaddingTop: RFValue(12),
+    defaultPaddingBottom: RFValue(12),
 
-    titleFontSize: 18,
-    pageTitleFontSize: 24,
-    subTitleFontSize: 16
+    titleFontSize: RFValue(20),
+    pageTitleFontSize: RFValue(26),
+    subTitleFontSize: RFValue(18)
 }

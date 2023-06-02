@@ -1,5 +1,6 @@
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -11,11 +12,17 @@ const styles = StyleSheet.create({
         width: '90%',
         marginTop: RFValue(16),
         borderBottomWidth: 1,
-        borderBottomColor: '#19882C',
+        borderBottomColor: defaultStyleProperties.greenColor,
         paddingBottom: RFValue(8),
     },
 
+    scrollFiltros: {
+        flexGrow: 1,
+        justifyContent: "space-evenly"
+    },
+
     contentComunicados: {
+        flex: 1,
         height: '100%',
         width: '90%'
     },
@@ -23,7 +30,7 @@ const styles = StyleSheet.create({
     lineSeparator: {
         width: '100%',
         borderTopWidth: 1.5,
-        borderTopColor: '#19882C'
+        borderTopColor: defaultStyleProperties.greenColor,
     },
 
     cardComponent: {

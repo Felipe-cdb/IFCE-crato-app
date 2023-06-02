@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, TouchableOpacity, Text, StatusBar } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,8 +20,8 @@ const ValidationCode = ({ route }: any) => {
         setCode('');
     }
     useEffect(() => {
-        function completeCode(){
-            if(code.trim().length < 4) return;
+        function completeCode() {
+            if (code.trim().length < 4) return;
 
             confirmCode(email, code, errorInCode);
             return;
@@ -31,7 +30,7 @@ const ValidationCode = ({ route }: any) => {
         completeCode();
     }, [code]);
 
-    
+
 
     useFocusEffect(
         React.useCallback(() => {
@@ -51,11 +50,11 @@ const ValidationCode = ({ route }: any) => {
         return maskedUsername + '@' + maskedDomain;
     }
 
-    return(
-        <View style={[styles.container, {paddingHorizontal: RFValue(16)}]}>
+    return (
+        <View style={[styles.container]}>
             <View style={styles.containerBack}>
                 <TouchableOpacity onPress={() => navigation.navigate('create')}>
-                    <Icon name="keyboard-return" style={styles.iconBack}/>
+                    <Icon name="keyboard-return" style={styles.iconBack} />
                 </TouchableOpacity>
             </View>
 
@@ -63,9 +62,9 @@ const ValidationCode = ({ route }: any) => {
                 <View style={styles.titleValidationContainer}>
                     <Text style={styles.titleValidation}>Verificação de E-mail</Text>
                     <Tooltip
-                        tooltipText='Caso não encontre o email na caixa principal, verifique em SPANS.'
+                        tooltipText='Caso não encontre o email na caixa principal, verifique em SPAMS.'
                     >
-                        <Icon style={styles.iconInformation} name="information-outline"/>
+                        <Icon style={styles.iconInformation} name="information-outline" />
                     </Tooltip>
                 </View>
 
@@ -76,9 +75,9 @@ const ValidationCode = ({ route }: any) => {
 
                 <View style={styles.contentCode}>
                     <Text style={styles.infoText}>Por favor, insira esse código a seguir</Text>
-                   
+
                     <View style={styles.optionsCode}>
-                        <CodeInput setCode={setCode} code={code}/>
+                        <CodeInput setCode={setCode} code={code} />
 
                         <TouchableOpacity style={styles.btnNewCode} onPress={handleCreateNewPass}>
                             <Text style={styles.textBtnCode}>Reenvie um novo código</Text>

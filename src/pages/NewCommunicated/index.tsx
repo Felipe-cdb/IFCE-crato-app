@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, KeyboardAvoidingView,
-  Platform, ScrollView, Image } from 'react-native';
+import {
+  View, Text, TouchableOpacity, KeyboardAvoidingView,
+  Platform, ScrollView, Image
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import {  useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FormData from 'form-data';
@@ -46,7 +48,7 @@ export default function NewCommunicated() {
     const { name, value } = input
     setInputValues({ ...inputValues, [name]: value })
   }
-  
+
   useFocusEffect(
     React.useCallback(() => {
       setLink('');
@@ -61,7 +63,7 @@ export default function NewCommunicated() {
   )
 
   const handleAddLink = () => {
-    if(!link) {
+    if (!link) {
       aviso('Preencha o campo para adicionar referências.', 'warning');
     }
 
@@ -71,7 +73,7 @@ export default function NewCommunicated() {
       aviso('Mesmo link já inserido.', 'warning')
       return
     }
-  
+
     setReferenceLinks([...referenceLinks, link.trim()])
     setLink('')
   }
@@ -94,7 +96,7 @@ export default function NewCommunicated() {
       });
 
       if (result.canceled) {
-          return;
+        return;
       }
 
       const manipulatedImage = await manipulateAsync(
@@ -119,13 +121,13 @@ export default function NewCommunicated() {
 
   const handleSubmit = async () => {
     const { title, category, contents } = inputValues;
-    
+
     const data = new FormData();
 
     data.append('category', category)
     data.append('title', title)
     data.append('contents', contents)
-    
+
     if (selectedImage) {
       data.append('file', selectedImage)
     }
@@ -136,7 +138,7 @@ export default function NewCommunicated() {
       });
     }
 
-    
+
     try {
       setScreenLoading(true);
       await api.post('communique', data, {
@@ -158,104 +160,104 @@ export default function NewCommunicated() {
   }
 
   return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        enabled style={styles.container}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      enabled style={styles.container}
+    >
+      <Menu />
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps={'handled'}
+        showsVerticalScrollIndicator={false}
       >
-        <Menu />
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          keyboardShouldPersistTaps={'handled'}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={styles.title}>Novo Comunicado</Text>
+        <Text style={styles.title}>Novo Comunicado</Text>
 
-          <View style={styles.form}>
-            <SelectGroup
-              label='Categoria'
-              lista={[
-                { label: "Aviso", value: constantCategories['Avisos'] },
-                { label: "Evento", value: constantCategories['Eventos'] },
-                { label: "Notícia", value: constantCategories['Notícias'] },
-                { label: "Palestra", value: constantCategories['Palestras'] }
-              ]}
-              required={true}
-              atualiza={(value) => handleInputChange({name: 'category', value: value})}
-            />
+        <View style={styles.form}>
+          <SelectGroup
+            label='Categoria'
+            lista={[
+              { label: "Aviso", value: constantCategories['Avisos'] },
+              { label: "Evento", value: constantCategories['Eventos'] },
+              { label: "Notícia", value: constantCategories['Notícias'] },
+              { label: "Palestra", value: constantCategories['Palestras'] }
+            ]}
+            required={true}
+            atualiza={(value) => handleInputChange({ name: 'category', value: value })}
+          />
 
-            <InputGroup
-              label='Titulo'
-              value={inputValues.title}
-              required={true}
-              atualiza={(value) => handleInputChange({name: 'title', value: value})}
-            />
+          <InputGroup
+            label='Titulo'
+            value={inputValues.title}
+            required={true}
+            atualiza={(value) => handleInputChange({ name: 'title', value: value })}
+          />
 
-            <View>
-              <Text style={styles.clipTxt}>Anexar imagem</Text>
-              <View style={styles.optionsImage}>
-                {selectedImage ? (
-                  <View style={styles.image}>
-                    <TouchableOpacity onPress={setRemoveImage} style={styles.imageTrash}>
-                      <Icon name='trash-can-outline' color={'#000'} style={styles.iconTrash}/>
-                    </TouchableOpacity>
-                    <Image
-                      source={{ uri: selectedImage.uri }}
-                      style={styles.imagePreview} />
-                  </View>
-                ) : 
-                  <TouchableOpacity onPress={handleUpload} style={styles.clipContainer}>
-                    <Icon style={styles.clipIcon} name="paperclip" color="#000"/>
+          <View>
+            <Text style={styles.clipTxt}>Anexar imagem</Text>
+            <View style={styles.optionsImage}>
+              {selectedImage ? (
+                <View style={styles.image}>
+                  <TouchableOpacity onPress={setRemoveImage} style={styles.imageTrash}>
+                    <Icon name='trash-can-outline' style={styles.iconTrash} />
                   </TouchableOpacity>
-                }
-              </View>
+                  <Image
+                    source={{ uri: selectedImage.uri }}
+                    style={styles.imagePreview} />
+                </View>
+              ) :
+                <TouchableOpacity onPress={handleUpload} style={styles.clipContainer}>
+                  <Icon style={styles.clipIcon} name="paperclip" />
+                </TouchableOpacity>
+              }
             </View>
-
-            <InputGroup
-              label="Conteúdo"
-              value={inputValues.contents}
-              atualiza={(value) => handleInputChange({name: 'contents', value: value})}
-              required={true}
-              multiline={true}
-              heigth={heightInputContent}
-              onContentSizeChange={handleContentSizeChange}
-            />
-
-            <View style={styles.containeLink}>
-              <View style={styles.inputLink}>
-                <InputGroup
-                  label='Adicionar link de referência'
-                  value={link}
-                  atualiza={setLink}
-                  required={false}
-                />
-              </View>
-
-              <TouchableOpacity
-                style={styles.btnPlus}
-                onPress={handleAddLink}
-              >
-                <Icon style={styles.plus} name='plus-thick' color="#fff"/>
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              {referenceLinks.map((l, i) => (
-                <LinkList link={l} indexLink={i} key={i} removeLink={() => handleRemoveLink(l)}/>
-              ))}
-            </View>
-            
           </View>
-          
-          <View style={styles.butnGroup}>
-            <Button typeButton='backButton' onPress={() => navigation.navigate('Mural')} style={styles.butnCancelar}>
-              <Text style={styles.textBtn}>Cancelar</Text>
-            </Button>
 
-            <Button typeButton='mainButton' onPress={handleSubmit} style={styles.butnCriar}>
-              <Text style={styles.textBtn}>Criar</Text>
-            </Button>
+          <InputGroup
+            label="Conteúdo"
+            value={inputValues.contents}
+            atualiza={(value) => handleInputChange({ name: 'contents', value: value })}
+            required={true}
+            multiline={true}
+            heigth={heightInputContent}
+            onContentSizeChange={handleContentSizeChange}
+          />
+
+          <View style={styles.containeLink}>
+            <View style={styles.inputLink}>
+              <InputGroup
+                label='Adicionar link de referência'
+                value={link}
+                atualiza={setLink}
+                required={false}
+              />
+            </View>
+
+            <TouchableOpacity
+              style={styles.btnPlus}
+              onPress={handleAddLink}
+            >
+              <Icon style={styles.plus} name='plus-thick' />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+
+          <View>
+            {referenceLinks.map((l, i) => (
+              <LinkList link={l} indexLink={i} key={i} removeLink={() => handleRemoveLink(l)} />
+            ))}
+          </View>
+
+        </View>
+
+        <View style={styles.butnGroup}>
+          <Button typeButton='backButton' onPress={() => navigation.navigate('Mural')} style={styles.butnCancelar}>
+            <Text style={styles.textBtn}>Cancelar</Text>
+          </Button>
+
+          <Button typeButton='mainButton' onPress={handleSubmit} style={styles.butnCriar}>
+            <Text style={styles.textBtn}>Criar</Text>
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
