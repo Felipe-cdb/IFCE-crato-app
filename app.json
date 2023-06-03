@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ifce-crato-app",
+    "name": "IFCE Crato",
     "slug": "ifce-crato-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.pedro_almeida.ifcecratoapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "303e911f-5936-40e7-a352-81465a680a1d"
+      }
     }
   }
 }
