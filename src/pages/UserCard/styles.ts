@@ -1,13 +1,39 @@
-import { StyleSheet, Dimensions } from "react-native";
-import  {  RFPercentage ,  RFValue  }  from  "react-native-responsive-fontsize" ;
+import { StyleSheet } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { defaultStyleProperties } from "../../base/styles";
 
 export default StyleSheet.create({
+
+  // __________________Index___________________
+  mainContainer: {
+    backgroundColor: defaultStyleProperties.whiteColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: RFValue(40)
+  },
+
+  // __________________CarouselCards___________________
+
+  carouselCardsContainer: {
+    backgroundColor: defaultStyleProperties.whiteColor,
+    paddingBottom: RFValue(30)
+  },
+
+  carouselCardsPagination: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: defaultStyleProperties.blackColor
+
+  },
+
+  // __________________CarouselCardItem___________________
   container: {
     flex: 1,
     backgroundColor: '#75B874',
     borderRadius: 8,
     paddingBottom: 10,
-    shadowColor: "#000",
+    shadowColor: defaultStyleProperties.blackColor,
     shadowOffset: {
       width: 0,
       height: 3,
@@ -37,7 +63,7 @@ export default StyleSheet.create({
     borderLeftWidth: 100,
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: '#275D8E',
+    borderBottomColor: defaultStyleProperties.blueColor,
     borderLeftColor: 'transparent',
     transform: [{ rotate: '180deg' }],
     position: "absolute",
@@ -46,29 +72,30 @@ export default StyleSheet.create({
   },
 
   image2: {
-    width: 34,
-    height: 49,
+    width: 30,
+    height: 42,
+    marginTop: RFValue(8)
   },
 
   textDestaque: {
     fontSize: RFValue(10),
     fontWeight: '700',
     textAlign: "center",
-    color: 'white'
+    color: defaultStyleProperties.whiteColor,
   },
 
   textCe: {
     fontSize: RFPercentage(2),
     marginTop: RFValue(4),
     borderTopWidth: 1,
-    borderTopColor: '#379936',
+    borderTopColor: defaultStyleProperties.greenColor,
     textAlign: 'center',
-    color: 'white'
+    color: defaultStyleProperties.whiteColor,
   },
 
   image: {
-    width: '60%',
-    height: '30%',
+    width: '50%',
+    height: '35%',
     borderTopRightRadius: RFValue(24),
     borderBottomLeftRadius: RFValue(24),
   },
@@ -76,7 +103,7 @@ export default StyleSheet.create({
   textContainer: {
     borderTopRightRadius: RFValue(24),
     borderBottomLeftRadius: RFValue(24),
-    backgroundColor: '#275D8E',
+    backgroundColor: defaultStyleProperties.blueColor,
     width: '90%',
     marginTop: RFValue(8),
     padding: RFValue(8),
@@ -98,18 +125,19 @@ export default StyleSheet.create({
 
   informations: {
     flex: 1,
-    marginTop: RFValue(8),
-    justifyContent: "space-around",
-    paddingHorizontal: RFValue(2)
+    marginTop: RFValue(16),
+    paddingLeft: RFValue(5),
+    paddingRight: RFValue(2),
   },
 
   infoLine: {
     width: '100%',
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginBottom: 5
   },
 
   header: {
@@ -126,34 +154,29 @@ export default StyleSheet.create({
   validationContainer: {
     borderTopEndRadius: 20,
     borderBottomLeftRadius: 20,
-    backgroundColor: '#275D8E',
+    backgroundColor: defaultStyleProperties.blueColor,
     width: '90%',
     height: '90%',
     justifyContent: "space-around",
     alignItems: "center",
   },
 
-  codeField: {
-    alignItems: "center"
-  },
-
   validationFooter: {
-    marginTop: 20,
     alignItems: "flex-start"
   },
 
-  codeTitle: {
-    color: 'black',
-    fontWeight: "bold",
-    fontSize: RFValue(32)
-  },
-
   smallTitle: {
-    color: 'white',
+    color: defaultStyleProperties.whiteColor,
     fontWeight: "normal",
     fontSize: RFValue(16),
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 5
+  },
+
+  iconsBackCard: {
+    color: defaultStyleProperties.whiteColor,
+    fontSize: RFValue(16),
   }
+
 })
