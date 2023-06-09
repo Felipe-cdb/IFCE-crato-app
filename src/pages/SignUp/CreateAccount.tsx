@@ -132,6 +132,8 @@ export default function CreateAccount() {
     setSelectedImage(null)
   }
 
+
+
   const handleCreateAccount = async () => {
     const data = new FormData();
     if ((!user.name?.trim() || !user.type?.trim() || !user.email?.trim() || !user.password?.trim()
@@ -244,7 +246,7 @@ export default function CreateAccount() {
                   value={user.name}
                   required={true}
                   atualiza={setNome} />
-                <SelectGroup label="Nível de Acesso" lista={[
+                <SelectGroup label="Nível de Acesso" value={user.type} lista={[
                   { label: "Aluno", value: UserTypes.STUDENT },
                   { label: "Servidor TAE", value: UserTypes.EMPLOYEETAE },
                   { label: "Servidor DOCENTE", value: UserTypes.EMPLOYEETEACHER },
@@ -259,11 +261,14 @@ export default function CreateAccount() {
                   atualiza={setIdentificacao}
                   keyboardType='number-pad'
                 />
-                <SelectGroup label="Curso" lista={Object.keys(CourseType).map((key) => {
-                  return { label: courseConstants[key], value: key }
-                })}
+                <SelectGroup
+                  label="Curso"
+                  lista={Object.keys(CourseType).map((key) => {
+                    return { label: courseConstants[key], value: key }
+                  })}
                   required={false}
                   atualiza={setCurso}
+                  value={user.course || CourseType.agropecuariaIntegrado}
                 />
                 <InputGroup
                   label="Email"
