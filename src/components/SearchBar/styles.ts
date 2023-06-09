@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
     featherStyle: {
         fontSize: RFValue(24),
-        marginLeft: 1,
+        marginLeft: RFValue(10),
         color: defaultStyleProperties.blackColor,
     },
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
 
     searchBar__unclicked: {
-        padding: 10,
+        padding: RFValue(8),
         flexDirection: "row",
         width: "95%",
         backgroundColor: "#d9dbda",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     searchBar__clicked: {
-        padding: 10,
+        padding: RFValue(8),
         flexDirection: "row",
         width: "80%",
         backgroundColor: "#d9dbda",
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     input: {
-        fontSize: 20,
-        marginLeft: 10,
+        fontSize: RFValue(18),
+        marginLeft: RFValue(15),
         width: "90%",
     },
 });

@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, View, Keyboard, Button } from "react-native";
+import { TextInput, View, Keyboard, Button, Platform } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 
 import styles from "./styles";
@@ -12,6 +12,8 @@ type SearchBarProperties = {
 }
 
 const SearchBar = ({ clicked, searchPhrase, setClicked, setSearchPhrase }: SearchBarProperties) => {
+  // const buttonStyle = Platform.OS === 'android' ? styles.androidButton : styles.iosButton;
+
   return (
     <View style={styles.container}>
       <View
@@ -43,6 +45,7 @@ const SearchBar = ({ clicked, searchPhrase, setClicked, setSearchPhrase }: Searc
       {clicked && (
         <View>
           <Button
+            color={'darkgray'}
             title="Cancelar"
             onPress={() => {
               Keyboard.dismiss();
