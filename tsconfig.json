@@ -1,6 +1,7 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "baseUrl": "..",
     "strict": true,
     "moduleResolution": "node",
     // "allowJs": true,
@@ -9,6 +10,9 @@
     "lib": ["DOM", "ESNext"],
     "noEmit": true,
     "resolveJsonModule": true,
-    "skipLibCheck":true
+    "skipLibCheck":true,
+    "paths": {
+      "@env": ["node_modules/react-native-dotenv"]
+    }
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, TextInput, TextInputProps } from "react-native";
-import RNPickerSelect, { Item } from 'react-native-picker-select';
+import {Picker} from '@react-native-picker/picker';
 import { RFValue } from "react-native-responsive-fontsize";
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -17,11 +17,18 @@ interface IInputGroupProps extends TextInputProps {
     heigth?: number;
     borderWidth?: number
 }
+
+type ItemType = {
+    label: string,
+    value: string
+}
+
 interface ISelectGroupProps {
     label: string;
     required: boolean;
     atualiza: (value: any) => void;
-    lista: Item[];
+    lista: ItemType[];
+    value: string;
 }
 
 export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, required, atualiza, multiline, heigth, onContentSizeChange }: IInputGroupProps) => {
@@ -85,18 +92,21 @@ export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, requ
     )
 };
 
-export const SelectGroup = ({ label, lista, required, atualiza }: ISelectGroupProps) => {
+export const SelectGroup = ({ label, lista, required, atualiza, value }: ISelectGroupProps) => {
     return (
         <View style={styles.containerInput}>
             <Text style={styles.label}>
                 {label}{required && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
             <View style={styles.inputEntry}>
-                <RNPickerSelect
-                    placeholder={{}}
+                <Picker
+                    selectedValue={value}
                     onValueChange={atualiza}
-                    items={lista}
-                />
+                >
+                    {lista.map((i) => (
+                        <Picker.Item key={i.value} label={i.label} value={i.value} />
+                    ))}
+                </Picker>
             </View>
         </View>
     )

@@ -89,7 +89,7 @@ function CreateForms() {
     useFocusEffect(
         React.useCallback(() => {
             setFormsToCreate([{
-                vigencyDate: addDays((new Date()), 1).toString(),
+                vigencyDate: addDays((new Date()), 1).toISOString(),
             }]);
         }, [])
     )

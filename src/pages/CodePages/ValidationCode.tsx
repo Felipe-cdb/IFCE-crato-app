@@ -11,7 +11,7 @@ import Tooltip from "../../components/Tooltip/index";
 
 const ValidationCode = ({ route }: any) => {
 
-    const email = route.params?.email || 'pedro@mail.com';
+    const email = route.params?.email;
     const [code, setCode] = useState<string>('');
     const navigation = useNavigation<StackNavigationProp<any>>();
     const { confirmCode, resendCode } = useContext(AuthContext);

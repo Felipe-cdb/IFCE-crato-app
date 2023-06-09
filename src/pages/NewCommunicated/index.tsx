@@ -110,7 +110,7 @@ export default function NewCommunicated() {
       const match = /\.(\w+)$/.exec(filename as string);
       const type = match ? `image/${match[1]}` : `image`;
       setSelectedImage({
-        uri: localUri,
+        uri: Platform.OS === 'ios' ? localUri.replace('file://', '') : localUri,
         name: filename,
         type
       })
@@ -119,41 +119,45 @@ export default function NewCommunicated() {
     }
   };
 
-  const handleSubmit = async () => {
-    const { title, category, contents } = inputValues;
-
-    const data = new FormData();
-
-    data.append('category', category)
-    data.append('title', title)
-    data.append('contents', contents)
-
-    if (selectedImage) {
-      data.append('file', selectedImage)
-    }
-
-    if (referenceLinks.length) {
-      referenceLinks.forEach((link, index) => {
-        data.append(`referenceLinks[${index}]`, link);
-      });
-    }
-
-
-    try {
-      setScreenLoading(true);
-      await api.post('communique', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      aviso('Comunicado criado com sucesso.', 'success');
-      navigation.navigate('Mural');
-    } catch (error: any) {
-      aviso('Falha ao criar comunicado.', 'danger');
-      return
-    }
-    setScreenLoading(false);
+  const handleSubmit = () => {
+    console.log(inputValues)
   }
+
+  // const handleSubmit = async () => {
+  //   const { title, category, contents } = inputValues;
+
+  //   const data = new FormData();
+
+  //   data.append('category', category)
+  //   data.append('title', title)
+  //   data.append('contents', contents)
+
+  //   if (selectedImage) {
+  //     data.append('file', selectedImage)
+  //   }
+
+  //   if (referenceLinks.length) {
+  //     referenceLinks.forEach((link, index) => {
+  //       data.append(`referenceLinks[${index}]`, link);
+  //     });
+  //   }
+
+
+  //   try {
+  //     setScreenLoading(true);
+  //     await api.post('communique', data, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data'
+  //       }
+  //     });
+  //     aviso('Comunicado criado com sucesso.', 'success');
+  //     navigation.navigate('Mural');
+  //   } catch (error: any) {
+  //     aviso('Falha ao criar comunicado.', 'danger');
+  //     return
+  //   }
+  //   setScreenLoading(false);
+  // }
 
   const setRemoveImage = () => {
     setSelectedImage(null)
@@ -175,12 +179,10 @@ export default function NewCommunicated() {
         <View style={styles.form}>
           <SelectGroup
             label='Categoria'
-            lista={[
-              { label: "Aviso", value: constantCategories['Avisos'] },
-              { label: "Evento", value: constantCategories['Eventos'] },
-              { label: "Notícia", value: constantCategories['Notícias'] },
-              { label: "Palestra", value: constantCategories['Palestras'] }
-            ]}
+            value={inputValues.category}
+            lista={Object.keys(constantCategories).map((key: any) => (
+              {label: key, value: constantCategories[key]}
+            ))}
             required={true}
             atualiza={(value) => handleInputChange({ name: 'category', value: value })}
           />
