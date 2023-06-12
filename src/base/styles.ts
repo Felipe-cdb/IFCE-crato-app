@@ -12,7 +12,7 @@ export const defaultStyleProperties = {
     defaultPaddingTop: RFValue(12),
     defaultPaddingBottom: RFValue(12),
 
-    titleFontSize: RFValue(20),
+    titleFontSize: RFValue(16),
     pageTitleFontSize: RFValue(26),
-    subTitleFontSize: RFValue(18)
+    subTitleFontSize: RFValue(14)
 }

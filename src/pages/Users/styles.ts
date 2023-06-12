@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
     },
 
     flatStyle: {
-        width: '100%'
+        width: '100%',
+        paddingBottom: RFValue(24)
     },
 
     buttonBack: {
-        marginBottom: RFValue(30),
-        marginTop: RFValue(30)
+        marginBottom: RFValue(24),
     },
 
     textbuttonBack: {

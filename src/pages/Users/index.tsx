@@ -48,6 +48,7 @@ const Users = () => {
             />
             <FlatList
                 style={styles.flatStyle}
+                contentContainerStyle={styles.flatStyle}
                 showsVerticalScrollIndicator={false}
                 data={users}
                 renderItem={({ item }) => (<UserInfos
@@ -60,10 +61,6 @@ const Users = () => {
                 />)}
                 keyExtractor={(item) => item.email}
             />
-
-            <ButtonComponent customStyle={styles.buttonBack} typeButton='backButton' onPress={() => navigation.navigate('Mural')} >
-                <Text style={styles.textbuttonBack}>Voltar</Text>
-            </ButtonComponent>
         </View>
     )
 }

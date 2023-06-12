@@ -56,9 +56,10 @@ const styles = StyleSheet.create({
     },
 
     emailTextStyle: {
+        width: '90%',
         color: defaultStyleProperties.whiteColor,
         fontSize: RFValue(defaultStyleProperties.subTitleFontSize),
-        marginLeft: RFValue(10)
+        marginLeft: RFValue(10),
     }
 })
 

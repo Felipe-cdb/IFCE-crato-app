@@ -1,5 +1,5 @@
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { defaultStyleProperties } from "../../base/styles";
 
 const styles = StyleSheet.create({
@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
     },
 
     featherStyle: {
-        fontSize: RFValue(24),
+        fontSize: RFValue(16),
         marginLeft: RFValue(10),
         color: defaultStyleProperties.blackColor,
     },
 
     entypoStyle: {
-        fontSize: RFValue(24),
+        fontSize: RFValue(22),
         padding: 1,
         color: defaultStyleProperties.blackColor,
     },
@@ -34,15 +34,16 @@ const styles = StyleSheet.create({
     },
     searchBar__clicked: {
         padding: RFValue(8),
+        paddingRight: RFValue(16),
         flexDirection: "row",
-        width: "80%",
+        width: Platform.OS=='ios' ? "80%" : undefined,
         backgroundColor: "#d9dbda",
         borderRadius: 15,
         alignItems: "center",
         justifyContent: "space-evenly",
     },
     input: {
-        fontSize: RFValue(18),
+        fontSize: RFValue(16),
         marginLeft: RFValue(15),
         width: "90%",
     },

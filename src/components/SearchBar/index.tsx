@@ -18,9 +18,11 @@ const SearchBar = ({ clicked, searchPhrase, setClicked, setSearchPhrase }: Searc
     <View style={styles.container}>
       <View
         style={
+          Platform.OS=='ios'?
           clicked
             ? styles.searchBar__clicked
             : styles.searchBar__unclicked
+          : styles.searchBar__clicked
         }
       >
         <Feather
@@ -35,14 +37,18 @@ const SearchBar = ({ clicked, searchPhrase, setClicked, setSearchPhrase }: Searc
           onFocus={() => {
             setClicked(true);
           }}
+          onEndEditing={()=>{
+            Keyboard.dismiss();
+            setClicked(false);
+          }}
         />
-        {clicked && (
+        {searchPhrase.trim() && (
           <Entypo name="cross" style={styles.entypoStyle} onPress={() => {
             setSearchPhrase("")
           }} />
         )}
       </View>
-      {clicked && (
+      {clicked && Platform.OS=='ios' && (
         <View>
           <Button
             color={'darkgray'}
