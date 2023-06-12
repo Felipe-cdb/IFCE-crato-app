@@ -119,45 +119,42 @@ export default function NewCommunicated() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(inputValues)
+
+  const handleSubmit = async () => {
+    const { title, category, contents } = inputValues;
+
+    const data = new FormData();
+
+    data.append('category', category)
+    data.append('title', title)
+    data.append('contents', contents)
+
+    if (selectedImage) {
+      data.append('file', selectedImage)
+    }
+
+    if (referenceLinks.length) {
+      referenceLinks.forEach((link, index) => {
+        data.append(`referenceLinks[${index}]`, link);
+      });
+    }
+
+
+    try {
+      setScreenLoading(true);
+      await api.post('communique', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      aviso('Comunicado criado com sucesso.', 'success');
+      navigation.navigate('Mural');
+    } catch (error: any) {
+      aviso('Falha ao criar comunicado.', 'danger');
+      return
+    }
+    setScreenLoading(false);
   }
-
-  // const handleSubmit = async () => {
-  //   const { title, category, contents } = inputValues;
-
-  //   const data = new FormData();
-
-  //   data.append('category', category)
-  //   data.append('title', title)
-  //   data.append('contents', contents)
-
-  //   if (selectedImage) {
-  //     data.append('file', selectedImage)
-  //   }
-
-  //   if (referenceLinks.length) {
-  //     referenceLinks.forEach((link, index) => {
-  //       data.append(`referenceLinks[${index}]`, link);
-  //     });
-  //   }
-
-
-  //   try {
-  //     setScreenLoading(true);
-  //     await api.post('communique', data, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     });
-  //     aviso('Comunicado criado com sucesso.', 'success');
-  //     navigation.navigate('Mural');
-  //   } catch (error: any) {
-  //     aviso('Falha ao criar comunicado.', 'danger');
-  //     return
-  //   }
-  //   setScreenLoading(false);
-  // }
 
   const setRemoveImage = () => {
     setSelectedImage(null)

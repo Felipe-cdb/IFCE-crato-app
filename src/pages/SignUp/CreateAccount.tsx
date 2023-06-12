@@ -132,8 +132,6 @@ export default function CreateAccount() {
     setSelectedImage(null)
   }
 
-
-
   const handleCreateAccount = async () => {
     const data = new FormData();
     if ((!user.name?.trim() || !user.type?.trim() || !user.email?.trim() || !user.password?.trim()

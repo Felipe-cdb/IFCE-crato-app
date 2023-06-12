@@ -89,8 +89,9 @@ function EditProfile() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+
             setScreenLoading(false);
-            // userReload();
+            userReload();
             setName('');
             setPhone('');
             aviso("Dados autualizados com sucesso", "success");
