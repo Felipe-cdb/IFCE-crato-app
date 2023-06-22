@@ -28,6 +28,25 @@ const styles = StyleSheet.create({
 
         justifyContent: "center"
     },
+
+    inputPass: {
+        alignItems: "center"
+    },
+
+    textErr: {
+        color: defaultStyleProperties.redColor
+    },
+
+    iconEye: {
+        fontSize: RFPercentage(3),
+        color: defaultStyleProperties.blackColor
+    },
+
+    viewPass: {
+        position: "absolute",
+        right: RFValue(8),
+        top: RFValue(8)
+    },
 });
 
 export default styles;

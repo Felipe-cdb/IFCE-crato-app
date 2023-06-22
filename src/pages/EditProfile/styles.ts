@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
+    containerImageProfile: {
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     contenteImageProfile: {
         borderRadius: RFPercentage(50),
         backgroundColor: '#D9D9D9',
@@ -25,16 +31,32 @@ const styles = StyleSheet.create({
     },
 
     imageProfile: {
-        width: RFValue(96),
-        height: RFValue(96),
+        width: RFValue(104),
+        height: RFValue(104),
         borderRadius: RFPercentage(50)
     },
 
     iconProfile: {
-        fontSize: RFValue(96),
+        fontSize: RFValue(104),
         color: defaultStyleProperties.blackColor
     },
 
+    editButton: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: RFValue(32),
+        height: RFValue(32),
+        borderRadius: RFValue(16),
+        backgroundColor: defaultStyleProperties.blueColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    pencilEdit: {
+        fontSize: RFValue(16),
+        color: defaultStyleProperties.whiteColor
+    },
     //Esse estilo não está sendo aplicado ao botão,
     //segue o newPassBtn original comentado e abaixo dele o adptado para solução temporaria usando uma view
     // newPassBtn: {
@@ -68,7 +90,7 @@ const styles = StyleSheet.create({
     footer: {
         width: '90%',
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
         marginTop: RFPercentage(20)
     },

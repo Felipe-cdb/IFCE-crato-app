@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Modal from 'react-native-modal';
 import {
     View, Text, TextInput, TouchableOpacity,
-    Keyboard, StyleProp, ViewStyle
+    Keyboard, StyleProp, ViewStyle, Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -11,6 +11,7 @@ import { AuthContext } from "../../context/auth";
 
 import styles from "./styles";
 import { Button } from "../Button";
+import { InputGroup } from "../InputGroup";
 
 type BoxProps = {
     visivel: boolean;
@@ -23,47 +24,6 @@ type InputPassProp = {
     label: string;
 }
 
-const InpuPass = ({ pass, setPass, label }: InputPassProp) => {
-
-    const [visible, setVisible] = useState(true);
-    const [border, setBorder] = useState<StyleProp<ViewStyle>>({});
-
-    const handletextInput = (value: string) => {
-        setPass(value);
-        if (!value.trim()) {
-            setBorder({
-                borderWidth: 1,
-                borderColor: 'red'
-            });
-            return;
-        }
-
-        setBorder({});
-    }
-
-    return (
-        <View style={{ marginTop: 24 }}>
-            <Text style={styles.label}>{label}</Text>
-            <View style={styles.contntInpuPass}>
-                <TextInput
-                    style={[styles.inputLog, border]}
-                    value={pass}
-                    secureTextEntry={visible}
-                    textContentType='password'
-                    autoCapitalize='none'
-                    onChangeText={handletextInput}
-                />
-                <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
-                    {
-                        visible ? <Icon name="visibility" style={styles.iconEye} />
-                            : <Icon name="visibility-off" style={styles.iconEye} />
-                    }
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-}
-
 function UpdatePass({ visivel, close }: BoxProps) {
 
     const [currentPass, setCurrentPass] = useState('');
@@ -71,6 +31,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
     const [confirmNewPass, setConfirmNewPass] = useState('');
     const [keyboardHeight, setKeyboardHeight] = useState(0);
     const { aviso, setScreenLoading } = useContext(AuthContext);
+    const [canSave, setCanSave] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -93,6 +54,15 @@ function UpdatePass({ visivel, close }: BoxProps) {
         };
     }, []);
 
+    useEffect(() => {
+        if (newPass.trim().length>=8 && newPass.trim().length>0 &&
+        currentPass.trim().length<=0 &&
+        newPass === confirmNewPass && confirmNewPass.trim().length<=0){
+            setCanSave(true)
+        } else{
+            setCanSave(false)
+        }
+    }, [currentPass, newPass, confirmNewPass])
 
     const handleUpdatePass = async () => {
         if (!currentPass.trim() || !newPass.trim() || !confirmNewPass.trim()) {
@@ -139,30 +109,46 @@ function UpdatePass({ visivel, close }: BoxProps) {
             animationInTiming={800}
             animationOutTiming={800}
             isVisible={visivel}
-            backdropOpacity={0.1}
+            backdropOpacity={0.5}
+            deviceHeight={Dimensions.get('window').height + 40}
             onBackButtonPress={close}
             statusBarTranslucent={true}
+            
             style={{ paddingBottom: keyboardHeight - 56 }}
         >
             <View style={styles.viewModal}>
                 <View style={styles.contentModalInfo}>
 
-                    <InpuPass
-                        pass={currentPass}
-                        setPass={setCurrentPass}
+                    <InputGroup
+                        atualiza={setCurrentPass}
+                        value={currentPass}
+                        required={false}
                         label="Senha atual"
+                        pass={true}
                     />
 
-                    <InpuPass
-                        pass={newPass}
-                        setPass={setNewPass}
+                    <InputGroup
+                        value={newPass}
+                        required={false}
+                        atualiza={setNewPass}
                         label="Nova senha"
+                        pass={true}
+                        err={{
+                            isInvalid: newPass.trim().length<8 && newPass.trim().length>0,
+                            message: "Senha deve conter no minimo 8 caracteres"
+                        }}
                     />
 
-                    <InpuPass
-                        pass={confirmNewPass}
-                        setPass={setConfirmNewPass}
+                    <InputGroup
+                        value={confirmNewPass}
+                        required={false}
+                        atualiza={setConfirmNewPass}
                         label="Confirmar nova senha"
+                        pass={true}
+                        err={{
+                            isInvalid: newPass !== confirmNewPass && confirmNewPass.trim().length>0,
+                            message: "Senha deve conter no minimo 8 caracteres"
+                        }}
                     />
 
                 </View>
@@ -172,7 +158,11 @@ function UpdatePass({ visivel, close }: BoxProps) {
                         <Text style={styles.textBtn}>Cancelar</Text>
                     </Button>
 
-                    <Button typeButton="mainButton" onPress={handleUpdatePass}>
+                    <Button
+                        disabled={ canSave }
+                        typeButton="mainButton"
+                        onPress={handleUpdatePass}
+                    >
                         <Text style={styles.textBtn}>Salvar</Text>
                     </Button>
                 </View>

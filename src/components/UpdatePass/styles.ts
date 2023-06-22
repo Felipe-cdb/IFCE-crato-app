@@ -25,16 +25,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
-    iconEye: {
-        fontSize: RFPercentage(3),
-        color: defaultStyleProperties.blackColor
-    },
-
-    viewPass: {
-        position: "absolute",
-        right: RFValue(8),
-    },
-
     viewModal: {
         width: '100%',
         alignItems: "center",

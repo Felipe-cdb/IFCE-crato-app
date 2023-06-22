@@ -8,6 +8,7 @@ import styles from "./styles";
 import CodeInput from "../../components/CodeInput";
 import { AuthContext } from "../../context/auth";
 import Tooltip from "../../components/Tooltip/index";
+import { maskEmail } from "ifce-crato-app/src/helpers";
 
 const ValidationCode = ({ route }: any) => {
 
@@ -41,14 +42,6 @@ const ValidationCode = ({ route }: any) => {
     const handleCreateNewPass = () => {
         resendCode(email, 'Um novo código foi enviado para seu email, verifique sua caixa de emails')
     };
-
-    function maskEmail(email: string) {
-        const atIndex = email.indexOf('@');
-        const domain = email.slice(atIndex + 1);
-        const maskedUsername = email.slice(0, 2) + '*'.repeat(atIndex - 2);
-        const maskedDomain = domain.slice(0, 1) + '*'.repeat(domain.length - 5) + domain.slice(-3);
-        return maskedUsername + '@' + maskedDomain;
-    }
 
     return (
         <View style={[styles.container]}>

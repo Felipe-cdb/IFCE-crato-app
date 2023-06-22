@@ -16,7 +16,7 @@ interface AuthContextDataProps {
     changeUserValues: (userResponse: any) => any;
     signOut: () => any;
     signIn: (user: IUserLog) => void;
-    aviso: (m: string, t: MessageType) => void;
+    aviso: (m: string, t: MessageType, mar?:number) => void;
     setLoggedUser: () => any;
     confirmCode: (email: string, code: string, errorInCode: () => void) => any;
     resendCode: (email: string, message: string) => any;
@@ -111,7 +111,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const aviso = (mensagem: string, tipo: MessageType) => {
+    const aviso = (mensagem: string, tipo: MessageType, margin?: number) => {
         showMessage({
             message: mensagem,
             type: tipo,
@@ -123,6 +123,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             style: {
                 width: '90%',
                 marginVertical: '5%',
+                marginTop: margin,
                 borderRadius: 8,
                 alignSelf: "center"
             }

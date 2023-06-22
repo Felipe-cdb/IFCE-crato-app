@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from "react";
-import { View, Text, TextInput, TextInputProps } from "react-native";
-import {Picker} from '@react-native-picker/picker';
+import React, { useState, useCallback, useEffect } from "react";
+import { View, Text, TextInput,
+    TextInputProps, TouchableOpacity } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 import { RFValue } from "react-native-responsive-fontsize";
 import { useFocusEffect } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from "./styles";
 import { defaultStyleProperties } from "../../base/styles";
@@ -15,7 +17,11 @@ interface IInputGroupProps extends TextInputProps {
     value: string;
     atualiza: (value: any) => void;
     heigth?: number;
-    borderWidth?: number
+    borderWidth?: number,
+    err?: {
+        message: string,
+        isInvalid: boolean,
+    },
 }
 
 type ItemType = {
@@ -31,63 +37,94 @@ interface ISelectGroupProps {
     value: string;
 }
 
-export const InputGroup = ({ borderWidth, keyboardType, label, value, pass, required, atualiza, multiline, heigth, onContentSizeChange }: IInputGroupProps) => {
+export const InputGroup = (props: IInputGroupProps) => {
 
-    const [borda, setBorda] = useState({});
+    const {
+        borderWidth,
+        keyboardType,
+        label,
+        value,
+        pass,
+        required,
+        atualiza,
+        multiline,
+        heigth,
+        onContentSizeChange,
+        err
+    } = props;
+
+    const [textValid, setTextValid] = useState(true);
+    const [visible, setVisible] = useState(true);
+    const borderInvalid = {
+        borderWidth: 1,
+        borderColor: defaultStyleProperties.redColor
+    }
 
     useFocusEffect(
         useCallback(() => {
-            setBorda({});
+            setTextValid(true);
         }, [])
     )
 
-    const endInput = () => {
+    useEffect(() => {
         if (value?.trim()) {
-            setBorda({});
-            return;
+            setTextValid(true);
         }
 
         if (!value && required) {
-            setBorda({
-                borderWidth: 1,
-                borderColor: defaultStyleProperties.redColor
-            });
-            return;
+            setTextValid(false);
+
         }
 
         if (required && !(value?.trim())) {
             atualiza('');
-            setBorda(defaultStyleProperties.redColor);
-            return;
+            setTextValid(false);
         }
+    }, [value])
 
-    }
 
     return (
         <View style={styles.containerInput}>
             <Text style={styles.label}>
-                {label}{required && <Text style={styles.mandatoryInput}>*</Text>}
+                {label}{required && !textValid && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
             {pass
-                ? <TextInput
-                    onEndEditing={() => endInput()}
-                    onChangeText={atualiza}
-                    style={[styles.inputEntry, borda, { height: heigth || RFValue(40) }]}
-                    secureTextEntry={true}
-                    textContentType='password'
-                    value={value}
-                />
-                : <TextInput
+                ? <View style={styles.inputPass}>
+                    <TextInput
+                        onChangeText={atualiza}
+                        style={[
+                            styles.inputEntry,
+                            { height: heigth || RFValue(40) },
+                            ((required && !textValid) || err?.isInvalid) && borderInvalid
+                        ]}
+                        secureTextEntry={true}
+                        textContentType='password'
+                        value={value}
+                    />
+                    <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
+                        {
+                            visible ? <Icon name="visibility" style={styles.iconEye} />
+                                : <Icon name="visibility-off" style={styles.iconEye} />
+                        }
+                    </TouchableOpacity>
+                </View>
+                :
+                <TextInput
+                    {...props}
                     multiline={multiline}
-                    onEndEditing={() => endInput()}
                     onChangeText={atualiza}
-                    style={[styles.inputEntry, { borderWidth: borderWidth ?? 0 }, borda, { height: heigth || RFValue(40) }]}
+                    style={[
+                        styles.inputEntry,
+                        { borderWidth: borderWidth ?? 0 },
+                        ((required && !textValid) || err?.isInvalid) && borderInvalid,
+                        { height: heigth || RFValue(40) }
+                    ]}
                     value={value}
                     onContentSizeChange={onContentSizeChange}
                     keyboardType={keyboardType}
                 />
             }
-
+            {err?.isInvalid && <Text style={styles.textErr}>{err?.message}</Text>}
         </View>
     )
 };

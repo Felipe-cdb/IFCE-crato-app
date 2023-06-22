@@ -5,7 +5,7 @@ import { defaultStyleProperties } from '../../base/styles';
 
 interface ButtonProps extends TouchableOpacityProps {
     typeButton: 'mainButton' | 'backButton' | 'redButton' | 'extraButton';
-    customStyle?: ViewStyle
+    customStyle?: ViewStyle,
 }
 
 const stylesButtons = {
@@ -14,23 +14,27 @@ const stylesButtons = {
     redColor: defaultStyleProperties.redColor,
     extraColor: defaultStyleProperties.blueColor,
 }
-export const Button = (props: ButtonProps) => (
-    <TouchableOpacity {...props} style={{
-        padding: RFValue(10),
-        borderRadius: RFValue(8),
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        backgroundColor: (
-            props.typeButton == 'mainButton' ? stylesButtons.mainColor :
-                (
-                    props.typeButton == 'backButton' ? stylesButtons.backColor :
-                        (
-                            props.typeButton == 'redButton' ? stylesButtons.redColor :
-                                stylesButtons.extraColor
-                        )
-                )
-        ),
-        ...props.customStyle,
-    }} />
-);
+export const Button = (props: ButtonProps) => {
+
+    return (
+        <TouchableOpacity {...props} style={{
+            padding: RFValue(10),
+            borderRadius: RFValue(8),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            backgroundColor: (
+                props.typeButton == 'mainButton' ? stylesButtons.mainColor :
+                    (
+                        props.typeButton == 'backButton' ? stylesButtons.backColor :
+                            (
+                                props.typeButton == 'redButton' ? stylesButtons.redColor :
+                                    stylesButtons.extraColor
+                            )
+                    )
+            ),
+            opacity: props.disabled ? 0.6: 1,
+            ...props.customStyle,
+        }} />
+    );
+};
