@@ -1,9 +1,16 @@
-import { Text, View, ScrollView, Pressable, Linking, TouchableOpacity, Image } from "react-native";
+import React, { useContext } from 'react';
+import {
+    Text, View, ScrollView, Linking,
+    TouchableOpacity, Image, Dimensions
+} from "react-native";
 import Modal from 'react-native-modal';
 import { format, parseISO } from "date-fns";
 import { Item as ItemType } from "../../base/Types";
 
 import styles from "./styles";
+import { Button } from "../Button";
+import { AuthContext } from 'ifce-crato-app/src/context/auth';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface IInfoProps {
     item: ItemType;
@@ -14,11 +21,14 @@ interface IInfoProps {
 
 function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
 
+    const { aviso } = useContext(AuthContext);
+
     const abrir = async (link: string) => {
         try {
             await Linking.openURL(link);
         } catch (error) {
-            alert('Não foi possível abrir a URL.'+error)
+            aviso('Não foi possível abrir a URL.', 'danger', RFValue(64));
+            menosInformacoes();
         }
 
     }
@@ -32,14 +42,17 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
             isVisible={visivel}
-            backdropOpacity={0.8}
+            backdropOpacity={0.5}
             onBackButtonPress={menosInformacoes}
             onBackdropPress={menosInformacoes}
             statusBarTranslucent={true}
+            deviceHeight={Dimensions.get('window').height + 40}
         >
             <View style={styles.viewModal}>
                 <View style={[styles.contentModalInfo, { backgroundColor: bgc }]}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={true}
+                    >
 
                         <View style={styles.titleAndImage}>
                             <Text style={styles.titleModal}>{item.title}</Text>
@@ -65,9 +78,9 @@ function MaisInfo({ item, bgc, visivel, setVisivel }: IInfoProps) {
                             <Text style={styles.dataModal}>{format(parseISO(item.createdAt), 'dd/MM/yyyy')}</Text>
 
                             <View style={styles.containerBtnOk}>
-                                <Pressable style={styles.btnOk} onPress={() => menosInformacoes()}>
-                                    <Text>OK</Text>
-                                </Pressable>
+                                <Button typeButton="mainButton" onPress={() => menosInformacoes()}>
+                                    <Text style={styles.textBtnOk} >OK</Text>
+                                </Button>
                             </View>
                         </View>
                     </ScrollView>

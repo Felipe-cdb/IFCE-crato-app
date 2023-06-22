@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
     titleModal: {
         fontSize: RFValue(17),
-        marginVertical: 20,
+        marginBottom: 20,
         fontWeight: '700'
     },
 
@@ -65,16 +65,10 @@ const styles = StyleSheet.create({
     },
 
 
-    btnOk: {
-        flexGrow: 1,
-        width: 49,
-        height: 28,
-        backgroundColor: defaultStyleProperties.greenColor,
-        borderRadius: 18.85,
-
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+    textBtnOk: {
+        fontSize: RFValue(12),
+        fontWeight: '600',
+        color: defaultStyleProperties.whiteColor
     },
 
     dataModal: {

@@ -13,16 +13,16 @@ type FiltersProps = {
 function Filtros({ item, setSelectedCategories, selectedCategories }: FiltersProps) {
 
     const [ativo, setAtivo] = useState(false);
-    const [bgc, setBgc] = useState({});
+    const [bgc, setBgc] = useState<string>();
 
     useEffect(() => {
         if (ativo) {
-            setBgc({ backgroundColor: constantColors[constantCategories[item]] });
+            setBgc(constantColors[constantCategories[item]]);
             return;
         }
 
         if (!ativo) {
-            setBgc({});
+            setBgc(undefined);
             return;
         }
     }, [ativo])
@@ -31,8 +31,8 @@ function Filtros({ item, setSelectedCategories, selectedCategories }: FiltersPro
         setAtivo(!ativo)
 
         const alreadyExists = selectedCategories.find((category) => category == constantCategories[value])
-        
-        if(!alreadyExists) {
+
+        if (!alreadyExists) {
             setSelectedCategories([...selectedCategories, constantCategories[value]])
         } else {
             setSelectedCategories(selectedCategories.filter((item) => item != constantCategories[value]))
@@ -40,7 +40,14 @@ function Filtros({ item, setSelectedCategories, selectedCategories }: FiltersPro
     }
 
     return (
-        <TouchableOpacity onPress={() => handlePress(item)} style={[styles.btnFiltro, bgc]}>
+        <TouchableOpacity onPress={() => handlePress(item)} style={[
+            styles.btnFiltro,
+            {
+                backgroundColor: bgc,
+                borderColor: constantColors[constantCategories[item]],
+                borderWidth: 3,
+            }
+        ]}>
             <Text style={styles.labelFiltro}>{item}</Text>
         </TouchableOpacity>
     )

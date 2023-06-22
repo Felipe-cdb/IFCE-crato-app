@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     btnFiltro: {
         borderWidth: 1,
-        borderColor: '#77DD77',
         borderRadius: 15,
 
         paddingHorizontal: 6,

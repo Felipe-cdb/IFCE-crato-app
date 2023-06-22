@@ -3,7 +3,6 @@ import Modal from 'react-native-modal';
 import { View, Text, Pressable } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { RFValue } from "react-native-responsive-fontsize";
 import { defaultStyleProperties } from '../../base/styles'
 import { AuthContext } from "../../context/auth";
 import ButtonLoading from "../ButtonLoading";
