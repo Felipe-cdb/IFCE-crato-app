@@ -48,3 +48,33 @@ export function formatPhoneNumber(value: string) {
 
     return formattedValue;
 };
+
+export const NameRegex = /^[a-zA-Z\s]+$/;
+export const emailRegex = /^[\w-]+(\.[\w-]+)*@(ifce\.edu\.br|aluno\.ifce\.edu\.br)$/;
+export const siapRegex1 = /^\d{6}$/;
+export const siapRegex2 = /^\d{6}-\d{3}$/;
+
+/**
+ * Tornar toda primeira letra maiuscula de um nome.
+ * @param {string} str 
+ * @returns {string}
+ */
+export const capitalizeAfterSpace = (str: string) => {
+    return str.replace(/(?:^|\s)\S/g, function (match) {
+        return match.toUpperCase();
+    });
+}
+
+export default function formatSIAPNumber(input: string): string {
+    // Remover caracteres não numéricos
+    const digitsOnly = input.replace(/\D/g, '');
+
+    // Formatar como "123456" ou "123456-789" dependendo do tamanho
+    if (digitsOnly.length <= 6) {
+        return digitsOnly;
+    }
+    else {
+        const formattedSIAP = digitsOnly.replace(/(\d{6})(\d{0,3})/, '$1-$2');
+        return formattedSIAP;
+    }
+}

@@ -35,13 +35,8 @@ export interface IUserRegister {
     password: string;
     course?: string;
     phoneNumber?: string;
-    registration?: string;
-    siap?: string;
+    registration: string;
     type: UserTypes;
-}
-
-export interface ICheckRegister extends IUserRegister {
-    confirmPassword: string;
 }
 
 export type IdentificationType = 'siap' | 'registration'

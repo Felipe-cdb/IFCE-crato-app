@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, TextInput,
-    TextInputProps, TouchableOpacity } from "react-native";
-import { Picker } from '@react-native-picker/picker';
+import React, { useState, useCallback } from "react";
+import {
+    View, Text, TextInput,
+    TextInputProps, TouchableOpacity
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,52 +12,45 @@ import { defaultStyleProperties } from "../../base/styles";
 
 interface IInputGroupProps extends TextInputProps {
     label: string;
-    pass?: boolean;
+    type?: "pass"|"email";
     required: boolean;
     multiline?: boolean;
     value: string;
     atualiza: (value: any) => void;
     heigth?: number;
-    borderWidth?: number,
-    err?: {
-        message: string,
-        isInvalid: boolean,
-    },
+    errorMessage: {
+        messageErro?: string;
+        valueIsValid?: (value:string|null|undefined)=>boolean;
+        setIsValid: React.Dispatch<React.SetStateAction<boolean>>
+    };
 }
 
-type ItemType = {
+export type ItemType = {
     label: string,
-    value: string
-}
-
-interface ISelectGroupProps {
-    label: string;
-    required: boolean;
-    atualiza: (value: any) => void;
-    lista: ItemType[];
-    value: string;
+    value: string | null
 }
 
 export const InputGroup = (props: IInputGroupProps) => {
 
     const {
-        borderWidth,
         keyboardType,
         label,
         value,
-        pass,
+        type,
         required,
         atualiza,
         multiline,
         heigth,
         onContentSizeChange,
-        err
+        errorMessage
     } = props;
+
+    const { valueIsValid, messageErro, setIsValid } = errorMessage;
 
     const [textValid, setTextValid] = useState(true);
     const [visible, setVisible] = useState(true);
     const borderInvalid = {
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: defaultStyleProperties.redColor
     }
 
@@ -66,38 +60,48 @@ export const InputGroup = (props: IInputGroupProps) => {
         }, [])
     )
 
-    useEffect(() => {
-        if (value?.trim()) {
-            setTextValid(true);
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
+    const handleValue = (value: string) => {
+        if(valueIsValid === undefined){
+            setTextValid(value.trim().length > 0);
+            atualiza(value);
+            return;
         }
-
-        if (!value && required) {
-            setTextValid(false);
-
-        }
-
-        if (required && !(value?.trim())) {
-            atualiza('');
-            setTextValid(false);
-        }
-    }, [value])
-
+        setTextValid(valueIsValid(value));
+        setIsValid(valueIsValid(value));
+        atualiza(value);        
+    }
 
     return (
         <View style={styles.containerInput}>
             <Text style={styles.label}>
-                {label}{required && !textValid && <Text style={styles.mandatoryInput}>*</Text>}
+                {label}{(required && !textValid) && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
-            {pass
+            {type === "pass"
                 ? <View style={styles.inputPass}>
                     <TextInput
-                        onChangeText={atualiza}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        onChangeText={handleValue}
                         style={[
                             styles.inputEntry,
-                            { height: heigth || RFValue(40) },
-                            ((required && !textValid) || err?.isInvalid) && borderInvalid
+                            {
+                                height: heigth || RFValue(40),
+                                borderWidth: isFocused && textValid ? 2 : 0,
+                                borderColor: isFocused && textValid ? '#7BB4E3' : undefined
+                            },
+                            (required && !textValid) && borderInvalid
                         ]}
-                        secureTextEntry={true}
+                        secureTextEntry={visible}
                         textContentType='password'
                         value={value}
                     />
@@ -112,39 +116,25 @@ export const InputGroup = (props: IInputGroupProps) => {
                 <TextInput
                     {...props}
                     multiline={multiline}
-                    onChangeText={atualiza}
+                    onChangeText={handleValue}
                     style={[
                         styles.inputEntry,
-                        { borderWidth: borderWidth ?? 0 },
-                        ((required && !textValid) || err?.isInvalid) && borderInvalid,
-                        { height: heigth || RFValue(40) }
+                        (required && !textValid) ? borderInvalid :
+                            {
+                                height: heigth || RFValue(40),
+                                borderWidth: isFocused ? 2 : 0,
+                                borderColor: isFocused ? '#7BB4E3' : undefined
+                            },
+                        type==="email" && styles.inputEmail
                     ]}
                     value={value}
                     onContentSizeChange={onContentSizeChange}
                     keyboardType={keyboardType}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
             }
-            {err?.isInvalid && <Text style={styles.textErr}>{err?.message}</Text>}
-        </View>
-    )
-};
-
-export const SelectGroup = ({ label, lista, required, atualiza, value }: ISelectGroupProps) => {
-    return (
-        <View style={styles.containerInput}>
-            <Text style={styles.label}>
-                {label}{required && <Text style={styles.mandatoryInput}>*</Text>}
-            </Text>
-            <View style={styles.inputEntry}>
-                <Picker
-                    selectedValue={value}
-                    onValueChange={atualiza}
-                >
-                    {lista.map((i) => (
-                        <Picker.Item key={i.value} label={i.label} value={i.value} />
-                    ))}
-                </Picker>
-            </View>
+            {!textValid && <Text style={styles.textErr}>{messageErro}</Text>}
         </View>
     )
 };

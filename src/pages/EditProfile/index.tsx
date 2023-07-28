@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
     Text,
-    TouchableOpacity,
     View,
-    Image
 } from "react-native";
 import FormData from 'form-data';
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,6 +17,7 @@ import UpdatePass from "../../components/UpdatePass";
 import ModalImagePicker from "ifce-crato-app/src/components/ModalImagePicker";
 import { formatPhoneNumber } from "ifce-crato-app/src/helpers";
 import { RFValue } from "react-native-responsive-fontsize";
+import ImageInput from "ifce-crato-app/src/components/ImageInput";
 
 interface ISelectedImage {
     uri: string,
@@ -34,7 +33,6 @@ function EditProfile() {
     const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
     const { user, aviso, setScreenLoading, userReload } = useContext(AuthContext);
     const [imageUri, setImageUri] = useState(user.avatarUrl);
-    const [toAlterImage, setToAlterImage] = useState(false)
     const [canSave, setCanSave] = useState(false);
 
     useEffect(() => {
@@ -117,26 +115,12 @@ function EditProfile() {
     return (<>
         <Menu />
         <View style={styles.container}>
-            <ModalImagePicker
-                visible={toAlterImage}
-                close={() => setToAlterImage(!toAlterImage)}
-                setImageUri={setImageUri}
-                setSelectedImage={setSelectedImage}
-            />
-
             <View style={styles.content}>
-                <View style={styles.containerImageProfile}>
-                    <View style={styles.contenteImageProfile} >
-                        {
-                            imageUri ?
-                                <Image source={{ uri: imageUri }} style={styles.imageProfile} /> :
-                                <Icon name="account" style={styles.iconProfile} />
-                        }
-                    </View>
-                    <TouchableOpacity style={styles.editButton} onPress={() => setToAlterImage(!toAlterImage)}>
-                        <Icon name="camera" style={styles.pencilEdit} />
-                    </TouchableOpacity>
-                </View>
+                <ImageInput
+                    imageUri={imageUri}
+                    setImageUri={setImageUri}
+                    setSelectedImage={setSelectedImage}
+                />
 
                 <InputGroup
                     atualiza={setName}
