@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
 import styles from "./styles";
+import { defaultStyleProperties } from "../../base/styles";
 
 export type ItemType = {
     label: string,
@@ -33,7 +34,13 @@ export const SelectGroup = ({
             <Text style={styles.label}>
                 {label}{(!valid && enable) && <Text style={styles.mandatoryInput}>*</Text>}
             </Text>
-            <View style={styles.inputEntry}>
+            <View style={[
+                styles.inputEntry,
+                (!valid && enable) && {
+                    borderWidth: 2,
+                    borderColor: defaultStyleProperties.redColor
+                }
+            ]}>
                 <Picker
                     enabled={enable}
                     selectedValue={value}

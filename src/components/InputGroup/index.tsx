@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
     View, Text, TextInput,
     TextInputProps, TouchableOpacity
@@ -12,16 +12,17 @@ import { defaultStyleProperties } from "../../base/styles";
 
 interface IInputGroupProps extends TextInputProps {
     label: string;
-    type?: "pass"|"email";
+    type?: "pass" | "email";
     required: boolean;
     multiline?: boolean;
     value: string;
     atualiza: (value: any) => void;
     heigth?: number;
+    submit: boolean;
     errorMessage: {
         messageErro?: string;
-        valueIsValid?: (value:string|null|undefined)=>boolean;
-        setIsValid: React.Dispatch<React.SetStateAction<boolean>>
+        valueIsValid?: (value: string) => boolean;
+        dependencies?: string[];
     };
 }
 
@@ -41,12 +42,13 @@ export const InputGroup = (props: IInputGroupProps) => {
         atualiza,
         multiline,
         heigth,
-        onContentSizeChange,
-        errorMessage
+        errorMessage,
+        submit
     } = props;
 
-    const { valueIsValid, messageErro, setIsValid } = errorMessage;
+    const { valueIsValid, messageErro, dependencies = [] } = errorMessage;
 
+    const isFirstRender = useRef(true);
     const [textValid, setTextValid] = useState(true);
     const [visible, setVisible] = useState(true);
     const borderInvalid = {
@@ -60,6 +62,22 @@ export const InputGroup = (props: IInputGroupProps) => {
         }, [])
     )
 
+    useEffect(() => {
+        if (submit) {
+            endEdintingText();
+        }
+    }, [submit, ...dependencies])
+
+    useEffect(() => {
+        // Ignorar a primeira renderização (montagem inicial)
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        endEdintingText();
+    }, dependencies)
+
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
@@ -70,15 +88,9 @@ export const InputGroup = (props: IInputGroupProps) => {
         setIsFocused(false);
     };
 
-    const handleValue = (value: string) => {
-        if(valueIsValid === undefined){
-            setTextValid(value.trim().length > 0);
-            atualiza(value);
-            return;
-        }
-        setTextValid(valueIsValid(value));
-        setIsValid(valueIsValid(value));
-        atualiza(value);        
+    const endEdintingText = () => {
+        if (!valueIsValid) setTextValid(value.trim().length > 0);
+        else setTextValid(valueIsValid(value));
     }
 
     return (
@@ -89,9 +101,14 @@ export const InputGroup = (props: IInputGroupProps) => {
             {type === "pass"
                 ? <View style={styles.inputPass}>
                     <TextInput
+                        multiline={multiline}
+                        onChangeText={atualiza}
                         onFocus={handleFocus}
+                        value={value}
                         onBlur={handleBlur}
-                        onChangeText={handleValue}
+                        onEndEditing={endEdintingText}
+                        secureTextEntry={visible}
+                        textContentType='password'
                         style={[
                             styles.inputEntry,
                             {
@@ -101,9 +118,6 @@ export const InputGroup = (props: IInputGroupProps) => {
                             },
                             (required && !textValid) && borderInvalid
                         ]}
-                        secureTextEntry={visible}
-                        textContentType='password'
-                        value={value}
                     />
                     <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.viewPass}>
                         {
@@ -116,7 +130,12 @@ export const InputGroup = (props: IInputGroupProps) => {
                 <TextInput
                     {...props}
                     multiline={multiline}
-                    onChangeText={handleValue}
+                    onChangeText={atualiza}
+                    onFocus={handleFocus}
+                    onEndEditing={endEdintingText}
+                    value={value}
+                    onBlur={handleBlur}
+                    keyboardType={keyboardType}
                     style={[
                         styles.inputEntry,
                         (required && !textValid) ? borderInvalid :
@@ -125,13 +144,8 @@ export const InputGroup = (props: IInputGroupProps) => {
                                 borderWidth: isFocused ? 2 : 0,
                                 borderColor: isFocused ? '#7BB4E3' : undefined
                             },
-                        type==="email" && styles.inputEmail
+                        type === "email" && styles.inputEmail
                     ]}
-                    value={value}
-                    onContentSizeChange={onContentSizeChange}
-                    keyboardType={keyboardType}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
                 />
             }
             {!textValid && <Text style={styles.textErr}>{messageErro}</Text>}

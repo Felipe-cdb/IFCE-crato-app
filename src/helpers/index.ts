@@ -36,6 +36,9 @@ export function formatPhoneNumber(value: string) {
 
     // Aplica a máscara de telefone (XX) XXXXX-XXXX
     let formattedValue = '';
+    if (!numericValue.length) {
+        formattedValue = '';
+    }
     if (numericValue.length > 0) {
         formattedValue += '(' + numericValue.substring(0, 2);
     }

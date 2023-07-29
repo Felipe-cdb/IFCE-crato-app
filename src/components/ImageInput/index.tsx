@@ -15,17 +15,17 @@ export interface ISelectedImage {
 }
 
 interface IImageProps {
-    imageUri: string | undefined;
-    setImageUri: React.Dispatch<React.SetStateAction<string | undefined>>;
     setSelectedImage: React.Dispatch<React.SetStateAction<ISelectedImage | null>>;
     size?: number;
+    imageUri: string|undefined;
+    setImageUri:  React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 export default function ({
-    imageUri,
-    setImageUri,
     setSelectedImage,
-    size = 104
+    size = 104,
+    imageUri,
+    setImageUri
 }: IImageProps) {
 
     const [toAlterImage, setToAlterImage] = React.useState(false);
@@ -47,10 +47,6 @@ export default function ({
         contenteImageProfile: {
             borderRadius: RFPercentage(50),
             backgroundColor: '#D9D9D9',
-            alignItems: "center",
-            justifyContent: "center",
-            borderWidth: 2,
-            borderColor: '#D9D9D9'
         },
 
         imageProfile: {
@@ -60,17 +56,17 @@ export default function ({
         },
 
         iconProfile: {
-            fontSize: RFValue(size),
+            fontSize: RFValue(size-8),
             color: defaultStyleProperties.blackColor
         },
 
         editButton: {
             position: 'absolute',
-            bottom: 0,
-            right: 0,
-            width: RFValue(32),
-            height: RFValue(32),
-            borderRadius: RFValue(16),
+            bottom: RFValue(-8),
+            right: RFValue(-4),
+            width: RFValue(size-56),
+            height: RFValue(size-56),
+            borderRadius: RFPercentage(50),
             backgroundColor: defaultStyleProperties.blueColor,
             alignItems: 'center',
             justifyContent: 'center',
