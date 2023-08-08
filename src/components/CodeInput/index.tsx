@@ -59,28 +59,26 @@ const CodeInput = ({ setCode, code }: ICodeInputProps) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.container}>
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <TextInput
-                        key={index}
-                        ref={codeInputRefs[index]}
-                        style={styles.codeInput}
-                        maxLength={1}
-                        value={code[index]}
-                        onChangeText={(value) => handleCodeChange(value, index)}
-                        onKeyPress={(event) => handleCodeKeyPress(event, index)}
-                        keyboardType="number-pad"
-                        onFocus={() => handleFocus(index)}
-                    />
-                ))}
-            </View>
+            {Array.from({ length: 4 }).map((_, index) => (
+                <TextInput
+                    key={index}
+                    ref={codeInputRefs[index]}
+                    style={styles.codeInput}
+                    maxLength={1}
+                    value={code[index]}
+                    onChangeText={(value) => handleCodeChange(value, index)}
+                    onKeyPress={(event) => handleCodeKeyPress(event, index)}
+                    keyboardType="number-pad"
+                    onFocus={() => handleFocus(index)}
+                />
+            ))}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '85%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
