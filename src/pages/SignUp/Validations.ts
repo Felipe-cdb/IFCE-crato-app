@@ -1,5 +1,5 @@
 import { UserTypes } from "../../base/Enums";
-import { NameRegex, emailRegex, formatPhoneNumber, siapRegex1, siapRegex2 } from "ifce-crato-app/src/helpers";
+import { NameRegex, emailRegex, formatPhoneNumber, siapRegex1, siapRegex2 } from "../../helpers";
 
 export default class VALIDATION {
 

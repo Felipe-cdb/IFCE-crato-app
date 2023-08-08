@@ -19,6 +19,7 @@ interface IInputGroupProps extends TextInputProps {
     atualiza: (value: any) => void;
     heigth?: number;
     submit: boolean;
+    borderWidth?: number;
     errorMessage: {
         messageErro?: string;
         valueIsValid?: (value: string) => boolean;

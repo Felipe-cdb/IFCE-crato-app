@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from "./styles";
-import { AuthContext } from 'ifce-crato-app/src/context/auth';
+import { AuthContext } from '../../context/auth';
 
 interface IImagePickerProps {
     visible: boolean;

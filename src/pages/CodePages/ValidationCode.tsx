@@ -8,7 +8,7 @@ import styles from "./styles";
 import CodeInput from "../../components/CodeInput";
 import { AuthContext } from "../../context/auth";
 import Tooltip from "../../components/Tooltip/index";
-import { maskEmail } from "ifce-crato-app/src/helpers";
+import { maskEmail } from "../../helpers";
 
 const ValidationCode = ({ route }: any) => {
 
