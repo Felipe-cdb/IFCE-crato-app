@@ -86,13 +86,12 @@ function MenuFormUrlModal({ isVisible, setVisible, action, description, setPropM
                             multiline={false}
                             value={menuUrl}
                             heigth={40}
-                            textContentType="URL"
-                            borderWidth={1} submit={false}
-                            errorMessage={{
+                            textContentType="URL" submit={false} errorMessage={{
                                 messageErro: undefined,
                                 valueIsValid: undefined,
                                 dependencies: undefined
-                            }}                        />
+                            }}
+                        />
                     </View>
 
                     <View style={styles.containerBtn}>

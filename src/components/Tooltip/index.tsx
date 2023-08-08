@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Text } from 'react-native';
 import Tooltip from 'rn-tooltip';
- 
+
 interface TooltipProps {
   children: ReactNode;
   tooltipText: string;
@@ -14,7 +14,7 @@ const TooltipComponet = ({ children, tooltipText }: TooltipProps) => (
     backgroundColor='#FFF'
     overlayColor='rgba(0, 0, 0, 0.3)'
     width={'95%'}
-    height={'8%'}
+    height={'10%'}
   >
     {children}
   </Tooltip>
