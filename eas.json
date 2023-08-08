@@ -24,7 +24,7 @@
         "buildType": "apk"
       },
       "env": {
-        "URL_API": "http://alunoifcecratoapi-env.eba-cgx6xwzd.us-east-1.elasticbeanstalk.com/"
+        "URL_API": "https://api-aluno-ifce-crato.fly.dev/"
       }
     }
   },
