@@ -9,7 +9,7 @@ import { Item as ItemType } from "../../base/Types";
 
 import styles from "./styles";
 import { Button } from "../Button";
-import { AuthContext } from 'ifce-crato-app/src/context/auth';
+import { AuthContext } from '../../context/auth';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface IInfoProps {

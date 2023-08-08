@@ -52,7 +52,7 @@ export default function Login() {
 
   const entrar = async () => {
     setLoading(true)
-    await signIn({ email, password: senha });
+    await signIn({ email: email.toLowerCase(), password: senha });
     setLoading(false)
   }
 
@@ -78,6 +78,7 @@ export default function Login() {
             <TextInput
               style={styles.inputLog}
               value={email}
+              placeholderTextColor='gray'
               onChangeText={setEmail}
               keyboardType='email-address'
               textContentType='emailAddress'
@@ -89,6 +90,7 @@ export default function Login() {
           <View style={styles.contntInpuPass}>
             <TextInput
               style={styles.inputLog}
+              placeholderTextColor='gray'
               value={senha}
               secureTextEntry={visible}
               textContentType='password'

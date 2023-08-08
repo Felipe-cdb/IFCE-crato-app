@@ -18,6 +18,7 @@ import LinkList from '../../components/LinkList';
 import { constantCategories } from '../../base/constants';
 import { AuthContext } from '../../context/auth';
 import { Button } from '../../components/Button';
+import Tooltip from '../../components/Tooltip';
 
 interface ISelectedImage {
   uri: string,
@@ -65,6 +66,16 @@ export default function NewCommunicated() {
   const handleAddLink = () => {
     if (!link) {
       aviso('Preencha o campo para adicionar referências.', 'warning');
+      return
+    }
+
+    const regExp = /^(https?):\/\/[^\s$.?#].[^\s]*$/g;
+    const url = link.trim();
+    const result = regExp.test(url);
+
+    if (!result) {
+        aviso('Link inválido!', 'warning')
+        return;
     }
 
     const record = referenceLinks.find((item) => item == link.trim())
@@ -91,7 +102,7 @@ export default function NewCommunicated() {
 
       const result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [10, 8],
         quality: 1,
       });
 
@@ -188,11 +199,19 @@ export default function NewCommunicated() {
             label='Titulo'
             value={inputValues.title}
             required={true}
-            atualiza={(value) => handleInputChange({ name: 'title', value: value })}
-          />
+            atualiza={(value) => handleInputChange({ name: 'title', value: value })} submit={false} errorMessage={{
+              messageErro: undefined,
+              valueIsValid: undefined,
+              dependencies: undefined
+            }}          />
 
           <View>
-            <Text style={styles.clipTxt}>Anexar imagem</Text>
+            <View style={styles.imageTooltipContainer}>
+              <Text style={styles.clipTxt}>Anexar imagem</Text>
+              <Tooltip tooltipText='Certifique-se de selecionar uma imagem com dimensões adequadas pra um bom enquadramento.'>
+                <Icon style={styles.tooltipIcon} name="information-outline" />
+              </Tooltip>
+            </View>
             <View style={styles.optionsImage}>
               {selectedImage ? (
                 <View style={styles.image}>
@@ -226,6 +245,8 @@ export default function NewCommunicated() {
               <InputGroup
                 label='Adicionar link de referência'
                 value={link}
+                keyboardType='url'
+                autoCapitalize='none'
                 atualiza={setLink}
                 required={false}
               />

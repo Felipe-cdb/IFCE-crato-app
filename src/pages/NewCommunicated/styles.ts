@@ -41,6 +41,18 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
 
+    imageTooltipContainer: {
+        alignItems: "center",
+        justifyContent: 'flex-start',
+        flexDirection: "row"
+    },
+
+    tooltipIcon: {
+        padding: RFValue(7),
+        fontSize: RFValue(16),
+        color: defaultStyleProperties.redColor
+    },
+
     image: {
         width: '100%',
 
