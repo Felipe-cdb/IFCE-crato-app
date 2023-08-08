@@ -35,6 +35,8 @@ function EditProfile() {
     const [imageUri, setImageUri] = useState(user.avatarUrl);
     const [canSave, setCanSave] = useState(false);
 
+    const [submit, setSubmit] = useState(false);
+
     useEffect(() => {
         setName(user.name);
         setPhone(formatPhoneNumber(user.phoneNumber || ''));
@@ -54,6 +56,7 @@ function EditProfile() {
     }, [name, phone, imageUri])
 
     const handleUpdateAccount = async () => {
+        setSubmit(true);
         if (!selectedImage?.uri && !name.trim() && !phone.trim()) {
             aviso('Para solicitar alteração é necessário modificar algum dos campos.', 'warning', RFValue(64));
             return;
@@ -124,12 +127,13 @@ function EditProfile() {
 
                 <InputGroup
                     atualiza={setName}
-                    label="Nome"
+                    label="Nome Completo"
                     required={true}
                     value={name}
-                    err={{
-                        isInvalid: name.trim().length <= 0,
-                        message: "Insira um nome válido"
+                    submit={submit}
+                    errorMessage={{
+                        valueIsValid: (value) => value.trim().length>4,
+                        messageErro: "Insira um nome válido"
                     }}
                 />
 
@@ -143,10 +147,11 @@ function EditProfile() {
                     maxLength={15}
                     keyboardType="number-pad"
                     placeholder="(XX) XXXXX-XXXX"
-                    err={{
-                        isInvalid: phone.trim().length > 0 && phone.trim().length < 15,
-                        message: "Formato de telefone incorreto"
+                    errorMessage={{
+                        valueIsValid: (value) => value.length === 15,
+                        messageErro: "Formato de telefone incorreto!"
                     }}
+                    submit={submit}
                 />
 
                 <View style={styles.newPassBtn}>

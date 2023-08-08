@@ -110,24 +110,19 @@ export default function CreateAccount() {
      * Criar FormData para cadastrar usuario
      */
     const data = new FormData();
-    data.append('name', name)
-    data.append('email', email)
-    data.append('password', password)
-    data.append('type', type)
-    if(type===UserTypes.STUDENT){
-      data.append('registration', registration);
-    }else{
-      data.append('siap', registration);
-    }
-    if (phoneNumber.length) {
-      data.append('phoneNumber', phoneNumber)
-    }
-    if (course) {
-      data.append('course', course)
-    }
-    if (selectedImage) {
-      data.append('file', selectedImage)
-    }
+    data.append('name', name);
+    data.append('email', email);
+    data.append('password', password);
+    data.append('type', type);
+
+    if(type===UserTypes.STUDENT) data.append('registration', registration);
+    else data.append('siap', registration);
+
+    if (phoneNumber.length) data.append('phoneNumber', phoneNumber);
+
+    if (course) data.append('course', course);
+
+    if (selectedImage) data.append('file', selectedImage);
 
     /**
      * Solicitar criação de usuário
@@ -144,6 +139,7 @@ export default function CreateAccount() {
       aviso("Só falta confirmar seu email!", "success");
     } catch (error: any) {
       setScreenLoading(false);
+      console.log(error.response)
       if (error.response) {
         if (error.response.data.message === "Duplicate Email entered") {
           aviso("Usuário já cadastrado", "warning");
