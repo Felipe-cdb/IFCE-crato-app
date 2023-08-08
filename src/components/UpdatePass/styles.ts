@@ -55,6 +55,26 @@ const styles = StyleSheet.create({
         color: defaultStyleProperties.whiteColor,
         fontWeight: 'bold'
     },
+
+    errorMessage: {
+        width: '86%',
+        marginHorizontal: '7%',
+        paddingVertical: 5,
+        paddingHorizontal: '3%',
+        backgroundColor: '#F66',
+        borderRadius: RFValue(8),
+        position: "absolute",
+        top: 2,
+        zIndex: 100
+    },
+
+    titleError: {
+        fontSize: RFValue(14)
+    },
+
+    listErrors: {
+        fontSize: RFValue(12)
+    }
 });
 
 export default styles;

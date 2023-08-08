@@ -14,7 +14,6 @@ import styles from "./styles";
 import { AuthContext } from "../../context/auth";
 import { api } from "../../config";
 import UpdatePass from "../../components/UpdatePass";
-import ModalImagePicker from "ifce-crato-app/src/components/ModalImagePicker";
 import { formatPhoneNumber } from "ifce-crato-app/src/helpers";
 import { RFValue } from "react-native-responsive-fontsize";
 import ImageInput from "ifce-crato-app/src/components/ImageInput";
