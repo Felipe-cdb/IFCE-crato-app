@@ -88,71 +88,47 @@ const Refectory = () => {
                                 <Text style={styles.titlePage}>Refeitório</Text>
 
                                 <View style={styles.dateForms}>
-                                    <Text style={styles.statusForms}>
-                                        Status: <Text style={{ color: refectoryStatusConstants[refectory.status].color, fontWeight: 'bold' }}> {refectoryStatusConstants[refectory.status].text} </Text>
-                                    </Text>
-
-                                    <Text style={styles.dateFormsReference}>
+                                    <Text style={styles.dateFormsFont}>
                                         Formulário referente a {formatDate(new Date(refectory.vigencyDate))}
                                     </Text>
 
-                                    <Text style={styles.dateFormsClosing}>
-                                        <Text numberOfLines={2} style={styles.redText}>Encerramento</Text>:
+                                    <Text style={styles.dateFormsFont}>
                                         Respostas aceitas até {formatDate(new Date(refectory.startAnswersDate))} às 19h
                                     </Text>
-                                </View>
-
-                                <View style={styles.menu}>
-                                    <Text style={styles.title}>Cardápio</Text>
-                                    <Text style={styles.subtitle}>Acesse a planilha do cardápio através do botão abaixo</Text>
-
-                                    <View style={styles.menuContainer}>
-                                        <OpenURLButton
-                                            url={refectory.menuUrl}
-                                            textColor='white'
-                                            icon={<Icon style={styles.iconStyle} name='microsoft-excel' />}
-                                        >
-                                            Cardápio
-                                        </OpenURLButton>
-                                        {!user.roles.includes(UserPermitions.RM) ? '' : (
-                                            <View style={styles.editMenuIconContainer}>
-                                                <TouchableOpacity onPress={() => setVisible(true)}>
-                                                    <Icon style={styles.editMenuIcon} name='pencil-outline' />
-                                                </TouchableOpacity>
-                                            </View>
-                                        )}
-                                    </View>
                                 </View>
 
                                 <View style={styles.refectoryChoices}>
                                     {refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open ? <RefectoryAlreadyAnswered /> : <RefectoryChoices />}
                                 </View>
 
-                                {!user.roles.includes(UserPermitions.RM) ? '' : (
-                                    <TouchableOpacity style={styles.formButton} >
-                                        <ButtonComponent typeButton='extraButton' onPress={() => navigation.navigate('Formulários do Refeitório')}>
-                                            <Text style={styles.formTitle}>Formulários</Text>
-                                            <Icon style={styles.iconStyle} name='clipboard-edit-outline' />
+                                <View style={styles.menuContainer}>
+                                    <OpenURLButton
+                                        url={refectory.menuUrl}
+                                        textColor='white'
+                                        icon={<Icon style={styles.iconMenu} name='microsoft-excel' />}
+                                    >
+                                        Cardápio
+                                    </OpenURLButton>
+
+                                    {!user.roles.includes(UserPermitions.RM) ? '' : (
+                                        <ButtonComponent
+                                            typeButton='extraButton'
+                                            onPress={() => setVisible(true)}
+                                        >
+                                            <Icon style={styles.editMenuIcon} name='pencil-outline' />
                                         </ButtonComponent>
-                                    </TouchableOpacity>
-                                )}
-
-                                <View style={styles.actionButtonContainer}>
-                                    <ButtonComponent typeButton='backButton' onPress={() => navigation.navigate('Mural')} >
-                                        <Text style={styles.actionButtomTitle}>Voltar</Text>
-                                    </ButtonComponent>
-
-                                    <ButtonComponent disabled={refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open} typeButton='mainButton' onPress={handleSubmit}>
-                                        <Text style={{ ...styles.actionButtomTitle, opacity: refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open ? 0.2 : 1 }}>
-                                            {loading ?
-                                                <ButtonLoading size={'small'} color={defaultStyleProperties.blueColor} />
-                                                :
-                                                'Enviar'
-                                            }
-                                        </Text>
-                                    </ButtonComponent>
-
+                                    )}
                                 </View>
+
+                                <ButtonComponent disabled={refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open} typeButton='mainButton' onPress={handleSubmit}>
+                                    <Text style={{ ...styles.actionButtomTitle, opacity: refectory.hasAnswered || refectory.status === RefectoryStatusEnum.open ? 0.2 : 1 }}>
+                                        {loading ?
+                                            <ButtonLoading size={'small'} color={defaultStyleProperties.blueColor} />
+                                            :
+                                            'Enviar'
+                                        }
+                                    </Text>
+                                </ButtonComponent>
                             </View>
                         </ScrollView>
                     </>

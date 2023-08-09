@@ -34,13 +34,12 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         width: '90%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: "center",
         marginVertical: RFValue(20)
     },
 
     buttonTitle: {
-        fontSize: RFValue(18),
+        fontSize: RFValue(16),
         color: 'white',
         fontWeight: "bold"
     },

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontWeight: "bold",
-        fontSize: RFValue(19),
+        fontSize: RFValue(16),
         marginBottom: RFValue(30),
     },
     optionContainer: {
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     optionText: {
         marginLeft: RFValue(18),
         fontSize: RFValue(16),
-        fontWeight: "bold"
     },
     checkbox: {
         width: RFValue(24),
