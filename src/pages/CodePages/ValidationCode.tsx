@@ -14,12 +14,15 @@ const ValidationCode = ({ route }: any) => {
 
     const email = route.params?.email;
     const [code, setCode] = useState<string>('');
+    const [codeValid, setCodeValid] = useState(true);
     const navigation = useNavigation<StackNavigationProp<any>>();
     const { confirmCode, resendCode } = useContext(AuthContext);
 
     const errorInCode = () => {
         setCode('');
+        setCodeValid(false);
     }
+    
     useEffect(() => {
         function completeCode() {
             if (code.trim().length < 4) return;
@@ -30,8 +33,6 @@ const ValidationCode = ({ route }: any) => {
 
         completeCode();
     }, [code]);
-
-
 
     useFocusEffect(
         React.useCallback(() => {
@@ -70,7 +71,14 @@ const ValidationCode = ({ route }: any) => {
                     <Text style={styles.infoText}>Por favor, insira esse código a seguir</Text>
 
                     <View style={styles.optionsCode}>
-                        <CodeInput setCode={setCode} code={code} />
+                        <CodeInput
+                            setCode={setCode}
+                            code={code}
+                            valid={{
+                                isValid: codeValid,
+                                message: "Código iválido!"
+                            }}
+                        />
 
                         <TouchableOpacity style={styles.btnNewCode} onPress={handleCreateNewPass}>
                             <Text style={styles.textBtnCode}>Reenvie um novo código</Text>

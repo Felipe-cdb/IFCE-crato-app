@@ -94,13 +94,20 @@ export default function CreateAccount() {
     return errors;
   }
 
+  const submitForm = () => {
+    setFormHasBeenSent(true);
+    setTimeout(() => {
+      setFormHasBeenSent(false);
+    }, 1000);
+  };
+
   const handleCreateAccount = async () => {
     
     /**
      * Atualizar o estado do formulário para enviado
      * e verificar todos os campos 
      */
-    setFormHasBeenSent(true);
+    submitForm();
     const errors = verifyErrors();
     if(errors.length){
       return aviso(`Verifique os seguintes campos:\n${errors.join('\n')}`, 'danger');;

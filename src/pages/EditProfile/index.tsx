@@ -6,6 +6,7 @@ import {
 import FormData from 'form-data';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { RFValue } from "react-native-responsive-fontsize";
 
 import Menu from "../../components/Menu";
 import { InputGroup } from "../../components/InputGroup";
@@ -14,9 +15,8 @@ import styles from "./styles";
 import { AuthContext } from "../../context/auth";
 import { api } from "../../config";
 import UpdatePass from "../../components/UpdatePass";
-import { formatPhoneNumber } from "ifce-crato-app/src/helpers";
-import { RFValue } from "react-native-responsive-fontsize";
-import ImageInput from "ifce-crato-app/src/components/ImageInput";
+import { formatPhoneNumber } from "../../helpers";
+import ImageInput from "../../components/ImageInput";
 
 interface ISelectedImage {
     uri: string,

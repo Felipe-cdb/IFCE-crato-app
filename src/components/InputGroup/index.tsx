@@ -18,9 +18,9 @@ interface IInputGroupProps extends TextInputProps {
     value: string;
     atualiza: (value: any) => void;
     heigth?: number;
-    submit: boolean;
+    submit?: boolean;
     borderWidth?: number;
-    errorMessage: {
+    errorMessage?: {
         messageErro?: string;
         valueIsValid?: (value: string) => boolean;
         dependencies?: string[];
@@ -47,7 +47,7 @@ export const InputGroup = (props: IInputGroupProps) => {
         submit
     } = props;
 
-    const { valueIsValid, messageErro, dependencies = [] } = errorMessage;
+    const { valueIsValid, messageErro, dependencies = [] } = errorMessage || {};
 
     const isFirstRender = useRef(true);
     const [textValid, setTextValid] = useState(true);

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         paddingTop: RFValue(28),
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "center"
     },
 
     butnCancelar: {

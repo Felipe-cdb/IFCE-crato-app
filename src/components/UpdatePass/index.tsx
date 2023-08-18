@@ -168,7 +168,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
                     />
 
                     <InputGroup
-                        label="Confirmar Senha"
+                        label="Nova Senha"
                         value={newPass}
                         type="pass"
                         required={true}
