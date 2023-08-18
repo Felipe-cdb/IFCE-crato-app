@@ -191,6 +191,8 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
     
     async function confirmCode(email: string, code: string, errorInCode: () => void){
+        if(code.trim().length !== 4) return errorInCode();
+
         try {
             setScreenLoading(true);
             const response = await api.post('/auth/confirm/email-code', JSON.stringify({
