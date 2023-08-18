@@ -3,9 +3,10 @@ import { View, Text, Image } from "react-native"
 
 import styles from './styles'
 import { IUser } from '../../base/Interfaces'
-import { constantUserType } from '../../base/constants'
+import { constantUserType, courseConstants } from '../../base/constants'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { format, parseISO } from 'date-fns'
+import { UserTypes } from '../../base/Enums'
 
 type CardProp = {
     item?: {
@@ -13,6 +14,8 @@ type CardProp = {
     },
     index?: number
 }
+
+
 
 const CarouselCardItem = ({ index, item }: CardProp) => {
     return (
@@ -36,23 +39,35 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                 </View>
                 <View style={styles.informations}>
                     <View style={styles.infoLine}>
-                        <Text style={styles.header}>Matrícula/Siap: </Text>
+                        {!item?.userData?.type.includes(UserTypes.STUDENT) ? (
+                            <Text style={styles.header}>Siap: </Text>
+                        ) : (
+                            <Text style={styles.header}>Matrícula: </Text>
+                        )}
                         <Text style={styles.body}>{item?.userData?.registration || item?.userData?.siape}</Text>
                     </View>
 
+                    {!item?.userData?.type.includes(UserTypes.STUDENT) ? '' : (
+                        <View style={styles.infoLine}>
+                            <Text style={styles.body}>
+                                <Text style={styles.header}>Curso: </Text>
+                                {courseConstants[`${item?.userData?.course}`]}
+                            </Text>
+                        </View>
+                    )}
+
                     <View style={styles.infoLine}>
-                        <Text style={styles.header}>Curso: </Text>
-                        <Text style={styles.body}>{item?.userData?.course}</Text>
+                        <Text ellipsizeMode='tail' numberOfLines={2} style={styles.body}>
+                            <Text style={styles.header}>Email: </Text>
+                            {item?.userData?.email}
+                        </Text>
                     </View>
 
                     <View style={styles.infoLine}>
-                        <Text style={styles.header}>Email: </Text>
-                        <Text ellipsizeMode='tail' numberOfLines={1} style={styles.body}>{item?.userData?.email}</Text>
-                    </View>
-
-                    <View style={styles.infoLine}>
-                        <Text style={styles.header}>Emissão: </Text>
-                        <Text style={styles.body}>{format(parseISO(item?.userData?.createdAt || String(new Date())), 'dd/MM/yyyy')}</Text>
+                        <Text style={styles.body}>
+                            <Text style={styles.header}>Emissão: </Text>
+                            {format(parseISO(item?.userData?.createdAt || String(new Date())), 'dd/MM/yyyy')}
+                        </Text>
                     </View>
                 </View>
             </>) : (<>
