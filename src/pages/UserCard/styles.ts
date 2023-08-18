@@ -95,10 +95,13 @@ export default StyleSheet.create({
 
   image: {
     width: '50%',
-    height: '35%',
+    height: '30%',
+    maxWidth: RFValue(160),
+    maxHeight: RFValue(160),
     borderTopRightRadius: RFValue(24),
     borderBottomLeftRadius: RFValue(24),
   },
+
 
   textContainer: {
     borderTopRightRadius: RFValue(24),

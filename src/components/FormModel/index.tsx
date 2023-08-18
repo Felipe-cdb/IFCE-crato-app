@@ -7,7 +7,7 @@ import { refectoryStatusConstants } from '../../base/constants'
 import styles from './styles'
 import { RefectoryStatusEnum } from '../../base/Enums'
 import BoxDialog from '../BoxDialog'
-import { formatDate } from '../../helpers';
+import { format } from 'date-fns';
 
 type Props = {
     status: RefectoryStatusEnum,
@@ -43,7 +43,7 @@ const FormModel = ({ status, vigencyDate, id, onRefresh }: Props) => {
 
                 <View style={styles.formDateContainer}>
                     <Icon style={styles.icon} name='calendar-blank' />
-                    <Text style={styles.formDateText} > {formatDate(new Date(vigencyDate), true)} </Text>
+                    <Text style={styles.formDateText} > {format(new Date(vigencyDate).valueOf(), "dd/MM/yyyy")} </Text>
                 </View>
             </View>
         </>

@@ -3,8 +3,6 @@ import { defaultStyleProperties } from '../../base/styles'
 import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const {
-    blueColor,
-    redColor,
     whiteColor,
     greenColor,
     defaultPaddingBottom,
@@ -35,74 +33,39 @@ const styles = StyleSheet.create({
     //--------------Data do Formulário------------
 
     dateForms: {
+        width: "100%",
         alignItems: "flex-start",
-        justifyContent: "center",
         paddingTop: RFValue(24)
     },
 
-    statusForms: {
-        alignSelf: "center",
-        fontSize: RFValue(19),
-        paddingTop: defaultPaddingTop,
-        paddingBottom: defaultPaddingBottom
+    dateFormsFont: {
+        fontSize: RFValue(16),
+        padding: RFValue(5),
     },
 
-    dateFormsReference: {
-        fontSize: RFValue(19),
-        padding: RFValue(6),
+    //-------------Opções do Dia----------------
+    refectoryChoices: {
+        width: '100%',
+        alignItems: 'flex-start',
+        paddingTop: RFValue(20),
     },
 
-    dateFormsClosing: {
-        fontSize: RFValue(19),
-        padding: RFValue(6),
-    },
-
-    redText: {
-        color: redColor
-    },
-
-    //----------CARDÁPIO---------------
-    menu: {
+    //----------Botão CARDÁPIO---------------
+    menuContainer: {
         width: '100%',
         paddingTop: defaultPaddingTop,
-        paddingBottom: defaultPaddingBottom
-    },
-
-    title: {
-        fontSize: RFValue(19),
-        fontWeight: 'bold',
-        paddingBottom: defaultPaddingBottom
-    },
-
-    subtitle: {
-        fontWeight: 'normal',
-        fontSize: RFValue(19),
-        alignSelf: "flex-start"
-    },
-
-    menuContainer: {
-        paddingTop: defaultPaddingTop,
         paddingBottom: defaultPaddingBottom,
-        paddingHorizontal: RFPercentage(12),
+        paddingHorizontal: RFPercentage(10),
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
         marginVertical: RFValue(12),
     },
 
-    iconStyle: {
+    iconMenu: {
         fontSize: RFValue(26),
         marginLeft: RFValue(10),
         color: whiteColor
-    },
-
-    editMenuIconContainer: {
-        backgroundColor: blueColor,
-        padding: RFValue(10),
-        borderRadius: RFValue(8),
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
     },
 
     editMenuIcon: {
@@ -110,36 +73,13 @@ const styles = StyleSheet.create({
         color: whiteColor
     },
 
-    //-------------Opções do Dia----------------
-    refectoryChoices: {
-        width: '100%',
-        alignItems: 'flex-start',
-    },
-
-    //--------------Botões---------------------
-    formButton: {
-        paddingVertical: RFValue(12),
-    },
-
-    formTitle: {
-        fontSize: RFValue(18),
-        color: whiteColor,
-        padding: RFValue(2)
-    },
-
-    actionButtonContainer: {
-        width: '100%',
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingTop: defaultPaddingTop
-    },
+    //--------------Botão enviar---------------------
 
     actionButtomTitle: {
-        fontSize: RFValue(18),
+        fontSize: RFValue(16),
         color: whiteColor,
         fontWeight: "bold",
-        paddingHorizontal: RFPercentage(4),
+        paddingHorizontal: RFPercentage(2),
     },
 
     //-------------------------EmptyRefectory-------------------------
@@ -172,6 +112,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         paddingVertical: RFPercentage(8),
+        marginBottom: RFValue(30),
     },
 
     iconAlreadyAnswered: {

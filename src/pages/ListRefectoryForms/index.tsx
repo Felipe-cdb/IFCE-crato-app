@@ -11,7 +11,6 @@ import { Button as ButtonComponent } from '../../components/Button';
 import styles from './styles';
 import FormModel from '../../components/FormModel';
 import Tooltip from '../../components/Tooltip';
-import { RFValue } from 'react-native-responsive-fontsize';
 import { IRefectory } from '../../base/Interfaces';
 import { api } from '../../config';
 import { AuthContext } from '../../context/auth';
@@ -89,16 +88,12 @@ function ListRefectoryForms() {
             </View>
 
             <View style={styles.buttonContainer}>
-                <ButtonComponent typeButton='backButton' onPress={() => navigation.goBack()} >
-                    <Text style={styles.buttonTitle}>Voltar</Text>
-                </ButtonComponent>
-
                 <ButtonComponent
                     typeButton='extraButton'
                     onPress={() => navigation.navigate('CreateForm')}
                 >
                     <Text style={styles.buttonTitle}>Novo Formulário</Text>
-                    <Icon style={styles.buttonStyle} name='file-image-plus-outline' />
+                    <Icon style={styles.buttonStyle} name='file-move-outline' />
                 </ButtonComponent>
             </View>
 
