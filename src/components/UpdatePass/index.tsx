@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/auth";
 import styles from "./styles";
 import { Button } from "../Button";
 import { InputGroup } from "../InputGroup";
-import VALIDATION from "ifce-crato-app/src/pages/SignUp/Validations";
+import VALIDATION from "../../pages/SignUp/Validations";
 import { RFValue } from "react-native-responsive-fontsize";
 
 type BoxProps = {

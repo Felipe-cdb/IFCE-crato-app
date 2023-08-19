@@ -7,6 +7,7 @@ import {
   Platform,
   ScrollView,
   Image,
+  ActionSheetIOS
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -26,6 +27,7 @@ import { AuthContext } from "../../context/auth";
 import { Button } from "../../components/Button";
 import Tooltip from "../../components/Tooltip";
 import { RFValue } from "react-native-responsive-fontsize";
+import { defaultStyleProperties } from "../../base/styles";
 
 interface ISelectedImage {
   uri: string;
@@ -219,6 +221,7 @@ export default function NewCommunicated() {
 
         <View style={styles.form}>
           <SelectGroup
+            osType={Platform.OS}
             label="Categoria"
             value={inputValues.category}
             lista={Object.keys(constantCategories).map((key: any) => ({
@@ -285,7 +288,7 @@ export default function NewCommunicated() {
             }
             required={true}
             multiline={true}
-            heigth={heightInputContent}
+            heigth={80}
             onContentSizeChange={handleContentSizeChange}
             errorMessage={{
               valueIsValid: (value: string) => !!value.trim(),

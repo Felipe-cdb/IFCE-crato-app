@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ActionSheetIOS } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
 import styles from "./styles";
 import { defaultStyleProperties } from "../../base/styles";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
 export type ItemType = {
     label: string,
@@ -18,6 +19,7 @@ interface ISelectGroupProps {
     value: string | null;
     enable?: boolean;
     messageErro?: string;
+    osType: "ios" | "android" | "windows" | "macos" | "web"
 }
 
 export const SelectGroup = ({
@@ -27,8 +29,37 @@ export const SelectGroup = ({
     atualiza,
     value,
     enable,
-    messageErro
+    messageErro,
+    osType
 }: ISelectGroupProps) => {
+    const onPress = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancelar', ...lista.map(item => item.label || '')],
+        cancelButtonIndex: 0,
+        userInterfaceStyle: 'dark',
+      },
+      (      buttonIndex: number) => {
+        const listItems = lista.map(item => item.value || '')
+        switch (buttonIndex) {
+            case 1:
+                atualiza(listItems[buttonIndex-1])
+                break;
+            case 2:
+                atualiza(listItems[buttonIndex-1])
+                break;
+            case 3:
+                atualiza(listItems[buttonIndex-1])
+                break;
+            case 4:
+                atualiza(listItems[buttonIndex-1])
+                break;
+            default:
+                break;
+        }
+      },
+    );
+
     return (
         <View style={styles.containerInput}>
             <Text style={styles.label}>
@@ -41,15 +72,28 @@ export const SelectGroup = ({
                     borderColor: defaultStyleProperties.redColor
                 }
             ]}>
-                <Picker
-                    enabled={enable}
-                    selectedValue={value}
-                    onValueChange={atualiza}
-                >
-                    {lista.map((i) => (
-                        <Picker.Item key={i.value} label={i.label} value={i.value} />
-                    ))}
-                </Picker>
+                { osType === 'ios' ?
+                    <TouchableOpacity>
+                        <TextInput
+                            onTouchStart={onPress}
+                            editable={false}
+                            value={ lista.find(item => item.value === value)?.label }
+                        />
+                    </TouchableOpacity>
+                : 
+                (
+                    <Picker
+                        enabled={enable}
+                        selectedValue={value}
+                        onValueChange={atualiza}
+                    >
+                        {lista.map((i) => (
+                            <Picker.Item key={i.value} label={i.label} value={i.value} />
+                        ))}
+                    </Picker>
+                )
+                    
+                }
             </View>
             {(!valid && enable) && <Text style={styles.textErr}>{messageErro}</Text>}
         </View>
