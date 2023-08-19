@@ -73,19 +73,20 @@ export default StyleSheet.create({
 
   image2: {
     width: 30,
-    height: 42,
-    marginTop: RFValue(8)
+    height: 38,
+    marginTop: RFValue(8),
+    marginLeft: RFValue(5),
   },
 
   textDestaque: {
-    fontSize: RFValue(10),
+    fontSize: RFPercentage(1.8),
     fontWeight: '700',
     textAlign: "center",
     color: defaultStyleProperties.whiteColor,
   },
 
   textCe: {
-    fontSize: RFPercentage(2),
+    fontSize: RFPercentage(1.5),
     marginTop: RFValue(4),
     borderTopWidth: 1,
     borderTopColor: defaultStyleProperties.greenColor,
