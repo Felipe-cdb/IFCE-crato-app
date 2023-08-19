@@ -1,15 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import Modal from 'react-native-modal';
 import { View, Text, Keyboard, Dimensions } from 'react-native';
+import { RFValue } from "react-native-responsive-fontsize";
 
 import { api } from "../../config";
 import { AuthContext } from "../../context/auth";
-
 import styles from "./styles";
 import { Button } from "../Button";
 import { InputGroup } from "../InputGroup";
 import VALIDATION from "../../pages/SignUp/Validations";
-import { RFValue } from "react-native-responsive-fontsize";
 
 type BoxProps = {
     visivel: boolean;
@@ -113,7 +112,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
             })
             setScreenLoading(false);
             close();
-            aviso('Senha alterada com sucesso', 'success', RFValue(65));
+            aviso('Senha alterada com sucesso', 'success', RFValue(64));
         } catch (error: any) {
             setScreenLoading(false);
             if (error.response) {
@@ -121,7 +120,7 @@ function UpdatePass({ visivel, close }: BoxProps) {
                     alertMessage('A senha atual está incorreta');
                 } else {
                     close();
-                    aviso('Houve um contratempo, tente novamente mais tarde.', 'danger', RFValue(65))
+                    aviso('Houve um contratempo, tente novamente mais tarde.', 'danger', RFValue(64))
                 }
             }
         }

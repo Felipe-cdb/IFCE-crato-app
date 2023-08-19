@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/auth";
 
 import styles from "./styles";
 import { Button } from "../Button";
+import { RFValue } from "react-native-responsive-fontsize";
 
 type BoxProps = {
     visible: boolean;
@@ -23,20 +24,19 @@ function BoxDialog({ visible, lessInfo, deleteId, refreshing, typeDeletion }: Bo
         if (typeDeletion == 'communique'){
             try {
                 await api.delete(`communique/${deleteId}`);
-                aviso('Comunicado removido com sucesso', 'success');
+                aviso('Comunicado removido com sucesso', 'success', RFValue(64));
                 refreshing();
             } catch (error) {
-                console.log(error);
-                aviso('Falha na exclusão do comunicado', 'danger');
+                aviso('Falha na exclusão do comunicado', 'danger', RFValue(64));
             }
         } else if (typeDeletion == 'form_refectory'){
             try {
                 await api.delete(`refectory/${deleteId}`);
-                aviso('Formulário removido com sucesso', 'success');
+                aviso('Formulário removido com sucesso', 'success', RFValue(64));
                 refreshing();
             } catch (error) {
                 console.log(error);
-                aviso('Falha na exclusão do comunicado', 'danger');
+                aviso('Falha na exclusão do comunicado', 'danger', RFValue(64));
             }
         }
 

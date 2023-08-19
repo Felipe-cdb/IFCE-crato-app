@@ -15,6 +15,7 @@ import { IRefectory } from '../../base/Interfaces';
 import { api } from '../../config';
 import { AuthContext } from '../../context/auth';
 import { defaultStyleProperties } from '../../base/styles';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 function ListRefectoryForms() {
     const navigation = useNavigation<StackNavigationProp<any>>();
@@ -28,7 +29,7 @@ function ListRefectoryForms() {
             const response = await api.get(`refectory/?resPerPage=${10}&page=${1}`)
             if (response.data) setFormularies(response.data.list.sort((a: IRefectory, b: IRefectory) => a.vigencyDate > b.vigencyDate ? 1 : -1))
         } catch (error) {
-            aviso('Falha ao carregar lista de formulários', 'warning')
+            aviso('Falha ao carregar lista de formulários', 'warning', RFValue(64))
         }
         setRefreshing(false);
     }

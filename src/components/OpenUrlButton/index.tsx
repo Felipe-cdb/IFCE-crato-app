@@ -1,6 +1,8 @@
-import { useCallback } from 'react'
-import { Linking, Alert, View, Text } from 'react-native'
+import { useCallback, useContext } from 'react'
+import { Linking, View, Text } from 'react-native'
+import { RFValue } from 'react-native-responsive-fontsize';
 import { Button as ButtonComponent } from '../../components/Button';
+import { AuthContext } from '../../context/auth';
 
 type OpenURLButtonProps = {
   url: string;
@@ -10,6 +12,8 @@ type OpenURLButtonProps = {
 };
 
 export const OpenURLButton = ({ url, children, textColor, icon }: OpenURLButtonProps) => {
+  const { aviso } = useContext(AuthContext);
+
   const handlePress = useCallback(async () => {
     // Checking if the link is supported for links with custom URL scheme.
     const supported = await Linking.canOpenURL(url);
@@ -19,7 +23,7 @@ export const OpenURLButton = ({ url, children, textColor, icon }: OpenURLButtonP
       // by some browser in the mobile
       await Linking.openURL(url);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      aviso(`Não foi possivél abrir a página desejada!`, 'danger', RFValue(64));
     }
   }, [url]);
 

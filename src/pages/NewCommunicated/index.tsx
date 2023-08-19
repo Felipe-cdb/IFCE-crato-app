@@ -75,7 +75,7 @@ export default function NewCommunicated() {
 
   const handleAddLink = () => {
     if (!link) {
-      aviso("Preencha o campo para adicionar referências.", "warning");
+      aviso("Preencha o campo para adicionar referências.", "warning", RFValue(64));
       return;
     }
 
@@ -91,7 +91,7 @@ export default function NewCommunicated() {
     const record = referenceLinks.find((item) => item == link.trim());
 
     if (record) {
-      aviso("Mesmo link já inserido.", "warning");
+      aviso("Mesmo link já inserido.", "warning", RFValue(64));
       return;
     }
 
@@ -137,7 +137,7 @@ export default function NewCommunicated() {
         type,
       });
     } catch (error) {
-      aviso("Error ao anexar imagem", "danger");
+      aviso("Error ao anexar imagem", "danger", RFValue(64));
     }
   };
 
@@ -192,10 +192,10 @@ export default function NewCommunicated() {
           "Content-Type": "multipart/form-data",
         },
       });
-      aviso("Comunicado criado com sucesso.", "success");
+      aviso("Comunicado criado com sucesso.", "success", RFValue(64));
       navigation.navigate("Mural");
     } catch (error: any) {
-      aviso("Falha ao criar comunicado.", "danger");
+      aviso("Falha ao criar comunicado.", "danger", RFValue(64));
       return;
     }
     setScreenLoading(false);
