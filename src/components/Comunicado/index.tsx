@@ -41,9 +41,12 @@ function Comunicado({ item, exibir, isGestorDeMural, setDeletion }: ComunicadoPr
                 {(isGestorDeMural && setDeletion) &&
                     (<TouchableOpacity
                         style={styles.apagarComunicado}
-                        onPress={() => setDeletion(item.id)}
                     >
-                        <Icon name="close" style={styles.apagarIcon} />
+                        <Icon
+                            name="close"
+                            style={styles.apagarIcon}
+                            onPress={() => setDeletion(item.id)}
+                            />
                     </TouchableOpacity>)
                 }
                 <View style={styles.textContent}>

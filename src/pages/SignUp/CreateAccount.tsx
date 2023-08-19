@@ -200,6 +200,7 @@ export default function CreateAccount() {
                 />
 
                 <SelectGroup
+                  osType={Platform.OS}
                   label="Nível de Acesso"
                   value={type}
                   lista={[
@@ -225,10 +226,11 @@ export default function CreateAccount() {
                 />
 
                 <SelectGroup
+                  osType={Platform.OS}
                   label="Curso"
                   value={course || null}
                   lista={
-                    [{ label: "SELECIONAR CURSO", value: null },
+                    [
                     ...Object.keys(CourseType).map((key) => {
                       return { label: courseConstants[key], value: key }
                     })]
