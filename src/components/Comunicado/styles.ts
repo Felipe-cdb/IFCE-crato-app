@@ -13,15 +13,15 @@ const styles = StyleSheet.create({
     },
 
     apagarComunicado: {
-        position: "absolute",
-        right: 5,
-        top: 2
+        display: 'flex',
+        alignItems: "flex-end",
+        justifyContent: "center"
     },
-
+    
     apagarIcon: {
         width: RFPercentage(7),
         fontSize: RFPercentage(4),
-        textAlign: 'right',
+        textAlign: 'center',
         color: defaultStyleProperties.blackColor
     },
 
