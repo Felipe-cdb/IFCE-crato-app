@@ -12,15 +12,14 @@ function Menu() {
 
     return (
         <View style={styles.containerMenu}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Icon name="menu" style={styles.iconsMenu} />
-            </TouchableOpacity>
-            <View style={styles.logoMenuContent}>
-                <Image style={styles.logoMenu} source={require('../../assets/images/LogoMenu.png')} />
+            <View style={styles.content}>
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <Icon name="menu" style={styles.iconsMenu} />
+                </TouchableOpacity>
+                <View style={styles.logoMenuContent}>
+                    <Image style={styles.logoMenu} source={require('../../assets/images/LogoMenu.png')} />
+                </View>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
-                <Icon name="bell" style={styles.iconsMenu} />
-            </TouchableOpacity>
         </View>
     )
 }

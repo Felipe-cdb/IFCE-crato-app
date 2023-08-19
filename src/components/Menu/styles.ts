@@ -5,16 +5,19 @@ import { defaultStyleProperties } from "../../base/styles";
 const styles = StyleSheet.create({
     containerMenu: {
         width: '100%',
-
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 20,
+        paddingHorizontal: RFValue(16),
         paddingTop: '10%',
         paddingBottom: 10,
 
         backgroundColor: defaultStyleProperties.greenColor
+    },
+
+    content: {
+        width: '60%',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
 
     logoMenuContent: {

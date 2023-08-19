@@ -14,7 +14,6 @@ import CustomDrawerContent from "../components/CustomDrawer";
 import ListRefectoryForms from "../pages/ListRefectoryForms";
 import EditProfile from "../pages/EditProfile";
 import UserCard from "../pages/UserCard";
-import Notifications from "../pages/Notifications";
 import { defaultStyleProperties } from "../base/styles";
 import Users from "../pages/Users";
 
@@ -133,19 +132,6 @@ const AppRoutesRoutes = ({ mural, permitions, refactory }: ManagerProps) => (<>
             }}
         />
 
-        <AppRoutesDrawer.Screen
-            name="Notifications"
-            component={Notifications}
-            options={{
-                headerShown: false,
-                drawerItemStyle: { display: 'none' },
-                drawerIcon: () => (
-                    <Icon name="silverware-fork-knife"
-                        style={stylesNavigation.icons}
-                    />
-                )
-            }}
-        />
     </AppRoutesDrawer.Navigator>
 </>);
 
