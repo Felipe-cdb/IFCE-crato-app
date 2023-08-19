@@ -22,6 +22,7 @@ type BoxProps = {
   identification: string;
   email: string;
   roles: UserPermitions[];
+  reloadUsers(searchPhrase: string): Promise<void>;
 };
 
 function UserPermissionsModal({
@@ -33,6 +34,7 @@ function UserPermissionsModal({
   identification,
   type,
   roles,
+  reloadUsers
 }: BoxProps) {
   const [checkboxAnswerFields, setCheckboxAnswerFields] =
     React.useState<UserPermitions[]>(roles);
@@ -58,6 +60,7 @@ function UserPermissionsModal({
       setLoading(false);
       setVisible();
       aviso("Permissões atualizadas com sucesso.", "success", RFValue(64));
+      reloadUsers('');
     } catch (error) {
       aviso("Falha ao atuaizar permissões de usuário.", "danger", RFValue(64));
       setLoading(false);

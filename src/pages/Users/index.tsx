@@ -31,6 +31,18 @@ const Users = () => {
       aviso("Falha ao carregar lista de Usuários", "warning", RFValue(64));
     }
   };
+  
+  const reloadUsers = async () => {
+    setSearchPhrase('');
+    try {
+      const response = await api.get(
+        `users/?resPerPage=${10}&page=${1}`
+      );
+      if (response.data) setUsers(response.data.list);
+    } catch (error) {
+      aviso("Falha ao carregar lista de Usuários", "warning", RFValue(64));
+    }
+  };
 
   const handleChageModal = (user: IUser) => {
     setUserSelected(user);
@@ -76,6 +88,7 @@ const Users = () => {
           }}
           type={constantUserType[useSelected.type]}
           roles={useSelected.roles}
+          reloadUsers={reloadUsers}
         />
       )}
     </View>
