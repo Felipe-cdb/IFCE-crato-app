@@ -10,6 +10,7 @@ import { UserPermitions, UserTypes } from "../../base/Enums";
 import { api } from "../../config";
 
 import styles from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 type BoxProps = {
     isVisible: boolean;
@@ -41,14 +42,14 @@ function UserPermissionsModal({ isVisible, setVisible, id, name, email, identifi
     const handleSave = async () => {
         setLoading(true)
         try {
-            await api.patch(`/users/roles/${id}`, { roles: checkboxAnswerFields })
-            setLoading(false)
-            setVisible()
-            aviso('Permissões atualizadas com sucesso.', 'success')
+            await api.patch(`/users/roles/${id}`, { roles: checkboxAnswerFields });
+            setLoading(false);
+            setVisible();
+            aviso('Permissões atualizadas com sucesso.', 'success', RFValue(64));
         } catch (error) {
-            aviso('Falha ao atuaizar permissões de usuário.', 'danger')
-            setLoading(false)
-            setVisible()
+            aviso('Falha ao atuaizar permissões de usuário.', 'danger', RFValue(64));
+            setLoading(false);
+            setVisible();
         }
     }
 

@@ -11,7 +11,6 @@ import { RefectoryChoices } from '../../components/RefectoryChoices';
 import { OpenURLButton } from '../../components/OpenUrlButton';
 import MenuFormUrlModal from '../../components/MenuFormUrlModal';
 import styles from './styles';
-import { refectoryStatusConstants } from '../../base/constants';
 import { RefreshControl } from 'react-native-gesture-handler'
 
 import { RefectoryContext } from '../../context/refectory.context'
@@ -22,6 +21,7 @@ import { defaultStyleProperties } from '../../base/styles';
 import { api } from '../../config';
 import RefectoryAlreadyAnswered from './RefectoryAlreadyAnswered';
 import { formatDate } from '../../helpers';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const Refectory = () => {
     const [isVisible, setVisible] = React.useState<boolean>(false)
@@ -35,7 +35,7 @@ const Refectory = () => {
 
     const handleSubmit = async () => {
         const filter = Object.values(checkboxAnswerFields).filter(val => val !== 0)
-        if (!filter.length) return aviso('Nenhuma opção selecionada', 'warning')
+        if (!filter.length) return aviso('Nenhuma opção selecionada', 'warning', RFValue(64))
         setLoading(true)
 
         try {
@@ -45,12 +45,12 @@ const Refectory = () => {
             if (refectory) {
                 await setRefectoryStoraged({ ...refectory, hasAnswered: true })
             }
-            aviso('Registramos a sua resposta, obrigado!', 'success')
+            aviso('Registramos a sua resposta, obrigado!', 'success', RFValue(64))
             setLoading(false)
             navigation.navigate('Mural')
         } catch (error: any) {
             console.log(error.response)
-            aviso('Falha ao submeter formulário.', 'danger')
+            aviso('Falha ao submeter formulário.', 'danger', RFValue(64))
             setLoading(false)
 
         }

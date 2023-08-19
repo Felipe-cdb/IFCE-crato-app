@@ -7,10 +7,10 @@ import { FlatList } from "react-native-gesture-handler";
 import { IUser } from "../../base/Interfaces";
 import { api } from "../../config";
 import { AuthContext } from "../../context/auth";
-import { Button as ButtonComponent } from '../../components/Button'
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import styles from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const Users = () => {
     const [users, setUsers] = React.useState<IUser[]>([])
@@ -26,7 +26,7 @@ const Users = () => {
             const response = await api.get(`users/?resPerPage=${10}&page=${1}&keyword=${searchPhrase}`)
             if (response.data) setUsers(response.data.list)
         } catch (error) {
-            aviso('Falha ao carregar lista de Usuários', 'warning')
+            aviso('Falha ao carregar lista de Usuários', 'warning', RFValue(64))
         }
     }
 

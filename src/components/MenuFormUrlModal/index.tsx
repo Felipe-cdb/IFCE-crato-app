@@ -10,6 +10,7 @@ import { InputGroup } from "../InputGroup";
 import { RefectoryContext } from '../../context/refectory.context';
 import { AuthContext } from "../../context/auth";
 import ButtonLoading from "../ButtonLoading";
+import { RFValue } from "react-native-responsive-fontsize";
 
 type BoxProps = {
     isVisible: boolean;
@@ -31,7 +32,7 @@ function MenuFormUrlModal({ isVisible, setVisible, action, description, setPropM
         setLoading(true)
         try {
             await api.put('refectory/menu-url', { menuUrl });
-            aviso('Link para cardápio atualizado com sucesso', 'success');
+            aviso('Link para cardápio atualizado com sucesso', 'success', RFValue(64));
 
             if (refectory) {
                 await setRefectoryStoraged({ ...refectory, menuUrl })
@@ -43,7 +44,7 @@ function MenuFormUrlModal({ isVisible, setVisible, action, description, setPropM
         } catch (error: any) {
             setLoading(false)
             console.log(error.response);
-            aviso('Falha ao atualizar link para cardápio', 'danger');
+            aviso('Falha ao atualizar link para cardápio', 'danger', RFValue(64));
         }
     }
 
