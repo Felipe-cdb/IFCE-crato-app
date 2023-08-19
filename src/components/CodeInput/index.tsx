@@ -20,7 +20,7 @@ interface ICodeInputProps {
 }
 
 const CodeInput = ({ setCode, code, valid }: ICodeInputProps) => {
-  const [inputIndex, setInputIndex] = useState<number>();
+  
   useEffect(() => {
     if (!code.trim()) codeInputRefs[0].current?.focus();
   }, [code]);

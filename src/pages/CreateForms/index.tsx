@@ -51,17 +51,17 @@ function CreateForms() {
         setScreenLoading(true);
         try {
             await api.post('refectory/create', { vigencyDates: formsToCreate, menuUrl: refectory?.menuUrl || menuUrl })
-            aviso('Formulários adicionados com sucesso', 'success')
+            aviso('Formulários adicionados com sucesso', 'success', RFValue(64))
             navigation.goBack()
         } catch (error: any) {
             if (error.response) {
                 if (error.response.data.message == "Some provided vigency date already exists") {
-                    aviso('Data de vigência fornecida já existe', 'danger');
+                    aviso('Data de vigência fornecida já existe', 'danger', RFValue(64));
                 } else {
-                    aviso('Falha ao criar formulários', 'danger')
+                    aviso('Falha ao criar formulários', 'danger', RFValue(64))
                 }
             } else {
-                aviso('Falha ao criar formulários', 'danger')
+                aviso('Falha ao criar formulários', 'danger', RFValue(64))
             }
         }
         setScreenLoading(false);
