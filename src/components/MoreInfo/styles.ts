@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     textBtnOk: {
         fontSize: RFValue(12),
         fontWeight: '600',
+        paddingHorizontal: RFValue(5),
         color: defaultStyleProperties.whiteColor
     },
 
