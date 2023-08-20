@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     containerMenu: {
         width: '100%',
         paddingHorizontal: RFValue(16),
-        paddingTop: '10%',
+        paddingTop: '2%',
         paddingBottom: 10,
 
         backgroundColor: defaultStyleProperties.greenColor

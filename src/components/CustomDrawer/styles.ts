@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
     textBack: {
         fontWeight: '700',
-        fontSize: RFPercentage(3.5),
+        fontSize: RFPercentage(3),
         color: defaultStyleProperties.whiteColor
     },
 
