@@ -33,32 +33,33 @@ export const SelectGroup = ({
     osType
 }: ISelectGroupProps) => {
     const onPress = () =>
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: ['Cancelar', ...lista.map(item => item.label || '')],
-        cancelButtonIndex: 0,
-        userInterfaceStyle: 'dark',
-      },
-      (      buttonIndex: number) => {
-        const listItems = lista.map(item => item.value || '')
-        switch (buttonIndex) {
-            case 1:
-                atualiza(listItems[buttonIndex-1])
-                break;
-            case 2:
-                atualiza(listItems[buttonIndex-1])
-                break;
-            case 3:
-                atualiza(listItems[buttonIndex-1])
-                break;
-            case 4:
-                atualiza(listItems[buttonIndex-1])
-                break;
-            default:
-                break;
-        }
-      },
-    );
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+                options: ['Cancelar', ...lista.map(item => item.label || '')],
+                cancelButtonIndex: 0,
+                userInterfaceStyle: 'dark',
+            },
+            (buttonIndex: number) => {
+                const listItems = lista.map(item => item.value || '')
+                const listButtonIndex = listItems[buttonIndex - 1];
+                switch (buttonIndex) {
+                    case 1:
+                        atualiza(listButtonIndex)
+                        break;
+                    case 2:
+                        atualiza(listButtonIndex)
+                        break;
+                    case 3:
+                        atualiza(listButtonIndex)
+                        break;
+                    case 4:
+                        atualiza(listButtonIndex)
+                        break;
+                    default:
+                        break;
+                }
+            },
+        );
 
     return (
         <View style={styles.containerInput}>
@@ -72,27 +73,27 @@ export const SelectGroup = ({
                     borderColor: defaultStyleProperties.redColor
                 }
             ]}>
-                { osType === 'ios' ?
+                {osType === 'ios' ?
                     <TouchableOpacity>
                         <TextInput
                             onTouchStart={onPress}
                             editable={false}
-                            value={ lista.find(item => item.value === value)?.label }
+                            value={lista.find(item => item.value === value)?.label}
                         />
                     </TouchableOpacity>
-                : 
-                (
-                    <Picker
-                        enabled={enable}
-                        selectedValue={value}
-                        onValueChange={atualiza}
-                    >
-                        {lista.map((i) => (
-                            <Picker.Item key={i.value} label={i.label} value={i.value} />
-                        ))}
-                    </Picker>
-                )
-                    
+                    :
+                    (
+                        <Picker
+                            enabled={enable}
+                            selectedValue={value}
+                            onValueChange={atualiza}
+                        >
+                            {lista.map((i) => (
+                                <Picker.Item key={i.value} label={i.label} value={i.value} />
+                            ))}
+                        </Picker>
+                    )
+
                 }
             </View>
             {(!valid && enable) && <Text style={styles.textErr}>{messageErro}</Text>}
