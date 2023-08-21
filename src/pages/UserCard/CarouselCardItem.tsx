@@ -15,8 +15,6 @@ type CardProp = {
     index?: number
 }
 
-
-
 const CarouselCardItem = ({ index, item }: CardProp) => {
     return (
         <View style={styles.container} key={index}>
@@ -26,13 +24,23 @@ const CarouselCardItem = ({ index, item }: CardProp) => {
                     <Text style={styles.textDestaque}>INSTITUTO FEDERAL</Text>
                     <Text style={styles.textCe}>Campus Crato</Text>
                     <View style={styles.square} />
+
                 </View>
-                <Image
-                    source={{
-                        uri: item.userData.avatarUrl
-                    }}
-                    style={styles.image}
-                />
+
+                {!item?.userData?.avatarUrl ?
+                    (
+                        <View style={styles.image}>
+                            <Icon name="account" style={styles.iconProfile} />
+                        </View>
+                    ) :
+                    (<Image
+                        source={{
+                            uri: item.userData.avatarUrl
+                        }}
+                        style={styles.image}
+                    />)
+                }
+
                 <View style={styles.textContainer}>
                     <Text style={styles.title} > {item.userData.name} </Text>
                     <Text style={styles.subtitle} > {constantUserType[item.userData.type as any]} </Text>

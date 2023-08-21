@@ -75,7 +75,7 @@ export default StyleSheet.create({
     width: 30,
     height: 38,
     marginTop: RFValue(8),
-    marginLeft: RFValue(5),
+    marginLeft: RFValue(4),
   },
 
   textDestaque: {
@@ -99,8 +99,16 @@ export default StyleSheet.create({
     height: '30%',
     maxWidth: RFValue(160),
     maxHeight: RFValue(160),
+    backgroundColor: '#4D779C',
     borderTopRightRadius: RFValue(24),
     borderBottomLeftRadius: RFValue(24),
+  },
+
+  iconProfile: {
+    fontSize: RFPercentage(16),
+    alignSelf: "center",
+    marginTop: RFPercentage(2),
+    color: defaultStyleProperties.whiteColor
   },
 
 
