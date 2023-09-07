@@ -42,22 +42,8 @@ export const SelectGroup = ({
             (buttonIndex: number) => {
                 const listItems = lista.map(item => item.value || '')
                 const listButtonIndex = listItems[buttonIndex - 1];
-                switch (buttonIndex) {
-                    case 1:
-                        atualiza(listButtonIndex)
-                        break;
-                    case 2:
-                        atualiza(listButtonIndex)
-                        break;
-                    case 3:
-                        atualiza(listButtonIndex)
-                        break;
-                    case 4:
-                        atualiza(listButtonIndex)
-                        break;
-                    default:
-                        break;
-                }
+
+                atualiza(listButtonIndex)
             },
         );
 
